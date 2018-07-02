@@ -1,0 +1,12 @@
+<!-- catID: {{catId}} -->
+<pre><small>{{items | async | json}}</small></pre>
+
+<h3 *ngIf="loadingProds">Loading items..</h3>
+
+<div class="d-flex justify-content-around flex-wrap" > 
+  <item *ngFor="let item of items | async" [item]="item" [ngClass]="{'col-md-6': show == 2, 'col-md-4': show == 3}"></item>
+</div>
+
+<h3 *ngIf="false">
+  <p class="alert alert-info w-100 mt-2 text-center">No Items.</p>
+</h3>
