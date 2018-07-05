@@ -31,7 +31,7 @@ export class ItemComponent implements OnInit {
       this.item.desc= this.txtEditDesc.nativeElement.value ? this.txtEditDesc.nativeElement.value : this.item.desc;
       this.item.price= this.txtEditPrice.nativeElement.value ? this.txtEditPrice.nativeElement.value : this.item.price;
       this.itemService.updateProduct(this.item);      
-      console.log("hahaaaaaaaaaaaaaaaa",this.item);
+      //console.log("hahaaaaaaaaaaaaaaaa",this.item);
     }
     this.editing.enabled = !this.editing.enabled    
   }

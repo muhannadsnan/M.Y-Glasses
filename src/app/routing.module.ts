@@ -5,17 +5,28 @@ import { CategoriesComponent } from "./components/categories/categories.componen
 import { CategoryComponent } from "./components/categories/category/category.component";
 import { AuthGuard } from "./services/auth.guard";
 import { ItemsComponent } from "./components/Items/items.component";
+import { AdminComponent } from "./components/admin/admin.component";
+import { AdminIndexComponent } from "./components/admin/admin-index/admin-index.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
-	{ path: 'home', component: HomeComponent },	
-	{ path: 'home/:name', component: HomeComponent },	
-	{path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard], children: [
+	{path: 'home', component: HomeComponent },	
+	{path: 'home/:name', component: HomeComponent },	
+	{path: 'categories', component: CategoriesComponent, /*canActivate: [AuthGuard],*/ children: [
 			{path: ':catid', component: ItemsComponent}
 		]
 	},
-	{ path: 'products', component: ItemsComponent, data: {show: 3}}
+	{path: 'items', component: ItemsComponent, data: {itemsInRow: 3}},
+	{path: 'admin', component: AdminComponent, children: [
+			{path: '', component: AdminIndexComponent},
+			{path: 'categories', component: CategoriesComponent, data: {showAs: 'table'}},
+			{path: 'items', component: ItemsComponent, data: {showAs: 'table'}},
+		]
+	},
+	{path: '**', redirectTo: '/home', pathMatch: 'full', data: {message: 'Page not found', messageType: 'error'}}
 ];
+
+
 
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],

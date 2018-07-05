@@ -15,6 +15,7 @@ export class CategoriesComponent implements OnInit {
   categories: Observable<any[]>;
   selectedCat = 0;
   loadingCats;
+  showAs: 'grid';
   
   @ViewChild('catTitle') catTitle: ElementRef;
 
@@ -22,9 +23,10 @@ export class CategoriesComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit() { console.log("catsss");
     this.isLoadingCats();
     this.getCats();
+    this.LISTEN_Data();
   }
 
   catChanged(cat) {
@@ -43,6 +45,12 @@ export class CategoriesComponent implements OnInit {
 
   isLoadingCats(){
     this.categoryService.loadingCats.subscribe(isLoading => this.loadingCats = isLoading);
+  }
+
+  LISTEN_Data(){
+    this.route.data.subscribe(data => {
+      this.showAs = data.showAs; console.log("data ", data);
+    });
   }
 
 }

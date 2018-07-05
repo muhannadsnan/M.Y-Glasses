@@ -15,7 +15,7 @@ export class ItemsComponent implements OnInit {
   catId;
   items;
   loadingProds = true;
-  show = 2;
+  itemsInRow = 2;
 
   constructor(private catService: CategoryService,
               private route: ActivatedRoute) { }
@@ -45,11 +45,11 @@ export class ItemsComponent implements OnInit {
   }
 
   LISTEN_Route_data(){
-    this.route.data.subscribe(data => {  console.log("data.show ", data);
-      if(data.show)
-        this.show = data.show;
+    this.route.data.subscribe(data => {  console.log("data.itemsInRow ", data);
+      if(data.itemsInRow)
+        this.itemsInRow = data.itemsInRow;
       else
-        this.show = 2;
+        this.itemsInRow = 2;
     });
   }
 

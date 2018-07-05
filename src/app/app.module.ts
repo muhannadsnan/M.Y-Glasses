@@ -22,6 +22,8 @@ import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/dat
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminIndexComponent } from './components/admin/admin-index/admin-index.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { environment } from '../environments/environment';
     CategoriesComponent,
     CategoryComponent,    
     ItemsComponent,
-    ItemComponent
+    ItemComponent,
+    AdminComponent,
+    AdminIndexComponent
   ],
   imports: [
     BrowserModule,

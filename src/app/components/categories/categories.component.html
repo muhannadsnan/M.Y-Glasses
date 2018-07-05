@@ -1,21 +1,27 @@
 <div class="container main">
-  <div class="row">    
-    <div class="col-lg-3">
-      <h5 class="text-center my-3">Categories</h5>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="enter category..." #catTitle (keyup.enter)="onAddCat()">
-      </div>      
-      <div class="list-group">
-        <app-category *ngFor="let cat of categories | async" [category]="cat" (click)="catChanged(cat)"></app-category>
-        <h3 *ngIf="loadingCats">LOADING..</h3>
-      </div>
-    <!-- <pre>{{categories | async | json}}</pre> -->
-    </div>
-    <!-- END: col-lg-3 -->
-
-    <div class="col-lg-9">
-      <!-- <h3 *ngIf="selectedCat == 0" class="alert alert-warning">Please select a category!</h3>     -->
-      <router-outlet></router-outlet>
-    </div><!-- END: col-lg-9 -->
+  <div class="row" *ngIf="showAs == 'table'; else showCatsPage">
+    <h1>table view</h1>
   </div>
+
+  <ng-template #showCatsPage>
+    <div class="row">    
+      <div class="col-lg-3">
+        <h5 class="text-center my-3">Categories</h5>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="enter category..." #catTitle (keyup.enter)="onAddCat()">
+        </div>      
+        <div class="list-group">
+          <app-category *ngFor="let cat of categories | async" [category]="cat" (click)="catChanged(cat)"></app-category>
+          <h3 *ngIf="loadingCats">LOADING..</h3>
+        </div>
+      <!-- <pre>{{categories | async | json}}</pre> -->
+      </div>
+      <!-- END: col-lg-3 -->
+      <div class="col-lg-9">
+        <!-- <h3 *ngIf="selectedCat == 0" class="alert alert-warning">Please select a category!</h3>     -->
+        <router-outlet></router-outlet>
+      </div><!-- END: col-lg-9 -->
+    </div>
+  </ng-template>
+  
 </div>

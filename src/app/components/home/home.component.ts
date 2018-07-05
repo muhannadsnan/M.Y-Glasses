@@ -13,7 +13,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.name = this.route.snapshot.params['name'];
+    //this.LINSTEN_Params();
     this.route.params.subscribe(params => this.name = params['name']);
+    //this.LINSTEN_Data(); // when data message, show toastr alert according to messageType
   }
 
   onNav(toName){
