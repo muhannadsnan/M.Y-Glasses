@@ -15,7 +15,8 @@ export class CategoriesComponent implements OnInit {
   categories: Observable<any[]>;
   selectedCat = 0;
   loadingCats;
-  showAs: 'grid';
+  showAs;
+  showModal;
   
   @ViewChild('catTitle') catTitle: ElementRef;
 
@@ -23,9 +24,10 @@ export class CategoriesComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) { }
 
-  ngOnInit() { console.log("catsss");
+  ngOnInit() { //console.log("catsss");
     this.isLoadingCats();
     this.getCats();
+    this.showAs = 'grid';
     this.LISTEN_Data();
   }
 
@@ -35,7 +37,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   onAddCat(){ 
-    this.categoryService.createCat({ name: this.catTitle.nativeElement.value});
+    this.categoryService.createCat({ title: this.catTitle.nativeElement.value});
     this.catTitle.nativeElement.value = '';
   }
 
@@ -48,9 +50,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   LISTEN_Data(){
-    this.route.data.subscribe(data => {
-      this.showAs = data.showAs; console.log("data ", data);
+    this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
+      if(data.showAs){
+        this.showAs = data.showAs; console.log("data ", data);
+      }
     });
   }
 
+  dblclickRow(){
+    this.categoryService.showModal.next(true);
+  }
 }

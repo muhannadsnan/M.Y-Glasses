@@ -1,8 +1,4 @@
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
 
-pre{    line-height: 10px;
-    font-size: 18px;
-    color: darkorange;
-    overflow-y: hidden;
-	background: dimgrey;
-}
+pre{line-height: 10px; font-size: 18px; color: darkorange; overflow-y: hidden; background: dimgrey; }
+.showModal{display: block; opacity: 1; visibility: visible; background-color:rgba(0, 0, 0, 0.5);}

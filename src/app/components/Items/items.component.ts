@@ -45,7 +45,7 @@ export class ItemsComponent implements OnInit {
   }
 
   LISTEN_Route_data(){
-    this.route.data.subscribe(data => {  console.log("data.itemsInRow ", data);
+    this.route.data.subscribe(data => {  console.log("data", data);
       if(data.itemsInRow)
         this.itemsInRow = data.itemsInRow;
       else

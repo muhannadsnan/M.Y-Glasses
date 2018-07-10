@@ -24,12 +24,14 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminIndexComponent } from './components/admin/admin-index/admin-index.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
+    ModalComponent,
     HomeComponent,
     CategoriesComponent,
     CategoryComponent,    

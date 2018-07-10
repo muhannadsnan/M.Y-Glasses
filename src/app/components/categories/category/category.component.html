@@ -1,5 +1,5 @@
 <a [routerLink]="'/categories/'+category.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickCat()">
-  <span>{{category.name}}</span>
+  <span>{{category.title}}</span>
   <button class="btn btn-outline-warning ml-auto" (click)="onDelCat(category.id)">Delete</button>
 </a>
 <!-- <pre>{{category | json}}</pre> -->
