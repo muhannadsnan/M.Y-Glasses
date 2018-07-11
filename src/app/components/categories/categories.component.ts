@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 
 export class CategoriesComponent implements OnInit {
   categories: Observable<any[]>;
-  selectedCat = 0;
+  selectedId = 0;
   loadingCats;
   showAs;
   showModal;
@@ -32,7 +32,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   catChanged(cat) {
-    this.selectedCat = cat.id;
+    this.selectedId = cat.id;
     this.categoryService.selectedCategory.next(cat);
   }
 
@@ -57,7 +57,8 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  dblclickRow(){
+  dblclickRow(category){
     this.categoryService.showModal.next(true);
+    this.catChanged(category);
   }
 }

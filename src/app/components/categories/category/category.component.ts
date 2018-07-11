@@ -10,12 +10,16 @@ import { ItemService } from '../../../services/item.service';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-
   @Input() category: Category;
+  @Input() showAs: string;
 
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
+    if(this.showAs == '')
+        this.showAs = 'list-group-item';
+    else
+        this.categoryService.selectedCategory.subscribe(category => this.category = category);
   }
 
   onDelCat(key){

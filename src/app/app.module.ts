@@ -25,32 +25,34 @@ import { environment } from '../environments/environment';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminIndexComponent } from './components/admin/admin-index/admin-index.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { EditCategoryComponent } from './components/categories/edit-category/edit-category.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    ModalComponent,
-    HomeComponent,
-    CategoriesComponent,
-    CategoryComponent,    
-    ItemsComponent,
-    ItemComponent,
-    AdminComponent,
-    AdminIndexComponent
-  ],
-  imports: [
-    BrowserModule,
-    RoutingModule,
-    HttpClientModule,
-    HttpModule,
-    NgbModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule, //---- for database 
-    // AngularFireAuthModule < ---- for auth
-  ],
-  providers: [CategoryService, ItemService, DbService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavComponent,
+        ModalComponent,
+        HomeComponent,
+        CategoriesComponent,
+        CategoryComponent,        
+        ItemsComponent,
+        ItemComponent,
+        AdminComponent,
+        AdminIndexComponent,
+        EditCategoryComponent
+    ],
+    imports: [
+        BrowserModule,
+        RoutingModule,
+        HttpClientModule,
+        HttpModule,
+        NgbModule.forRoot(),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule, //---- for database 
+        // AngularFireAuthModule < ---- for auth
+    ],
+    providers: [CategoryService, ItemService, DbService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
