@@ -12,15 +12,17 @@ import { ItemService } from '../../../services/item.service';
 export class CategoryComponent implements OnInit {
   @Input() category: Category;
   @Input() showAs: string;
+  editMode: boolean;
 
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    if(this.showAs == '')
-        this.showAs = 'list-group-item';
-    else
-        this.categoryService.selectedCategory.subscribe(category => this.category = category);
-  }
+        this.editMode = false;
+        if(!this.showAs)
+            this.showAs = 'list-group-item';
+        else
+            this.categoryService.selectedCategory.subscribe(category => this.category = category);
+   }
 
   onDelCat(key){
     this.categoryService.destroyCat(key);
@@ -28,6 +30,10 @@ export class CategoryComponent implements OnInit {
 
   onClickCat(){
     this.categoryService.selectedCategory.next(this.category);
+  }
+
+  switchEditMode(mode){
+    this.editMode = mode; console.log(this.editMode);
   }
 
 }

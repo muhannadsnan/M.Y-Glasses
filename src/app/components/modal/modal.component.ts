@@ -9,12 +9,14 @@ import { Subscription } from 'rxjs';
 })
 export class ModalComponent implements OnInit, OnDestroy {
   show: boolean = false;
+  @Input() btns: string;
   tmp: Subscription;
 
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.tmp = this.categoryService.showModal.subscribe(show => {
+      this.btns = "close-only"; // close-only(defalut), close-save, ok-only, ok-cancel, yes-no, delete-cancel
+      this.tmp = this.categoryService.showModal.subscribe(show => {
       this.show = show;
     });
   }

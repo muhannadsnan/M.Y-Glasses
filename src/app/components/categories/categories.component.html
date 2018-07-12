@@ -11,7 +11,7 @@
             </thead>
             <tbody>
                     <h3 *ngIf="loadingCats">LOADING..</h3>
-                <tr *ngFor="let cat of categories | async; let i = index" (dblclick)="dblclickRow(cat)">                    
+                <tr *ngFor="let cat of categories | async; let i = index" (click)="dblclickRow(cat)">                    
                     <th scope="row">{{i+1}}</th>
                     <td>{{cat.title}}</td>
                     <td>{{cat.desc}}</td>
@@ -41,7 +41,7 @@
 </div>
 
 <!-- BOOTSTRAP 4 MODAL, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
-<app-modal>
-    <h4 class="text-center text-info" title>Show category</h4>
+<app-modal [btns]="close-only">
+    <h4 class="text-info" title>Show category</h4>
     <app-category [showAs]="'details'" body></app-category>
 </app-modal>
