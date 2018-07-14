@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
 import { HomeComponent } from './components/home/home.component';

@@ -31,6 +31,10 @@ export class CategoryService {
 
 	createCat(newCat){
 		return this.catCollection.add(newCat);
+    }
+    
+    updateCat(newCat){
+		//return this.catCollection.add(newCat);
 	}
 
 	destroyCat(catid){

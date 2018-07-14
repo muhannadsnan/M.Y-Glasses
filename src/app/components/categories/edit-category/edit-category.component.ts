@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Category } from '../../../models/category';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-edit-category',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-category.component.css']
 })
 export class EditCategoryComponent implements OnInit {
+    @Input() category: Category; 
 
-  constructor() { }
+    constructor(private categoryService: CategoryService) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    saveChanges(){
+        this.categoryService.updateCat(this.category);
+    }
 
 }

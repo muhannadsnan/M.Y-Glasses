@@ -1,3 +1,15 @@
-<p>
-  edit-category works!
-</p>
+<div class="edit-category">
+    <label class="col-md-12">
+        <div class="form-group">
+            Title:
+            <input type="text" class="form-control" [value]="category.title">
+        </div>
+    </label>
+    <br>
+    <label class="col-md-12">
+        <div class="form-group">
+            Description:
+            <textarea type="text" class="form-control" [value]="category.desc"></textarea>
+        </div>
+    </label>
+</div>
