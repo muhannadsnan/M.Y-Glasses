@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../../../models/category';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../services/category.service';
-import { ItemService } from '../../../services/item.service';
 
 @Component({
   selector: 'app-category',
@@ -13,15 +11,19 @@ export class CategoryComponent implements OnInit {
   @Input() category: Category;
   @Input() showAs: string;
   editMode: boolean;
+  adminMode: string; // add, edit in modal
 
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-        this.editMode = false;
+        this.categoryService.adminMode.subscribe(mode => {
+            this.adminMode = mode;
+            if(mode == 'add')
+                this.category = new Category();
+        });       
         if(!this.showAs)
             this.showAs = 'list-group-item';
-        else
-            this.categoryService.selectedCategory.subscribe(category => this.category = category);
+        this.categoryService.selectedCategory.subscribe(category => this.category = category);
    }
 
   onDelCat(key){
@@ -32,8 +34,15 @@ export class CategoryComponent implements OnInit {
     this.categoryService.selectedCategory.next(this.category);
   }
 
-  switchEditMode(mode){
+  switchEditMode(mode){        
     this.editMode = mode; console.log(this.editMode);
   }
+  
+  saveChanges(){
+    this.categoryService.updateCat(this.category);
+    this.editMode = false;
+  }
+
+
 
 }

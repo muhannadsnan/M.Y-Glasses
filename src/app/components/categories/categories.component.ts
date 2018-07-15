@@ -17,6 +17,7 @@ export class CategoriesComponent implements OnInit {
   loadingCats;
   showAs;
   showModal;
+  adminMode;
   
   @ViewChild('catTitle') catTitle: ElementRef;
 
@@ -29,6 +30,8 @@ export class CategoriesComponent implements OnInit {
     this.getCats();
     this.showAs = 'grid';
     this.LISTEN_Data();
+    this.LISTEN_AdminMode();
+    // this.categoryService.adminMode.next('add');
   }
 
   catChanged(cat) {
@@ -57,8 +60,18 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  dblclickRow(category){
+  LISTEN_AdminMode(){
+    this.categoryService.adminMode.subscribe(mode => this.adminMode = mode);
+  }
+
+  onClkCategory(category){
     this.categoryService.showModal.next(true);
+    this.categoryService.adminMode.next('edit');
     this.catChanged(category);
+  }
+
+  onClkAddCategory(){
+      this.categoryService.showModal.next(true);
+      this.categoryService.adminMode.next('add');
   }
 }

@@ -25,7 +25,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminIndexComponent } from './components/admin/admin-index/admin-index.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { EditCategoryComponent } from './components/categories/edit-category/edit-category.component';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -43,6 +43,7 @@ import { EditCategoryComponent } from './components/categories/edit-category/edi
     ],
     imports: [
         BrowserModule,
+        FormsModule,
         RoutingModule,
         HttpClientModule,
         HttpModule,

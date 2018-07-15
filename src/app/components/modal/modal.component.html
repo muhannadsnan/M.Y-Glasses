@@ -5,7 +5,7 @@
                 <h5 class="modal-title w-100 text-center" id="exampleModalLongTitle">
                     <ng-content select="[title]"></ng-content>                    
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="show = false">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -14,16 +14,16 @@
             </div><!-- ------------------------------------------------------------------------------- -->
             <div class="modal-footer" [ngSwitch]="btns">
                 <!-- close-only(defalut), close-save, ok-only, ok-cancel, yes-no, delete-cancel -->
-                <button type="button" class="btn btn-secondary" (click)="show = false" *ngSwitchCase=" 'close-only' ">Close</button>
-                <button type="button" class="btn btn-secondary" (click)="show = false" *ngSwitchCase=" 'close-save' ">Close</button>
-                <button type="button" class="btn btn-primary"    (click)="show = false" *ngSwitchCase=" 'close-save' ">Save changes</button>
-                <button type="button" class="btn btn-dark" (click)="show = false" *ngSwitchCase=" 'ok-only' ">OK</button>
-                <button type="button" class="btn btn-dark" (click)="show = false" *ngSwitchCase=" 'ok-cancel' ">OK</button>
-                <button type="button" class="btn btn-secondary" (click)="show = false" *ngSwitchCase=" 'ok-cancel' ">Cancel</button>
-                <button type="button" class="btn btn-success" (click)="show = false" *ngSwitchCase=" 'yes-no' ">Yes</button>
-                <button type="button" class="btn btn-secondary" (click)="show = false" *ngSwitchCase=" 'yes-no' ">>No</button>
-                <button type="button" class="btn btn-danger" (click)="show = false" *ngSwitchCase=" 'delete-cancel' ">Delete</button>
-                <button type="button" class="btn btn-secondary" (click)="show = false" *ngSwitchCase=" 'delete-cancel' ">Cancel</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'close-only' ">Close</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'close-save' ">Close</button>
+                <button type="button" class="btn btn-primary"    (click)="closeModal()" *ngSwitchCase=" 'close-save' ">Save changes</button>
+                <button type="button" class="btn btn-dark" (click)="closeModal()" *ngSwitchCase=" 'ok-only' ">OK</button>
+                <button type="button" class="btn btn-dark" (click)="closeModal()" *ngSwitchCase=" 'ok-cancel' ">OK</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'ok-cancel' ">Cancel</button>
+                <button type="button" class="btn btn-success" (click)="closeModal()" *ngSwitchCase=" 'yes-no' ">Yes</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'yes-no' ">>No</button>
+                <button type="button" class="btn btn-danger" (click)="closeModal()" *ngSwitchCase=" 'delete-cancel' ">Delete</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'delete-cancel' ">Cancel</button>
             </div>
         </div>
     </div>

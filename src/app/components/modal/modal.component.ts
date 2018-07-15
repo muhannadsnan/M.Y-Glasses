@@ -16,9 +16,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
       this.btns = "close-only"; // close-only(defalut), close-save, ok-only, ok-cancel, yes-no, delete-cancel
-      this.tmp = this.categoryService.showModal.subscribe(show => {
-      this.show = show;
-    });
+      this.tmp = this.categoryService.showModal.subscribe(show => this.show = show);
   }
 
   closeModal(){

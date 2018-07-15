@@ -2,14 +2,14 @@
     <label class="col-md-12">
         <div class="form-group">
             Title:
-            <input type="text" class="form-control" [value]="category.title">
+            <input type="text" class="form-control" [value]="category?.title" [(ngModel)]="category.title" required>
         </div>
     </label>
     <br>
     <label class="col-md-12">
         <div class="form-group">
             Description:
-            <textarea type="text" class="form-control" [value]="category.desc"></textarea>
+            <textarea type="text" class="form-control" [value]="category?.desc" [(ngModel)]="category.desc"></textarea>
         </div>
     </label>
 </div>

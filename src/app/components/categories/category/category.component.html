@@ -7,9 +7,8 @@
 
 <div class="category" *ngIf="showAs == 'details' ">
     <div class="form-group text-right">
-        <button class="btn btn-warning" *ngIf="!editMode" (click)="editMode = true">Edit</button>
-        <button class="btn btn-success" *ngIf="editMode" (click)="saveChanges()">Save Changes</button>
-        <button class="btn btn-secondary" *ngIf="editMode" (click)="editMode = false">Cancel</button>
+        <button class="btn btn-warning" *ngIf="!editMode && adminMode == 'edit' " (click)="editMode = true">Edit</button>
+        <button class="btn btn-success" *ngIf="editMode" (click)="saveChanges()">Done</button>
     </div>
     <div class="category-details" *ngIf="!editMode">
         <div class="row">

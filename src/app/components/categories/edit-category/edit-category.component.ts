@@ -15,8 +15,4 @@ export class EditCategoryComponent implements OnInit {
     ngOnInit() {
     }
 
-    saveChanges(){
-        this.categoryService.updateCat(this.category);
-    }
-
 }
