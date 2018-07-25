@@ -3,11 +3,8 @@
     <div class="row" *ngSwitchCase="'grid'">        
         <div class="col-lg-3">
             <h5 class="text-center my-3">Categories</h5>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="enter category..." #catTitle (keyup.enter)="onAddCat()">
-            </div>            
             <div class="list-group">
-                <app-category *ngFor="let cat of categories | async" [category]="cat" (click)="catChanged(cat)"></app-category>
+                <app-category *ngFor="let cat of categories" [category]="cat" (click)="catChanged(cat)"></app-category>
                 <h3 *ngIf="loadingCats">LOADING..</h3>
             </div>
             <!-- <pre>{{categories | async | json}}</pre> -->
@@ -19,32 +16,35 @@
         </div><!-- END: col-lg-9 -->
     </div>    
 
-    <div class="row" *ngSwitchCase="'table'">
-            <button class="btn btn-primary" (click)="onClkAddCategory()">Add category</button>
-            <table class="table table-striped table-hover table-warning table-responsiveX table-sm table-darkX table-borderedX col-md-12 mx-auto">
-                <thead class="thead-dark">
-                    <tr class="">
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Desc</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <h3 *ngIf="loadingCats">LOADING..</h3>
-                    <tr *ngFor="let cat of categories | async; let i = index" (click)="onClkCategory(cat)">                    
-                        <th scope="row">{{i+1}}</th>
-                        <td>{{cat.title}}</td>
-                        <td>{{cat.desc}}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="rowX" *ngSwitchCase="'table'">
+        <div class="alert alert-warning text-center">
+            <h5> <a routerLink="/admin">Control panel</a> > Categories Management</h5>
         </div>
+        <table class="table table-striped table-hover table-warning table-responsiveX table-sm table-darkX table-borderedX col-md-12 mx-auto">
+            <thead class="thead-dark">
+                <tr class="">
+                    <th scope="col"># - id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <h3 *ngIf="loadingCats">LOADING..</h3>
+                <tr *ngFor="let cat of categories; let i = index" (click)="onClkCategory(cat)">                    
+                    <th scope="row">{{i+1}} - {{cat.id}}</th>
+                    <td>{{cat.title}}</td>
+                    <td>{{cat.desc}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<h1>adminMode: {{adminMode}}</h1>
+<h4>adminMode: {{adminMode}}</h4>
 
 <!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
 <app-modal [btns]="close-only">
     <h4 class="text-secondary" *ngIf="adminMode == 'edit' " title>Show category</h4>
     <h4 class="text-success" *ngIf="adminMode == 'add' " title>Add category</h4>
     <app-category [showAs]="'details'" body></app-category>
+    <button class="btn btn-primary" *ngIf="adminMode == 'add' " (click)="onCreateCat()" [disabled]="loadingCats" footer>{{loadingCats ? 'Creating category...' : 'Create category' }}</button>
 </app-modal>

@@ -1,4 +1,6 @@
 export class Category {
-	constructor(public title: String,
-				public desc: String){}
+	constructor(
+                public id?: String,
+                public title?: String,
+				public desc?: String){}
 }

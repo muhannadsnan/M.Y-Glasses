@@ -8,9 +8,10 @@
 <div class="category" *ngIf="showAs == 'details' ">
     <div class="form-group text-right">
         <button class="btn btn-warning" *ngIf="!editMode && adminMode == 'edit' " (click)="editMode = true">Edit</button>
+        <button class="btn btn-danger" *ngIf="!editMode && adminMode == 'edit' " (click)="deleteCategory()">Delete</button>
         <button class="btn btn-success" *ngIf="editMode" (click)="saveChanges()">Done</button>
     </div>
-    <div class="category-details" *ngIf="!editMode">
+    <div class="category-details" *ngIf="!editMode && adminMode == 'edit' ">
         <div class="row">
                 <div class="col-md-3">
                     <label for="">ID:</label>
@@ -36,7 +37,10 @@
                 </div>
             </div>
     </div>
-   <div class="editMode" *ngIf="editMode">
+   <div class="editMode" *ngIf="editMode && adminMode == 'edit' ">
         <app-edit-category [category]="category"></app-edit-category>
+    </div>
+    <div class="addMode" *ngIf="!editMode && adminMode == 'add' ">
+        <app-edit-category></app-edit-category>
     </div>
 </div> <!-- END: DETAILS VIEW -->

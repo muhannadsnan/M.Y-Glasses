@@ -13,6 +13,7 @@
                 <ng-content select="[body]"></ng-content>
             </div><!-- ------------------------------------------------------------------------------- -->
             <div class="modal-footer" [ngSwitch]="btns">
+                <ng-content select="[footer]"></ng-content>
                 <!-- close-only(defalut), close-save, ok-only, ok-cancel, yes-no, delete-cancel -->
                 <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'close-only' ">Close</button>
                 <button type="button" class="btn btn-secondary" (click)="closeModal()" *ngSwitchCase=" 'close-save' ">Close</button>

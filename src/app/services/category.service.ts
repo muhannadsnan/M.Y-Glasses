@@ -3,69 +3,62 @@ import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/fires
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Category } from "../models/category";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 
 export class CategoryService {
 	catCollection: AngularFirestoreCollection<any>;
 	selectedCategory: Subject<any> = new Subject<any>(); 
-	
-	prodCollection: AngularFirestoreCollection<any>;
-
+	ClickedCategoryCreate: Subject<any> = new Subject<any>(); 
+	categoryCreated: Subject<Category> = new Subject<Category>(); 
+	categoryDeleted: Subject<Category> = new Subject<Category>(); 
 	loadingCats: Subject<boolean> = new Subject<boolean>(); 
 	loadingProds: Subject<boolean> = new Subject<boolean>(); 
 
-	isLoggedin = false;
 	showModal: Subject<boolean> = new Subject<boolean>();
-	adminMode: Subject<string> = new Subject<string>();
+    adminMode: Subject<string> = new Subject<string>();
+	isLoggedin = false;
+    dbUrl = "http://localhost:99";
 
-	constructor(private firestore: AngularFirestore){
-		this.catCollection = this.firestore.collection('categories');
-		this.prodCollection = this.firestore.collection('products');
-	}
+    constructor(private http: HttpClient){}
 
 	readCats() {
-		//return this.firestore.collection('categories').valueChanges(); // without maping IDs
-		this.loadingCats.next(true);
-		return this.MAP(this.catCollection.snapshotChanges());
+        return this.MAP(this.http.get(`${this.dbUrl}/cats`));
 	}
 
-	createCat(newCat){
-		return this.catCollection.add(newCat);
+	createCat(newCat): Observable<any>{
+        return this.http.post(`${this.dbUrl}/cats`, newCat, { responseType: 'text' /*important to receive JSON*/});
     }
     
     updateCat(newCat){
-		//return this.catCollection.add(newCat);
+        return this.http.put(`${this.dbUrl}/cats/${newCat.id}`, new Category(null, newCat.title, newCat.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 
 	destroyCat(catid){
-		this.catCollection.doc(catid).delete()
-			.then(_ => console.log("Document successfully deleted!"))
-			.catch(error => console.error("Error removing document: ", error))
+        return this.http.delete(`${this.dbUrl}/cats/${catid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
 
 	readProdsByCatId(catid) {
 		this.loadingProds.next(true);		
-		return this.MAP(this.firestore.collection('products', ref => ref.where('catid', '==', catid)).snapshotChanges());
+        return this.http.get(`${this.dbUrl}/products/cat/${catid}`, { responseType: 'text' /*important to receive JSON*/});        
 	}
 
 	readAllProducts(){
-		return this.MAP(this.prodCollection.snapshotChanges());
+        return this.http.get(`${this.dbUrl}/products`, { responseType: 'text' /*important to receive JSON*/});        
 	}
-	
-	
-	
-	MAP(observable: Observable<any[]>){
+    //--------------------------------------------------------------------
+    	
+	MAP(observable){
 		return observable.pipe(
-			map(actions => {
-				this.loadingCats.next(false);
-				this.loadingProds.next(false);	
-				return actions.map(a => {
-					const data = a.payload.doc.data();
-					const id = a.payload.doc.id;									
-					return { id, ...data };
+            map(actions => { //console.log("actions",actions);
+                // this.loadingCats.next(false); this.loadingProds.next(false);	
+                const res = Object.entries(actions); 
+				return res.map(a => { //console.log("a",a);
+					const id = a[0]; const data = a[1]; return { id, ...data };
 				})
 			})
-		);
+        )
 	}
 }

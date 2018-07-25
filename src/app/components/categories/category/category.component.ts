@@ -26,23 +26,30 @@ export class CategoryComponent implements OnInit {
         this.categoryService.selectedCategory.subscribe(category => this.category = category);
    }
 
-  onDelCat(key){
-    this.categoryService.destroyCat(key);
-  }
-
-  onClickCat(){
-    this.categoryService.selectedCategory.next(this.category);
-  }
-
-  switchEditMode(mode){        
-    this.editMode = mode; console.log(this.editMode);
-  }
-  
-  saveChanges(){
-    this.categoryService.updateCat(this.category);
-    this.editMode = false;
-  }
-
+   
+   onClickCat(){
+       this.categoryService.selectedCategory.next(this.category);
+    }
+    
+    switchEditMode(mode){        
+        this.editMode = mode; console.log(this.editMode);
+    }
+    
+    saveChanges(){
+        this.categoryService.updateCat(this.category).subscribe(resp => console.log(resp));
+        this.editMode = false;
+    }
+    
+    deleteCategory(){
+        if(confirm(`Delete category "${this.category.title}"?`)){
+            this.categoryService.destroyCat(this.category.id).subscribe(resp => {
+                console.log(resp);
+                this.categoryService.showModal.next(false);
+                this.categoryService.categoryDeleted.next(this.category);           
+                this.category = new Category;
+            });
+        }
+    }
 
 
 }
