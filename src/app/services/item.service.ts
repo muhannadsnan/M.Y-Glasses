@@ -1,34 +1,58 @@
-import { Product } from "../models/product";
-import { Observable } from "rxjs";
-import { AngularFireList, AngularFireDatabase } from "angularfire2/database";
+import { Item } from "../models/item";
+import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
-import { ActivatedRoute } from "@angular/router";
 import { Injectable } from "@angular/core";
-import { AngularFirestoreCollection, AngularFirestore } from "angularfire2/firestore";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 
 export class ItemService {
+    selectedItem: Subject<any> = new Subject<any>(); 
+	ClickedItemCreate: Subject<any> = new Subject<any>(); 
+	itemCreated: Subject<Item> = new Subject<Item>(); 
+	itemDeleted: Subject<Item> = new Subject<Item>(); 
+	loadingItems: Subject<boolean> = new Subject<boolean>(); 
 
-	itemCollection: AngularFirestoreCollection<any>;
+	showModal: Subject<boolean> = new Subject<boolean>();
+    adminMode: Subject<string> = new Subject<string>();
+	isLoggedin = false;
+    dbUrl = "http://localhost:99";
 
-	constructor(private firestore: AngularFirestore){
-		//this.prodCollection = firestore.collection('');
+    constructor(private http: HttpClient){}
+    
+    //********  CRUD FUNCTIONALITY  *********/
+	readItems() {
+        return this.MAP(this.http.get(`${this.dbUrl}/cats`));
 	}
 
-	updateProduct(newProd){console.log(newProd.id);
-		this.firestore.doc('products/' + newProd.id).update(Object.assign({}, newProd));
+	createItem(newItem): Observable<any>{
+        return this.http.post(`${this.dbUrl}/cats`, newItem, { responseType: 'text' /*important to receive JSON*/});
+    }
+    
+    updateItem(newItem){
+        return this.http.put(`${this.dbUrl}/cats/${newItem.id}`, new Item(null, newItem.title, newItem.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 
-	MAP(observable: Observable<any[]>) {
+	destroyItem(catid){
+        return this.http.delete(`${this.dbUrl}/cats/${catid}`, { responseType: 'text' /*important to receive JSON*/});
+	}
+    //*************************************
+
+	readItemsByItemId(catid) {
+		this.loadingItems.next(true);		
+        return this.http.get(`${this.dbUrl}/items/cat/${catid}`, { responseType: 'text' /*important to receive JSON*/});        
+	}
+    //--------------------------------------------------------------------
+    	
+	MAP(observable){
 		return observable.pipe(
-			map(actions => {
-				return actions.map(a => {
-					const data = a.payload.doc.data();
-					const id = a.payload.doc.id;
-					return { id, ...data };
+            map(actions => { //console.log("actions",actions);
+                // this.loadingItems.next(false);	
+                const res = Object.entries(actions); 
+				return res.map(a => { //console.log("a",a);
+					const id = a[0]; const data = a[1]; return { id, ...data };
 				})
 			})
-		)
+        )
 	}
 }

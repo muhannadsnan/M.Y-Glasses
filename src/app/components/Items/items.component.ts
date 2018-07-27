@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ItemService } from '../../services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoryService } from '../../services/category.service';
 import { Observable } from '@firebase/util';
 
 @Component({
@@ -11,59 +10,84 @@ import { Observable } from '@firebase/util';
 })
 
 export class ItemsComponent implements OnInit {
-  tmp;
-  catId;
-  items;
-  loadingProds = true;
-  itemsInRow = 2;
+    items;
+    selectedId = 0;
+    loadingItems;
+    showAs;
+    showModal;
+    adminMode;
 
-  constructor(private catService: CategoryService,
-              private route: ActivatedRoute) { }
+    @ViewChild('itemTitle') itemTitle: ElementRef;
 
-  ngOnInit() {
-    this.isLoadingProds();
-    this.LISTEN_CategorySelected();
-    this.LISTEN_Route();
-    this.LISTEN_Route_data();
-  }
+    constructor(private itemService: ItemService,
+                private route: ActivatedRoute,
+                private router: Router) { }
 
-  LISTEN_CategorySelected(){
-     /* LISTEN TO SELECTING A CATEGORY TO TAKE PRODUCTS FROM THE SUBJECT */
-    this.catService.selectedCategory.subscribe(selectedCat => { //console.log("selectedCat", selectedCat);
-      //this.products = typeof selectedCat.products === 'undefined' ? [] : Object.values(selectedCat.products); // cat collection contains prods array
-      this.getCatProds(selectedCat.id); //console.log("hiii ", selectedCat);
-    });
-  }
+    ngOnInit() { //console.log("itemsss");
+        this.LISTEN_LoadingItems();
+        this.LISTEN_CreateItem();
+        this.LISTEN_DeleteItem();
+        this.getItems();
+        this.showAs = 'grid';
+        this.LISTEN_Data();
+        this.LISTEN_AdminMode();
+        // this.itemService.adminMode.next('add');
+    }
 
-  LISTEN_Route(){
-    // this.catId = this.route.snapshot.params.catid; console.log("snapshot", this.catId);
-    this.route.params.subscribe(params => {
-      this.catId = params['catid'];
-      //if (typeof this.catId === 'undefined') console.log("catid", 'empty '); else console.log("catid", 'not empty: ' + this.catId);
-      this.items = (typeof this.catId === 'undefined') ? this.getAllProds() : this.getCatProds(this.catId);
-    }); /*  for å kunne vise meldingen "velg en kategori" kan vi bruke Subject her for å informere CategoriesCopmonent at det er en valgt kategori. */
-  }
+    itemChanged(item) {
+        this.selectedId = item.id;
+        this.itemService.selectedItem.next(item);
+    }
 
-  LISTEN_Route_data(){
-    this.route.data.subscribe(data => {  console.log("data", data);
-      if(data.itemsInRow)
-        this.itemsInRow = data.itemsInRow;
-      else
-        this.itemsInRow = 2;
-    });
-  }
+    getItems(){
+        this.itemService.loadingItems.next(true);
+        this.itemService.readItems().subscribe(resp => { //console.log("resp", resp);
+            this.items = resp;
+            this.itemService.loadingItems.next(false);
+        });
+    }
 
-  isLoadingProds() {
-    this.catService.loadingProds.subscribe(isLoading => this.loadingProds = isLoading);
-  }
+    LISTEN_LoadingItems(){
+        this.itemService.loadingItems.subscribe(isLoading => this.loadingItems = isLoading);
+    }
 
-  getAllProds() {
-    return this.catService.readAllProducts();
-  }
+    LISTEN_CreateItem(){
+        this.itemService.itemCreated.subscribe(createdItem => {
+            this.items.unshift(createdItem);
+        });
+    }
+    
+    LISTEN_DeleteItem(){
+        this.itemService.itemDeleted.subscribe(deletedItem => { 
+            this.items = this.items.filter(item => item !== deletedItem);
+        });
+    }
 
-  getCatProds(catid) {
-    //console.log("--- getCatProds ");
-    return this.catService.readProdsByCatId(catid);
-  }
+    LISTEN_Data(){
+        this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
+            if(data.showAs){
+            this.showAs = data.showAs; console.log("data ", data);
+            }
+        });
+    }
 
+    LISTEN_AdminMode(){
+        this.itemService.adminMode.subscribe(mode => this.adminMode = mode);
+    }
+
+    onClkItem(item){
+        this.itemService.showModal.next(true);
+        this.itemService.adminMode.next('edit');
+        this.itemChanged(item);
+    }
+
+    onClkAddItem(){
+        this.itemService.showModal.next(true);
+        this.itemService.adminMode.next('add');
+    }
+
+    onCreateItem(){
+        this.itemService.ClickedItemCreate.next(true);
+        this.itemService.loadingItems.next(true);
+    }
 }

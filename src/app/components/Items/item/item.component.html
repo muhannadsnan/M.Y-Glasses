@@ -1,23 +1,46 @@
-<div class="card m-2">
-  <img class="card-img-top" [src]="cloudinaryUrl + item.img" alt="Card image cap">
-  <div class="card-body">
-    <button class="btn btn-success float-right" (click)="toggleEditing()">{{!editing.enabled ? 'enable edit': 'done'}} </button>
+<a [routerLink]="'/items/'+item?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickItem()" *ngIf="showAs == 'list-group-item' ">
+    <span>{{item?.title}}</span>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelItem(item?.id)">Delete</button>
+</a>
 
-    <h5 class="card-title">
-      <span *ngIf="!editing.title" (dblclick)="editTitle()">{{item.title}}</span>
-      <input type="text" [hidden]="!(editing.enabled && editing.title)" #txtEditTitle [value]="item.title">      
-    </h5>
+<!-- <pre>{{item | json}}</pre> -->
 
-    <p class="card-text">
-      <span *ngIf="!editing.desc" (dblclick)="editDesc()" class="koko">{{item.desc}}</span>
-      <input type="text" [hidden]="!(editing.enabled && editing.desc)" #txtEditDesc [value]="item.desc">      
-    </p>
-
-    <h3 class="card-text">
-      <span *ngIf="!editing.price" (dblclick)="editPrice()">${{item.price}}</span>
-      <input type="text" [hidden]="!(editing.enabled && editing.price)" #txtEditPrice [value]="item.price">
-    </h3>
-
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
+<div class="item" *ngIf="showAs == 'details' ">
+    <div class="form-group text-right">
+        <button class="btn btn-warning" *ngIf="!editMode && adminMode == 'edit' " (click)="editMode = true">Edit</button>
+        <button class="btn btn-danger" *ngIf="!editMode && adminMode == 'edit' " (click)="deleteItem()">Delete</button>
+        <button class="btn btn-success" *ngIf="editMode" (click)="saveChanges()">Done</button>
+    </div>
+    <div class="item-details" *ngIf="!editMode && adminMode == 'edit' ">
+        <div class="row">
+                <div class="col-md-3">
+                    <label for="">ID:</label>
+                </div>
+                <div class="col-md-9">
+                    <span class="x">{{item?.id}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="">Title:</label>
+                </div>
+                <div class="col-md-9">
+                    <span class="x">{{item?.title}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="">Desc:</label>
+                </div>
+                <div class="col-md-9">
+                    <span class="x">{{item?.desc}}</span>
+                </div>
+            </div>
+    </div>
+   <div class="editMode" *ngIf="editMode && adminMode == 'edit' ">
+        <app-edit-item [item]="item"></app-edit-item>
+    </div>
+    <div class="addMode" *ngIf="!editMode && adminMode == 'add' ">
+        <app-edit-item></app-edit-item>
+    </div>
+</div> <!-- END: DETAILS VIEW -->
