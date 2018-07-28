@@ -23,6 +23,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { EditCategoryComponent } from './components/categories/edit-category/edit-category.component';
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 import { FormsModule } from '@angular/forms';
+import { ModalService } from './services/modal.service';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,7 @@ import { FormsModule } from '@angular/forms';
         HttpModule,
         NgbModule.forRoot()
     ],
-    providers: [CategoryService, ItemService],
+    providers: [CategoryService, ItemService, ModalService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

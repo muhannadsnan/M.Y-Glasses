@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Item } from '../../../models/item';
 import { ItemService } from '../../../services/item.service';
 import { Subscription } from 'rxjs';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-edit-item',
@@ -13,7 +14,8 @@ export class EditItemComponent implements OnInit, OnDestroy {
     tmp: Subscription;
     isLoading: boolean;
 
-    constructor(private itemService: ItemService) { }
+    constructor(private itemService: ItemService,
+                    private modalService: ModalService) { }
 
     ngOnInit() {
         this.isLoading = false;
@@ -38,7 +40,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
 
     Listen_CreateItem(){
         this.itemService.createItem(this.item).subscribe(resp => {
-            this.itemService.showModal.next(false);
+            this.modalService.showModal.next(false);
             //toastr msg
             this.isLoading = false;
             this.itemService.loadingItems.next(false);

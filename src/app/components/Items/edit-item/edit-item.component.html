@@ -1,15 +1,15 @@
-<div class="edit-category">
+<div class="edit-item">
     <label class="col-md-12">
         <div class="form-group">
             Title:
-            <input type="text" class="form-control" [value]="category?.title" [(ngModel)]="category.title" [disabled]="isLoading" required>
+            <input type="text" class="form-control" [value]="item?.title" [(ngModel)]="item.title" [disabled]="isLoading" required>
         </div>
     </label>
     <br>
     <label class="col-md-12">
         <div class="form-group">
             Description:
-            <textarea type="text" class="form-control" [value]="category?.desc" [(ngModel)]="category.desc" [disabled]="isLoading"></textarea>
+            <textarea type="text" class="form-control" [value]="item?.desc" [(ngModel)]="item.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
 </div>

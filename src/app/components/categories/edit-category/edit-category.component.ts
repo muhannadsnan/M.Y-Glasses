@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 import { Subscription } from 'rxjs';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-edit-category',
@@ -13,7 +14,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     tmp: Subscription;
     isLoading: boolean;
 
-    constructor(private categoryService: CategoryService) { }
+    constructor(private categoryService: CategoryService,
+                    private modalService: ModalService) { }
 
     ngOnInit() {
         this.isLoading = false;
@@ -38,7 +40,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
 
     Listen_CreateCat(){
         this.categoryService.createCat(this.category).subscribe(resp => {
-            this.categoryService.showModal.next(false);
+            this.modalService.showModal.next(false);
             //toastr msg
             this.isLoading = false;
             this.categoryService.loadingCats.next(false);

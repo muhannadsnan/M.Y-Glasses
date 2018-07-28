@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-categories',
@@ -17,12 +18,11 @@ export class CategoriesComponent implements OnInit {
     selectedId = 0;
     loadingCats;
     showAs;
-    showModal;
+    // showModal;
     adminMode;
 
-    @ViewChild('catTitle') catTitle: ElementRef;
-
     constructor(private categoryService: CategoryService,
+                private modalService: ModalService,
                 private route: ActivatedRoute,
                 private router: Router) { }
 
@@ -34,7 +34,6 @@ export class CategoriesComponent implements OnInit {
         this.showAs = 'grid';
         this.LISTEN_Data();
         this.LISTEN_AdminMode();
-        // this.categoryService.adminMode.next('add');
     }
 
     catChanged(cat) {
@@ -79,14 +78,14 @@ export class CategoriesComponent implements OnInit {
     }
 
     onClkCategory(category){
-        this.categoryService.showModal.next(true);
-        this.categoryService.adminMode.next('edit');
+        this.modalService.showModal.next(true);
+        this.categoryService.adminMode.next('detail-mode');
         this.catChanged(category);
     }
 
     onClkAddCategory(){
-        this.categoryService.showModal.next(true);
-        this.categoryService.adminMode.next('add');
+        this.modalService.showModal.next(true);
+        this.categoryService.adminMode.next('add-mode');
     }
 
     onCreateCat(){

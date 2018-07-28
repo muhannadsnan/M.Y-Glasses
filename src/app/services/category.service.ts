@@ -11,7 +11,7 @@ export class CategoryService {
 	ClickedCategoryCreate: Subject<any> = new Subject<any>(); 
 	categoryCreated: Subject<Category> = new Subject<Category>(); 
 	categoryDeleted: Subject<Category> = new Subject<Category>(); 
-	loadingCats: Subject<boolean> = new Subject<boolean>(); 
+	loadingCats: Subject<boolean> = new Subject<boolean>();
 
 	showModal: Subject<boolean> = new Subject<boolean>();
     adminMode: Subject<string> = new Subject<string>();

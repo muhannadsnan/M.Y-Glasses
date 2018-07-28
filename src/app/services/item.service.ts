@@ -22,19 +22,19 @@ export class ItemService {
     
     //********  CRUD FUNCTIONALITY  *********/
 	readItems() {
-        return this.MAP(this.http.get(`${this.dbUrl}/cats`));
+        return this.MAP(this.http.get(`${this.dbUrl}/items`));
 	}
 
 	createItem(newItem): Observable<any>{
-        return this.http.post(`${this.dbUrl}/cats`, newItem, { responseType: 'text' /*important to receive JSON*/});
+        return this.http.post(`${this.dbUrl}/items`, newItem, { responseType: 'text' /*important to receive JSON*/});
     }
     
     updateItem(newItem){
-        return this.http.put(`${this.dbUrl}/cats/${newItem.id}`, new Item(null, newItem.title, newItem.desc), { responseType: 'text' /*important to receive JSON*/});        
+        return this.http.put(`${this.dbUrl}/items/${newItem.id}`, new Item(null, newItem.title, newItem.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 
 	destroyItem(catid){
-        return this.http.delete(`${this.dbUrl}/cats/${catid}`, { responseType: 'text' /*important to receive JSON*/});
+        return this.http.delete(`${this.dbUrl}/items/${catid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
     //*************************************
 

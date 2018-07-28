@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ItemService } from '../../services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from '@firebase/util';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'items',
@@ -14,12 +14,11 @@ export class ItemsComponent implements OnInit {
     selectedId = 0;
     loadingItems;
     showAs;
-    showModal;
+    // showModal;
     adminMode;
 
-    @ViewChild('itemTitle') itemTitle: ElementRef;
-
     constructor(private itemService: ItemService,
+                private modalService: ModalService,
                 private route: ActivatedRoute,
                 private router: Router) { }
 
@@ -31,7 +30,6 @@ export class ItemsComponent implements OnInit {
         this.showAs = 'grid';
         this.LISTEN_Data();
         this.LISTEN_AdminMode();
-        // this.itemService.adminMode.next('add');
     }
 
     itemChanged(item) {
@@ -76,14 +74,14 @@ export class ItemsComponent implements OnInit {
     }
 
     onClkItem(item){
-        this.itemService.showModal.next(true);
-        this.itemService.adminMode.next('edit');
+        this.modalService.showModal.next(true);
+        this.itemService.adminMode.next('detail-mode');
         this.itemChanged(item);
     }
 
     onClkAddItem(){
-        this.itemService.showModal.next(true);
-        this.itemService.adminMode.next('add');
+        this.modalService.showModal.next(true);
+        this.itemService.adminMode.next('add-mode');
     }
 
     onCreateItem(){

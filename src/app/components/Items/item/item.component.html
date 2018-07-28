@@ -1,17 +1,17 @@
 <a [routerLink]="'/items/'+item?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickItem()" *ngIf="showAs == 'list-group-item' ">
     <span>{{item?.title}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelItem(item?.id)">Delete</button>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelItem(item?.id)" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
 </a>
 
 <!-- <pre>{{item | json}}</pre> -->
 
 <div class="item" *ngIf="showAs == 'details' ">
-    <div class="form-group text-right">
-        <button class="btn btn-warning" *ngIf="!editMode && adminMode == 'edit' " (click)="editMode = true">Edit</button>
-        <button class="btn btn-danger" *ngIf="!editMode && adminMode == 'edit' " (click)="deleteItem()">Delete</button>
-        <button class="btn btn-success" *ngIf="editMode" (click)="saveChanges()">Done</button>
+    <div class="admin-btns form-group text-right">
+        <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteItem()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
     </div>
-    <div class="item-details" *ngIf="!editMode && adminMode == 'edit' ">
+    <div class="item-details" *ngIf="adminMode == 'detail-mode' ">
         <div class="row">
                 <div class="col-md-3">
                     <label for="">ID:</label>
@@ -37,10 +37,10 @@
                 </div>
             </div>
     </div>
-   <div class="editMode" *ngIf="editMode && adminMode == 'edit' ">
+   <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
         <app-edit-item [item]="item"></app-edit-item>
     </div>
-    <div class="addMode" *ngIf="!editMode && adminMode == 'add' ">
+    <div class="addMode" *ngIf="adminMode == 'add-mode' ">
         <app-edit-item></app-edit-item>
     </div>
 </div> <!-- END: DETAILS VIEW -->

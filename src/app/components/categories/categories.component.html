@@ -45,8 +45,8 @@
 
 <!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
 <app-modal [btns]="close-only">
-    <h4 class="text-secondary" *ngIf="adminMode == 'edit' " title>Show category</h4>
-    <h4 class="text-success" *ngIf="adminMode == 'add' " title>Add category</h4>
+    <h4 class="text-secondary" *ngIf="adminMode == 'edit-mode' " title>Show category</h4>
+    <h4 class="text-success" *ngIf="adminMode == 'add-mode' " title>Add category</h4>
     <app-category [showAs]="'details'" body></app-category>
-    <button class="btn btn-primary" *ngIf="adminMode == 'add' " (click)="onCreateCat()" [disabled]="loadingCats" footer>{{loadingCats ? 'Creating category...' : 'Create category' }}</button>
+    <button class="btn btn-primary" *ngIf="adminMode == 'add-mode' " (click)="onCreateCat()" [disabled]="loadingCats" footer>{{loadingCats ? 'Creating category...' : 'Create category' }}</button>
 </app-modal>
