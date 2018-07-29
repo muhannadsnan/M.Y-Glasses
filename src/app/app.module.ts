@@ -5,6 +5,7 @@ import { RoutingModule } from './routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {SelectModule} from 'ng-select';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -16,7 +17,6 @@ import { ItemComponent } from './components/Items/item/item.component';
 
 import { CategoryService } from './services/category.service';
 import { ItemService } from './services/item.service';
-import { environment } from '../environments/environment';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminIndexComponent } from './components/admin/admin-index/admin-index.component';
 import { ModalComponent } from './components/modal/modal.component';
@@ -46,7 +46,8 @@ import { ModalService } from './services/modal.service';
         RoutingModule,
         HttpClientModule,
         HttpModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(), // bootstrap 4
+        SelectModule
     ],
     providers: [CategoryService, ItemService, ModalService],
     bootstrap: [AppComponent]

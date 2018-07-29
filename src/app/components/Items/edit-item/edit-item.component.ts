@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Item } from '../../../models/item';
 import { ItemService } from '../../../services/item.service';
+import { CategoryService } from '../../../services/category.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-item',
@@ -13,14 +15,18 @@ export class EditItemComponent implements OnInit, OnDestroy {
     @Input() item: Item; 
     tmp: Subscription;
     isLoading: boolean;
+    isLoadingCats: boolean;
+    categories;
 
-    constructor(private itemService: ItemService,
+    constructor(private itemService: ItemService, 
+                    private categoryService: CategoryService,
                     private modalService: ModalService) { }
 
     ngOnInit() {
         this.isLoading = false;
         this.InitItem();
         this.Listen_OnClickCreateItem();
+        this.readCategories();
     }
 
     InitItem(){
@@ -49,6 +55,24 @@ export class EditItemComponent implements OnInit, OnDestroy {
             this.itemService.itemCreated.next(this.item);
             this.item = new Item;
         });
+    }
+
+    readCategories(){
+        this.isLoadingCats = true;
+        this.categoryService.readCats().pipe(
+            map(actions => { //console.log("actions",actions);
+				return actions.map(a => { //console.log("a",a);
+                    return { "value": a.id, "label": a.title };
+				})
+			})
+        ).subscribe(resp => { //console.log("read cats", resp);
+            this.categories = resp;
+            this.isLoadingCats = false;
+        });
+    }
+
+    catSelected(cat){
+        console.log(cat);
     }
 
     ngOnDestroy(){
