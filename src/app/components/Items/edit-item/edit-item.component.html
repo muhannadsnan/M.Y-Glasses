@@ -12,7 +12,10 @@
             <textarea type="text" class="form-control" [value]="item?.desc" [(ngModel)]="item.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
-    <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
+    <br>
+    <div class="form-group">
+        <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
                     [disabled]="isLoadingCats"></ng-select>
+    </div>
     <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
 </div>

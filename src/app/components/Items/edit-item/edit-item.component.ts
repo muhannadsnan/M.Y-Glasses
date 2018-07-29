@@ -60,14 +60,20 @@ export class EditItemComponent implements OnInit, OnDestroy {
     readCategories(){
         this.isLoadingCats = true;
         this.categoryService.readCats().pipe(
-            map(actions => { console.log("actions",actions);
-                const res = Object.entries(actions); 
-				return res.map(a =>{ console.log("res",res);
-                    // return { "value": a.id, "label": a.title };
-                } );
+            map(actions => { //console.log("actions",actions);
+                if(actions != null){
+                    const res = Object.entries(actions); 
+                    return res.map(a =>{ console.log("res",res);
+                        return { "value": a.id, "label": a.title };
+                    } );
+                }
 			})
         ).subscribe(resp => { //console.log("read cats", resp);
-            this.categories = resp;
+            if(typeof resp === "undefined"){
+                this.categories = [];
+            }else{
+                this.categories = resp;
+            }     
             this.isLoadingCats = false;
         });
     }
