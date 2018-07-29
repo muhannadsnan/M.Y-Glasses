@@ -48,10 +48,12 @@ export class ItemService {
 		return observable.pipe(
             map(actions => { //console.log("actions",actions);
                 // this.loadingItems.next(false);	
-                const res = Object.entries(actions); 
-				return res.map(a => { //console.log("a",a);
-					const id = a[0]; const data = a[1]; return { id, ...data };
-				})
+                if(actions != null){
+                    const res = Object.entries(actions); 
+                    return res.map(row => { //console.log("row",row);
+                        const id = row[0]; const data = row[1]; return { id, ...data };
+                    })
+                }
 			})
         )
 	}

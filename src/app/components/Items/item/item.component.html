@@ -10,6 +10,7 @@
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteItem()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
         <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
     </div>
     <div class="item-details" *ngIf="adminMode == 'detail-mode' ">
         <div class="row">

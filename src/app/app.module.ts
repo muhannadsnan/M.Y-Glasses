@@ -24,6 +24,10 @@ import { EditCategoryComponent } from './components/categories/edit-category/edi
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from './services/modal.service';
+import { BranchesComponent } from './components/Branches/branches.component';
+import { BranchService } from './services/branch.service';
+import { BranchComponent } from './components/Branches/branch/branch.component';
+import { EditBranchComponent } from './components/Branches/edit-branch/edit-branch.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +42,10 @@ import { ModalService } from './services/modal.service';
         AdminComponent,
         AdminIndexComponent,
         EditCategoryComponent,
-        EditItemComponent
+        EditItemComponent,
+        BranchesComponent,
+        BranchComponent,
+        EditBranchComponent
     ],
     imports: [
         BrowserModule,
@@ -49,7 +56,7 @@ import { ModalService } from './services/modal.service';
         NgbModule.forRoot(), // bootstrap 4
         SelectModule
     ],
-    providers: [CategoryService, ItemService, ModalService],
+    providers: [ModalService, CategoryService, ItemService, BranchService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

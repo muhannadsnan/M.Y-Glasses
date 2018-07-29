@@ -32,11 +32,14 @@
             </thead>
             <tbody>
                     <h3 *ngIf="loadingCats">LOADING..</h3>
-                <tr *ngFor="let cat of categories; let i = index" (click)="onClkCategory(cat)">                    
-                    <th scope="row">{{i+1}} - {{cat.id}}</th>
-                    <td>{{cat.title}}</td>
-                    <td>{{cat.desc}}</td>
-                </tr>
+                    <tr *ngIf="categories?.length == 0; else manyRows"><td colspan="3" class="text-center">No categories.</td></tr>
+                <ng-template #manyRows>
+                    <tr *ngFor="let cat of categories; let i = index" (click)="onClkCategory(cat)">                    
+                        <th scope="row">{{i+1}} - {{cat.id}}</th>
+                        <td>{{cat.title}}</td>
+                        <td>{{cat.desc}}</td>
+                    </tr>
+                </ng-template>
             </tbody>
         </table>
     </div>

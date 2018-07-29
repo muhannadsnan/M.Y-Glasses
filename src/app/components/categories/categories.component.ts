@@ -44,7 +44,11 @@ export class CategoriesComponent implements OnInit {
     getCats(){
         this.categoryService.loadingCats.next(true);
         this.categoryService.readCats().subscribe(resp => { //console.log("resp", resp);
-            this.categories = resp;
+            if(typeof resp === "undefined"){
+                this.categories = [];
+            }else{
+                this.categories = resp;
+            }            
             this.categoryService.loadingCats.next(false);
         });
     }

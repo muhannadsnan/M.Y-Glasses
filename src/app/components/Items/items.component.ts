@@ -40,7 +40,11 @@ export class ItemsComponent implements OnInit {
     getItems(){
         this.itemService.loadingItems.next(true);
         this.itemService.readItems().subscribe(resp => { //console.log("resp", resp);
-            this.items = resp;
+            if(typeof resp === "undefined"){
+                this.items = [];
+            }else{
+                this.items = resp;
+            }
             this.itemService.loadingItems.next(false);
         });
     }

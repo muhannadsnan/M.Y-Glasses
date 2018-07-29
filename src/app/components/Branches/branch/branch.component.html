@@ -1,24 +1,24 @@
-<a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickCat()" *ngIf="showAs == 'list-group-item' ">
-    <span>{{category?.title}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelCat(category?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+<a [routerLink]="'/branches/'+branch?.id" routerLinkActive="active" class="list-group-branch d-flex" (click)="onClickBranch()" *ngIf="showAs == 'list-group-branch' ">
+    <span>{{branch?.title}}</span>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelBranch(branch?.id)" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
 </a>
 
-<!-- <pre>{{category | json}}</pre> -->
+<!-- <pre>{{branch | json}}</pre> -->
 
-<div class="category" *ngIf="showAs == 'details' ">
+<div class="branch" *ngIf="showAs == 'details' ">
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
-        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteCategory()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
-        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode'" (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteBranch()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
         <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
     </div>
-    <div class="category-details" *ngIf="adminMode == 'detail-mode' ">
+    <div class="branch-details" *ngIf="adminMode == 'detail-mode' ">
         <div class="row">
                 <div class="col-md-3">
                     <label for="">ID:</label>
                 </div>
                 <div class="col-md-9">
-                    <span class="x">{{category?.id}}</span>
+                    <span class="x">{{branch?.id}}</span>
                 </div>
             </div>
             <div class="row">
@@ -26,7 +26,7 @@
                     <label for="">Title:</label>
                 </div>
                 <div class="col-md-9">
-                    <span class="x">{{category?.title}}</span>
+                    <span class="x">{{branch?.title}}</span>
                 </div>
             </div>
             <div class="row">
@@ -34,14 +34,14 @@
                     <label for="">Desc:</label>
                 </div>
                 <div class="col-md-9">
-                    <span class="x">{{category?.desc}}</span>
+                    <span class="x">{{branch?.desc}}</span>
                 </div>
             </div>
     </div>
    <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
-        <app-edit-category [category]="category"></app-edit-category>
+        <app-edit-branch [branch]="branch"></app-edit-branch>
     </div>
     <div class="addMode" *ngIf="adminMode == 'add-mode' ">
-        <app-edit-category></app-edit-category>
+        <app-edit-branch></app-edit-branch>
     </div>
 </div> <!-- END: DETAILS VIEW -->
