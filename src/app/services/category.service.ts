@@ -25,11 +25,11 @@ export class CategoryService {
         return this.MAP(this.http.get(`${this.dbUrl}/cats`));
 	}
 
-	createCat(newCat): Observable<any>{
+	createCat(newCat: Category): Observable<any>{
         return this.http.post(`${this.dbUrl}/cats`, newCat, { responseType: 'text' /*important to receive JSON*/});
     }
     
-    updateCat(newCat){
+    updateCat(newCat: Category){
         return this.http.put(`${this.dbUrl}/cats/${newCat.id}`, new Category(null, newCat.title, newCat.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 

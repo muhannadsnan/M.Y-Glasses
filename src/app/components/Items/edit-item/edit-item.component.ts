@@ -63,8 +63,8 @@ export class EditItemComponent implements OnInit, OnDestroy {
             map(actions => { //console.log("actions",actions);
                 if(actions != null){
                     const res = Object.entries(actions); 
-                    return res.map(a =>{ console.log("res",res);
-                        return { "value": a.id, "label": a.title };
+                    return res.map(a =>{ //console.log("res",res);console.log("a", a);
+                        return { "value": a[1].id, "label": a[1].title };
                     } );
                 }
 			})

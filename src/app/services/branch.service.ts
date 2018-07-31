@@ -25,11 +25,11 @@ export class BranchService {
         return this.MAP(this.http.get(`${this.dbUrl}/branches`));
 	}
 
-	createBranch(newBranch): Observable<any>{
+	createBranch(newBranch: Branch): Observable<any>{
         return this.http.post(`${this.dbUrl}/branches`, newBranch, { responseType: 'text' /*important to receive JSON*/});
     }
     
-    updateBranch(newBranch){
+    updateBranch(newBranch: Branch){
         return this.http.put(`${this.dbUrl}/branches/${newBranch.id}`, new Branch(null, newBranch.title, newBranch.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 

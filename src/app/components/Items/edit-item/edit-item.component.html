@@ -13,9 +13,11 @@
         </div>
     </label>
     <br>
-    <div class="form-group">
-        <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
-                    [disabled]="isLoadingCats"></ng-select>
-    </div>
-    <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    <label class="col-md-12">
+        <div class="form-group">
+            <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
+                        [disabled]="isLoadingCats" [(ngModel)]="item.catid"></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
 </div>

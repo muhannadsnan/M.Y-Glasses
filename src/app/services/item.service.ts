@@ -25,12 +25,12 @@ export class ItemService {
         return this.MAP(this.http.get(`${this.dbUrl}/items`));
 	}
 
-	createItem(newItem): Observable<any>{
+	createItem(newItem: Item): Observable<any>{
         return this.http.post(`${this.dbUrl}/items`, newItem, { responseType: 'text' /*important to receive JSON*/});
     }
     
-    updateItem(newItem){
-        return this.http.put(`${this.dbUrl}/items/${newItem.id}`, new Item(null, newItem.title, newItem.desc), { responseType: 'text' /*important to receive JSON*/});        
+    updateItem(newItem: Item){
+        return this.http.put(`${this.dbUrl}/items/${newItem.id}`, new Item(null, newItem.catid, newItem.title, newItem.desc, newItem.price, newItem.img), { responseType: 'text' /*important to receive JSON*/});        
 	}
 
 	destroyItem(catid){

@@ -38,6 +38,7 @@ export class ItemComponent implements OnInit {
     }
     
     saveChanges(){
+        console.log("item", this.item);
         this.isLoading = true;
         this.itemService.updateItem(this.item).subscribe(resp => {
             console.log(resp);
