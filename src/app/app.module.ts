@@ -28,6 +28,7 @@ import { BranchesComponent } from './components/Branches/branches.component';
 import { BranchService } from './services/branch.service';
 import { BranchComponent } from './components/Branches/branch/branch.component';
 import { EditBranchComponent } from './components/Branches/edit-branch/edit-branch.component';
+import { BranchAddItemComponent } from './components/Branches/edit-branch/branch-add-item/branch-add-item.component';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { EditBranchComponent } from './components/Branches/edit-branch/edit-bran
         EditItemComponent,
         BranchesComponent,
         BranchComponent,
-        EditBranchComponent
+        EditBranchComponent,
+        BranchAddItemComponent
     ],
     imports: [
         BrowserModule,

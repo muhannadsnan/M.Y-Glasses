@@ -11,6 +11,7 @@
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteBranch()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
         <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
         <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('branch-add-item-mode')" [disabled]="isLoading">Add Items</button>
     </div>
     <div class="branch-details" *ngIf="adminMode == 'detail-mode' ">
         <div class="row">
@@ -42,6 +43,9 @@
         <app-edit-branch [branch]="branch"></app-edit-branch>
     </div>
     <div class="addMode" *ngIf="adminMode == 'add-mode' ">
+        <app-edit-branch></app-edit-branch>
+    </div>
+    <div class="addItemMode" *ngIf="adminMode == 'branch-add-item-mode' ">
         <app-edit-branch></app-edit-branch>
     </div>
 </div> <!-- END: DETAILS VIEW -->
