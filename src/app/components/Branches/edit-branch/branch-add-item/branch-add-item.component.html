@@ -1,3 +1,24 @@
-<p>
-  branch-add-item works!
-</p>
+<div class="admin-btns form-group text-right">
+    <button class="btn btn-secondary" (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
+</div>
+
+<label class="col-md-12">
+    <div class="form-group">
+        <ng-select [options]="searchResult" [allowClear]="true" [placeholder]="isLoadingItems ? 'Loading...' : 'Search items...' " 
+                    [disabled]="isLoadingItems" [(ngModel)]="selectedItem.id"></ng-select>
+    </div>
+    <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+</label>
+<br>
+<label class="col-md-12">
+    <div class="form-group">
+        ID: {{selectedItem.id}} - Title: {{selectedItem.title}}
+        Quantity:
+        <input type="number" class="form-control" [(ngModel)]="qtities.qty" [disabled]="isLoading">
+        <button class="btn btn-primary" (click)="addItemToList()">Add to list</button>
+    </div>
+</label>
+
+<h4 *ngFor="let q of qtities">Item: {{q.itemId}} - Item Title, Qty: {{q.qty}}</h4>
+
+<button class="btn btn-primary btn-block" (click)="addItemToList()" [disabled]="isLoading">Save items</button>

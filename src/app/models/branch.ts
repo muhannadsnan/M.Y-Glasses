@@ -1,7 +1,7 @@
 export class Branch {
 	constructor(
-                public id?: String,
-				public title?: String,
-				public desc?: String,
+                public id?: string,
+				public title?: string,
+				public desc?: string,
 				){}
 }

@@ -46,6 +46,6 @@
         <app-edit-branch></app-edit-branch>
     </div>
     <div class="addItemMode" *ngIf="adminMode == 'branch-add-item-mode' ">
-        <app-edit-branch></app-edit-branch>
+        <app-branch-add-item [branch]="branch"></app-branch-add-item>
     </div>
 </div> <!-- END: DETAILS VIEW -->

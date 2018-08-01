@@ -78,10 +78,6 @@ export class EditItemComponent implements OnInit, OnDestroy {
         });
     }
 
-    catSelected(cat){
-        console.log(cat);
-    }
-
     ngOnDestroy(){
         this.tmp.unsubscribe();
     }
