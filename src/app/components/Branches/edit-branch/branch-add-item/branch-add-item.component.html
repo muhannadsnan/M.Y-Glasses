@@ -1,24 +1,27 @@
+<h4 class="text-center text-primary">{{branch.title}}</h4>
+
 <div class="admin-btns form-group text-right">
     <button class="btn btn-secondary" (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
 </div>
 
 <label class="col-md-12">
     <div class="form-group">
-        <ng-select [options]="searchResult" [allowClear]="true" [placeholder]="isLoadingItems ? 'Loading...' : 'Search items...' " 
-                    [disabled]="isLoadingItems" [(ngModel)]="selectedItem.id"></ng-select>
+        <ng-select [options]="searchResult" [allowClear]="true" [label]="isLoadingItems ? 'Loading...' : 'Search items...' " 
+                    [disabled]="isLoadingItems" (keyup.enter)="searchItems($event)" highlightColor="#9575cd" highlightTextColor="#fff"
+                    (selected)="onSelectedItem($event)" ></ng-select>
     </div>
     <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
 </label>
 <br>
-<label class="col-md-12">
-    <div class="form-group">
-        ID: {{selectedItem.id}} - Title: {{selectedItem.title}}
-        Quantity:
-        <input type="number" class="form-control" [(ngModel)]="qtities.qty" [disabled]="isLoading">
-        <button class="btn btn-primary" (click)="addItemToList()">Add to list</button>
+<label class="col-md-12" *ngIf="selectedItem.id !== null ">
+    <div class="form-group items-to-add">
+        <span class="x">item: {{selectedItem.id}} - : {{selectedItem.title}} - Quantity: </span>
+        <input type="number" class="form-control col-md-2" [disabled]="isLoading" min="1" value="1"
+                    (keyup.enter)="addItemToList()" #qty>
     </div>
 </label>
+<h5 class="text-center text-secondary" *ngIf="qtities.length == 0">No items selected.</h5>
 
-<h4 *ngFor="let q of qtities">Item: {{q.itemId}} - Item Title, Qty: {{q.qty}}</h4>
+<h5 *ngFor="let q of qtities">Item: {{q.item.id}} - {{q.item.title}}, Qty: {{q.qty}}</h5>
 
-<button class="btn btn-primary btn-block" (click)="addItemToList()" [disabled]="isLoading">Save items</button>
+<button class="btn btn-primary btn-block" (click)="saveQuantities()" [disabled]="isLoading">Save items</button>

@@ -59,7 +59,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
 
     readCategories(){
         this.isLoadingCats = true;
-        this.categoryService.readCats().pipe(
+        this.categoryService.MAP_List_Value_label(this.categoryService.readCats().pipe(
             map(actions => { //console.log("actions",actions);
                 if(actions != null){
                     const res = Object.entries(actions); 
@@ -68,7 +68,8 @@ export class EditItemComponent implements OnInit, OnDestroy {
                     } );
                 }
 			})
-        ).subscribe(resp => { //console.log("read cats", resp);
+        ))
+        .subscribe(resp => { //console.log("read cats", resp);
             if(typeof resp === "undefined"){
                 this.categories = [];
             }else{

@@ -40,8 +40,13 @@ export class ItemService {
 
 	readItemsByItemId(catid) {
 		this.loadingItems.next(true);		
-        return this.http.get(`${this.dbUrl}/items/cat/${catid}`, { responseType: 'text' /*important to receive JSON*/});        
-	}
+        return this.MAP(this.http.get(`${this.dbUrl}/items/cat/${catid}`, { responseType: 'text' /*important to receive JSON*/}));
+    }
+        
+    searchItemsByTitle(keyword){
+        this.loadingItems.next(true);
+        return this.MAP_List_Value_label(this.http.get(`${this.dbUrl}/items/search/${keyword}`));
+    }
     //--------------------------------------------------------------------
     	
 	MAP(observable){
@@ -54,7 +59,20 @@ export class ItemService {
                         const id = row[0]; const data = row[1]; return { id, ...data };
                     })
                 }
-			})
+            })
         )
-	}
+    }
+
+    MAP_List_Value_label(observable){
+        return observable.pipe(
+            map(actions => { //console.log("actions",actions);
+                if(actions != null){
+                    const res = Object.entries(actions); 
+                    return res.map(a =>{ //console.log("res",res);console.log("a", a);
+                        return { "value": a[0], "label": a[1].title };
+                    } );
+                }
+            })
+        );
+    }
 }

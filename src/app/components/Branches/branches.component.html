@@ -51,6 +51,7 @@
 <app-modal [btns]="close-only">
     <h4 class="text-secondary" *ngIf="adminMode == 'edit-mode' " title>Show branch</h4>
     <h4 class="text-primary" *ngIf="adminMode == 'add-mode' " title>Add branch</h4>
+    <h4 class="text-primary" *ngIf="adminMode == 'branch-add-item-mode' " title>Add items to branch</h4>
     <app-branch [showAs]=" 'details' " body></app-branch>
     <button class="btn btn-primary" *ngIf="adminMode == 'add-mode' " (click)="onCreateBranch()" [disabled]="loadingBranches" footer>{{loadingBranches ? 'Creating branch...' : 'Create branch' }}</button>
 </app-modal>

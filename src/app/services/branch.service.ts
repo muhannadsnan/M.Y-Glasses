@@ -41,7 +41,12 @@ export class BranchService {
 	readBranchesByBranchId(catid) {
 		this.loadingBranches.next(true);		
         return this.http.get(`${this.dbUrl}/branches/cat/${catid}`, { responseType: 'text' /*important to receive JSON*/});        
-	}
+    }
+
+    createQuantities(qtities): Observable<any>{
+        // foreach qty.item.id
+        return this.http.post(`${this.dbUrl}/quantities`, qtities, { responseType: 'text' /*important to receive JSON*/});
+    }
     //--------------------------------------------------------------------
     	
 	MAP(observable){
