@@ -59,21 +59,12 @@ export class EditItemComponent implements OnInit, OnDestroy {
 
     readCategories(){
         this.isLoadingCats = true;
-        this.categoryService.MAP_List_Value_label(this.categoryService.readCats().pipe(
-            map(actions => { //console.log("actions",actions);
-                if(actions != null){
-                    const res = Object.entries(actions); 
-                    return res.map(a =>{ //console.log("res",res);console.log("a", a);
-                        return { "value": a[1].id, "label": a[1].title };
-                    } );
-                }
-			})
-        ))
+        this.categoryService.MAP_List_Value_label(this.categoryService.readCats())
         .subscribe(resp => { //console.log("read cats", resp);
             if(typeof resp === "undefined"){
                 this.categories = [];
             }else{
-                this.categories = resp;
+                this.categories = resp; 
             }     
             this.isLoadingCats = false;
         });
