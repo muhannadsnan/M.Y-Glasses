@@ -3,6 +3,7 @@ import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 
@@ -16,7 +17,7 @@ export class ItemService {
 	showModal: Subject<boolean> = new Subject<boolean>();
     adminMode: Subject<string> = new Subject<string>();
 	isLoggedin = false;
-    dbUrl = "http://localhost:99";
+    dbUrl = environment.db.url;
 
     constructor(private http: HttpClient){}
     

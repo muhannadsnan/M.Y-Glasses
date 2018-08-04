@@ -30,6 +30,9 @@ export const environment = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+  },
+  db: {
+    url: "http://localhost:99"
   }
 };
 

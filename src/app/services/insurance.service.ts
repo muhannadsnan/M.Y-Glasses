@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
-import { Category } from "../models/category";
+import { Insurance } from "../models/insurance";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 
 @Injectable()
 
-export class CategoryService {
-	selectedCategory: Subject<any> = new Subject<any>(); 
-	ClickedCategoryCreate: Subject<any> = new Subject<any>(); 
-	categoryCreated: Subject<Category> = new Subject<Category>(); 
-	categoryDeleted: Subject<Category> = new Subject<Category>(); 
-	loadingCats: Subject<boolean> = new Subject<boolean>();
+export class InsuranceService {
+	selectedInsurance: Subject<any> = new Subject<any>(); 
+	ClickedInsuranceCreate: Subject<any> = new Subject<any>(); 
+	insuranceCreated: Subject<Insurance> = new Subject<Insurance>(); 
+	insuranceDeleted: Subject<Insurance> = new Subject<Insurance>(); 
+	loadingInsurances: Subject<boolean> = new Subject<boolean>();
 
 	showModal: Subject<boolean> = new Subject<boolean>();
     adminMode: Subject<string> = new Subject<string>();
@@ -22,27 +22,27 @@ export class CategoryService {
     constructor(private http: HttpClient){}
 
     //********  CRUD FUNCTIONALITY  *********/
-	readCats() {
-        return this.MAP(this.http.get(`${this.dbUrl}/cats`));
+	readInsurances() {
+        return this.MAP(this.http.get(`${this.dbUrl}/insurances`));
 	}
 
-	createCat(newCat: Category): Observable<any>{
-        return this.http.post(`${this.dbUrl}/cats`, newCat, { responseType: 'text' /*important to receive JSON*/});
+	createInsurance(newInsurance: Insurance): Observable<any>{
+        return this.http.post(`${this.dbUrl}/insurances`, newInsurance, { responseType: 'text' /*important to receive JSON*/});
     }
     
-    updateCat(newCat: Category){
-        return this.http.put(`${this.dbUrl}/cats/${newCat.id}`, new Category(null, newCat.title, newCat.desc), { responseType: 'text' /*important to receive JSON*/});        
+    updateInsurance(newInsurance: Insurance){
+        return this.http.put(`${this.dbUrl}/insurances/${newInsurance.id}`, new Insurance(null, newInsurance.title, newInsurance.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 
-	destroyCat(catid){
-        return this.http.delete(`${this.dbUrl}/cats/${catid}`, { responseType: 'text' /*important to receive JSON*/});
+	destroyInsurance(insuranceid){
+        return this.http.delete(`${this.dbUrl}/insurances/${insuranceid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
     //*************************************
     	
 	MAP(observable){
 		return observable.pipe(
             map(actions => { //console.log("actions",actions);
-                // this.loadingCats.next(false);  	
+                // this.loadingInsurances.next(false);  	
                 if(actions != null){
                     const res = Object.entries(actions); 
                     return res.map(row => { //console.log("row",row);

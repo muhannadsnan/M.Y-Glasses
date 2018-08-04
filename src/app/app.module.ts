@@ -29,6 +29,10 @@ import { BranchService } from './services/branch.service';
 import { BranchComponent } from './components/Branches/branch/branch.component';
 import { EditBranchComponent } from './components/Branches/edit-branch/edit-branch.component';
 import { BranchAddItemComponent } from './components/Branches/edit-branch/branch-add-item/branch-add-item.component';
+import { InsuranceService } from './services/insurance.service';
+import { InsuranceComponent } from './components/insurance/insurance/insurance.component';
+import { InsurancesComponent } from './components/insurance/insurances.component';
+import { EditInsuranceComponent } from './components/insurance/edit-insurance/edit-insurance.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +51,10 @@ import { BranchAddItemComponent } from './components/Branches/edit-branch/branch
         BranchesComponent,
         BranchComponent,
         EditBranchComponent,
-        BranchAddItemComponent
+        BranchAddItemComponent,
+        InsurancesComponent,
+        InsuranceComponent,
+        EditInsuranceComponent
     ],
     imports: [
         BrowserModule,
@@ -58,7 +65,7 @@ import { BranchAddItemComponent } from './components/Branches/edit-branch/branch
         NgbModule.forRoot(), // bootstrap 4
         SelectModule
     ],
-    providers: [ModalService, CategoryService, ItemService, BranchService],
+    providers: [ModalService, CategoryService, ItemService, BranchService, InsuranceService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
