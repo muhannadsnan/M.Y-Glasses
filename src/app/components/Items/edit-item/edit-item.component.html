@@ -1,19 +1,19 @@
 <div class="edit-item">
-    <label class="col-md-12">
+    <label class="col-sm-12">
         <div class="form-group">
             Title:
             <input type="text" class="form-control" [value]="item?.title" [(ngModel)]="item.title" [disabled]="isLoading" required>
         </div>
     </label>
     <br>
-    <label class="col-md-12">
+    <label class="col-sm-12">
         <div class="form-group">
             Description:
             <textarea type="text" class="form-control" [value]="item?.desc" [(ngModel)]="item.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
     <br>
-    <label class="col-md-12">
+    <label class="col-sm-12">
         <div class="form-group">
             <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
                         [disabled]="isLoadingCats" [(ngModel)]="item.catid"></ng-select>
