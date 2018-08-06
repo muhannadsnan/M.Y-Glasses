@@ -1,6 +1,6 @@
 export class Quantity {
 	constructor(
-                public id?: string,
-                public title?: string,
-				public desc?: string){}
+                public qty?: number,
+                public itemId?: string,
+				public branchId?: string){}
 }

@@ -1,0 +1,47 @@
+<a [routerLink]="'/orders/'+order?.id" routerLinkActive="active" class="list-group-order d-flex" (click)="onClickOrder()" *ngIf="showAs == 'list-group-order' ">
+    <span>{{order?.title}}</span>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelOrder(order?.id)" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+</a>
+
+<!-- <pre>{{order | json}}</pre> -->
+
+<div class="order" *ngIf="showAs == 'details' ">
+    <div class="admin-btns form-group text-right">
+        <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteOrder()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
+    </div>
+    <div class="order-details" *ngIf="adminMode == 'detail-mode' ">
+        <div class="row">
+                <div class="col-sm-3">
+                    <label for="">ID:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{order?.id}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">Title:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{order?.title}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">Desc:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{order?.desc}}</span>
+                </div>
+            </div>
+    </div>
+   <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
+        <app-edit-order [order]="order"></app-edit-order>
+    </div>
+    <div class="addMode" *ngIf="adminMode == 'add-mode' ">
+        <app-edit-order></app-edit-order>
+    </div>
+</div> <!-- END: DETAILS VIEW -->

@@ -1,0 +1,23 @@
+<div class="edit-order">
+    <label class="col-sm-12">
+        <div class="form-group">
+            Title:
+            <input type="text" class="form-control" [value]="order?.title" [(ngModel)]="order.title" [disabled]="isLoading" required>
+        </div>
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            Description:
+            <textarea type="text" class="form-control" [value]="order?.desc" [(ngModel)]="order.desc" [disabled]="isLoading"></textarea>
+        </div>
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
+                        [disabled]="isLoadingCats" [(ngModel)]="order.catid"></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
+</div>

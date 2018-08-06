@@ -2,13 +2,12 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { HomeComponent } from "./components/home/home.component";
 import { CategoriesComponent } from "./components/categories/categories.component";
-import { CategoryComponent } from "./components/categories/category/category.component";
-import { AuthGuard } from "./services/auth.guard";
 import { ItemsComponent } from "./components/Items/items.component";
 import { AdminComponent } from "./components/admin/admin.component";
 import { AdminIndexComponent } from "./components/admin/admin-index/admin-index.component";
 import { BranchesComponent } from "./components/Branches/branches.component";
-import { InsurancesComponent } from "./components/insurance/insurances.component";
+import { InsurancesComponent } from "./components/insurances/insurances.component";
+import { OrdersComponent } from "./components/orders/orders.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -25,6 +24,7 @@ const routes = [
 			{path: 'items', component: ItemsComponent, data: {showAs: 'table'}},
 			{path: 'branches', component: BranchesComponent, data: {showAs: 'table'}},
 			{path: 'insurances', component: InsurancesComponent, data: {showAs: 'table'}},
+			{path: 'orders', component: OrdersComponent, data: {showAs: 'table'}},
 		]
 	},
 	{path: '**', redirectTo: '/home', pathMatch: 'full', data: {message: 'Page not found', messageType: 'error'}}

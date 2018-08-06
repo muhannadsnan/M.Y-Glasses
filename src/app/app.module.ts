@@ -30,9 +30,13 @@ import { BranchComponent } from './components/Branches/branch/branch.component';
 import { EditBranchComponent } from './components/Branches/edit-branch/edit-branch.component';
 import { BranchAddItemComponent } from './components/Branches/edit-branch/branch-add-item/branch-add-item.component';
 import { InsuranceService } from './services/insurance.service';
-import { InsuranceComponent } from './components/insurance/insurance/insurance.component';
-import { InsurancesComponent } from './components/insurance/insurances.component';
-import { EditInsuranceComponent } from './components/insurance/edit-insurance/edit-insurance.component';
+import { InsuranceComponent } from './components/insurances/insurance/insurance.component';
+import { InsurancesComponent } from './components/insurances/insurances.component';
+import { EditInsuranceComponent } from './components/insurances/edit-insurance/edit-insurance.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { OrderComponent } from './components/orders/order/order.component';
+import { EditOrderComponent } from './components/orders/edit-order/edit-order.component';
+import { OrderService } from './services/order.service';
 
 @NgModule({
     declarations: [
@@ -54,7 +58,10 @@ import { EditInsuranceComponent } from './components/insurance/edit-insurance/ed
         BranchAddItemComponent,
         InsurancesComponent,
         InsuranceComponent,
-        EditInsuranceComponent
+        EditInsuranceComponent,
+        OrdersComponent,
+        OrderComponent,
+        EditOrderComponent
     ],
     imports: [
         BrowserModule,
@@ -65,7 +72,7 @@ import { EditInsuranceComponent } from './components/insurance/edit-insurance/ed
         NgbModule.forRoot(), // bootstrap 4
         SelectModule
     ],
-    providers: [ModalService, CategoryService, ItemService, BranchService, InsuranceService],
+    providers: [ModalService, CategoryService, ItemService, BranchService, InsuranceService, OrderService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
