@@ -48,7 +48,7 @@ export class OrderComponent implements OnInit {
     }
     
     deleteOrder(){
-        if(confirm(`Delete order "${this.order.title}"?`)){
+        if(confirm(`Delete order "${this.order.id}"?`)){
             this.isLoading = true;
             this.orderService.loadingOrders.next(true);
             this.orderService.destroyOrder(this.order.id).subscribe(resp => {
