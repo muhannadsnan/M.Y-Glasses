@@ -1,7 +1,7 @@
 export class Eye {
 	constructor( 
-                public eye: string, // left or right,
-                public prescriptions: EyePrescription,
+                public left: EyePrescription,
+                public right: EyePrescription,
 				){}
 }
 

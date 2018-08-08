@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
-import { ItemService } from '../../services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../../models/category';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ModalService } from '../../services/modal.service';
 
 @Component({
@@ -18,7 +14,6 @@ export class CategoriesComponent implements OnInit {
     selectedId = 0;
     loadingCats;
     showAs;
-    // showModal;
     adminMode;
 
     constructor(private categoryService: CategoryService,

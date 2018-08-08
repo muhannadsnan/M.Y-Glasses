@@ -38,6 +38,7 @@ export class BranchAddItemComponent implements OnInit {
 
     searchItems(event){ // by title for now
         // console.log(event.target.value);
+        this.itemService.loadingItems.next(true);
         this.itemService.searchItemsByTitle(event.target.value).subscribe(resp => {
             this.itemService.loadingItems.next(false);
             this.searchResult = resp; console.log("resp", resp);

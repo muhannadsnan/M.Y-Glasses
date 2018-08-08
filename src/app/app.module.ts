@@ -37,6 +37,10 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { OrderComponent } from './components/orders/order/order.component';
 import { EditOrderComponent } from './components/orders/edit-order/edit-order.component';
 import { OrderService } from './services/order.service';
+import { ClientsComponent } from './components/clients/clients.component';
+import { ClientComponent } from './components/clients/client/client.component';
+import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
+import { ClientService } from './services/client.service';
 
 @NgModule({
     declarations: [
@@ -59,6 +63,9 @@ import { OrderService } from './services/order.service';
         InsurancesComponent,
         InsuranceComponent,
         EditInsuranceComponent,
+        ClientsComponent,
+        ClientComponent,
+        EditClientComponent,
         OrdersComponent,
         OrderComponent,
         EditOrderComponent
@@ -72,7 +79,7 @@ import { OrderService } from './services/order.service';
         NgbModule.forRoot(), // bootstrap 4
         SelectModule
     ],
-    providers: [ModalService, CategoryService, ItemService, BranchService, InsuranceService, OrderService],
+    providers: [ModalService, CategoryService, ItemService, BranchService, InsuranceService, ClientService, OrderService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

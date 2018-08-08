@@ -1,23 +1,53 @@
 <div class="edit-order">
+    <label class="col-md-12">
+        <div class="form-group">
+            {{isLoadingClients ? 'Searching clients ...' : 'Search clients:'}}
+            <ng-select [options]="searchClientsResult" [allowClear]="true"
+                        [disabled]="isLoadingClients" (keyup.enter)="searchClients($event)" highlightColor="#9575cd" highlightTextColor="#fff"
+                        (selected)="onSelectedClient($event)" ></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
+    <br>
     <label class="col-sm-12">
         <div class="form-group">
-            Title:
-            <input type="text" class="form-control" [value]="order?.title" [(ngModel)]="order.title" [disabled]="isLoading" required>
+            <ng-select [options]="branches" [allowClear]="true" [placeholder]="isLoadingBranches ? 'Loading branches...' : 'Select branches...' " 
+                        [disabled]="isLoadingBranches" [(ngModel)]="order.branchId"></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            <ng-select [options]="insurances" [allowClear]="true" [placeholder]="isLoadingInsurances ? 'Loading insurances...' : 'Select insurances...' " 
+                        [disabled]="isLoadingInsurances" [(ngModel)]="order.insuranceId"></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
+    <br>
+    <label class="col-md-12">
+        <div class="form-group">
+            {{isLoadingItems ? 'Searching items...' : 'Search items:' }}
+            <ng-select [options]="searchItemsResult" [allowClear]="true" 
+                        [disabled]="isLoadingItems" (keyup.enter)="searchItems($event)" highlightColor="#9575cd" highlightTextColor="#fff"
+                        (selected)="onSelectedItem($event)" ></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group eye_prescriptions">
+            Eye prescriptions: (sphere,cylinder,axis,addition)
+            <input type="text" class="form-control col-sm-5" [value]="txtEyePrescriptions['left']" [(ngModel)]="txtEyePrescriptions['left']" [disabled]="isLoading" placeholder="Left: " required> &nbsp;
+            <input type="text" class="form-control col-sm-5" [value]="txtEyePrescriptions['right']" [(ngModel)]="txtEyePrescriptions['right']" [disabled]="isLoading" placeholder="Right: " required>
         </div>
     </label>
     <br>
     <label class="col-sm-12">
         <div class="form-group">
             Description:
-            <textarea type="text" class="form-control" [value]="order?.desc" [(ngModel)]="order.desc" [disabled]="isLoading"></textarea>
+            <textarea class="form-control" [value]="order?.desc" [(ngModel)]="order.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
     <br>
-    <label class="col-sm-12">
-        <div class="form-group">
-            <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
-                        [disabled]="isLoadingCats" [(ngModel)]="order.catid"></ng-select>
-        </div>
-        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
-    </label>
 </div>

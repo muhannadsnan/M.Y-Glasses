@@ -1,0 +1,56 @@
+<div class="container main" [ngSwitch]="showAs"> <!-- ngSwitch works only with divs, not ng-templates -->
+ 
+    <div class="row" *ngSwitchCase="'grid'">        
+        <div class="col-lg-3">
+            <h5 class="text-center my-3">Clients</h5>
+            <div class="list-group">
+                <app-client *ngFor="let client of clients" [client]="client" (click)="clientChanged(client)"></app-client>
+                <h3 *ngIf="loadingClients">LOADING..</h3>
+            </div>
+            <!-- <pre>{{clients | async | json}}</pre> -->
+        </div><!-- END: col-lg-3 -->
+
+        <div class="col-lg-9">
+            <!-- <h3 *ngIf="selectedId == 0" class="alert alert-dark">Please select a client!</h3>         -->
+            <router-outlet></router-outlet>
+        </div><!-- END: col-lg-9 -->
+    </div>    
+
+    <div class="rowX" *ngSwitchCase="'table'">
+        <div class="alert alert-dark text-center">
+            <h5> <a routerLink="/admin">Control panel</a> > Clients Management
+                <button class="btn btn-primary float-right" (click)="onClkAddClient()">Add client</button>
+            </h5>
+        </div>
+        <table class="table table-striped table-hover table-dark table-responsiveX table-sm table-darkX table-bclientedX col-md-12 mx-auto">
+            <thead class="thead-dark">
+                <tr class="">
+                    <th scope="col"># : id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <h3 *ngIf="loadingClients">LOADING..</h3>
+                    <tr *ngIf="clients?.length == 0; else manyRows"><td colspan="3" class="text-center">No clients.</td></tr>
+                <ng-template #manyRows>
+                    <tr *ngFor="let client of clients; let i = index" (click)="onClkClient(client)">                    
+                        <th scope="row">{{i+1}} : {{client.id}}</th>
+                        <td>{{client.title}}</td>
+                        <td>{{client.desc}}</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- <h4>adminMode: {{adminMode}}</h4> -->
+
+<!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
+<app-modal [btns]="close-only">
+    <h4 class="text-secondary" *ngIf="adminMode == 'detail-mode' " title>Show client</h4>
+    <h4 class="text-secondary" *ngIf="adminMode == 'edit-mode' " title>Edit client</h4>
+    <h4 class="text-dark" *ngIf="adminMode == 'add-mode' " title>Add client</h4>
+    <app-client [showAs]=" 'details' " body></app-client>
+    <button class="btn btn-primary" *ngIf="adminMode == 'add-mode' " (click)="onCreateClient()" [disabled]="loadingClients" footer>{{loadingClients ? 'Creating client...' : 'Create client' }}</button>
+</app-modal>

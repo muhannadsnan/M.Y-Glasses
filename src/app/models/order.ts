@@ -9,6 +9,6 @@ export class Order {
                 public branchId?: string,
                 public insuranceId?: string,
                 public items?: Item[],
-                public eyePrescriptions?: Eye[],
+                public eyePrescriptions?: Eye,
 				public desc?: string){}
 }

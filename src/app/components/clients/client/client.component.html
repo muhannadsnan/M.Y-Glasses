@@ -1,0 +1,59 @@
+<a [routerLink]="'/clients/'+client?.id" routerLinkActive="active" class="list-group-client d-flex" (click)="onClickClient()" *ngIf="showAs == 'list-group-client' ">
+    <span>{{client?.id}}</span>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelClient(client?.id)" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+</a>
+
+<!-- <pre>{{client | json}}</pre> -->
+
+<div class="client" *ngIf="showAs == 'details' ">
+    <div class="admin-btns form-group text-right">
+        <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteClient()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
+    </div>
+    <div class="client-details" *ngIf="adminMode == 'detail-mode' ">
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="">ID:</label>
+            </div>
+            <div class="col-sm-9">
+                <span class="x">{{client?.id}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <label for="" class="col-sm-3">Name:</label>
+            <span class="x" class="col-sm-9">{{client?.name}}</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="">Phone:</label>
+            </div>
+            <div class="col-sm-9">
+                <span class="x">{{client?.phone}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="">Address:</label>
+            </div>
+            <div class="col-sm-9">
+                <span class="x">{{client?.address}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="">Email:</label>
+            </div>
+            <div class="col-sm-9">
+                <span class="x">{{client?.email}}</span>
+            </div>
+        </div>
+    </div>
+   <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
+        <app-edit-client [client]="client"></app-edit-client>
+    </div>
+    <div class="addMode" *ngIf="adminMode == 'add-mode' ">
+        <app-edit-client></app-edit-client>
+    </div>
+</div> <!-- END: DETAILS VIEW -->

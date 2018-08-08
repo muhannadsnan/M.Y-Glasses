@@ -5,6 +5,12 @@ import { CategoryService } from '../../../services/category.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
 import { map } from "rxjs/operators";
+import { ClientService } from '../../../services/client.service';
+import { ItemService } from '../../../services/item.service';
+import { BranchService } from '../../../services/branch.service';
+import { InsuranceService } from '../../../services/insurance.service';
+import { Client } from '../../../models/client';
+import { EyePrescription } from '../../../models/eyePrescription';
 
 @Component({
   selector: 'app-edit-order',
@@ -15,18 +21,31 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     @Input() order: Order; 
     tmp: Subscription;
     isLoading: boolean;
-    isLoadingCats: boolean;
-    categories;
+    isLoadingItems: boolean;
+    isLoadingBranches: boolean;
+    isLoadingInsurances: boolean;
+    isLoadingClients: boolean;
+    items;
+    branches;
+    insurances;
+    clients;
+    searchClientsResult;
+    searchItemsResult;
+    txtEyePrescriptions: string[] = []; // left, right
 
     constructor(private orderService: OrderService, 
-                    private categoryService: CategoryService,
+                    private clientService: ClientService,
+                    private itemService: ItemService,
+                    private branchService: BranchService,
+                    private insuranceService: InsuranceService,
                     private modalService: ModalService) { }
 
     ngOnInit() {
         this.isLoading = false;
         this.InitOrder();
         this.Listen_OnClickCreateOrder();
-        this.readCategories();
+        this.readBranches();
+        this.readInsurances();
     }
 
     InitOrder(){
@@ -44,8 +63,12 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         });
     }
 
-    Listen_CreateOrder(){
-        this.orderService.createOrder(this.order).subscribe(resp => {
+    Listen_CreateOrder(){ 
+        let split = this.txtEyePrescriptions['left'].split(',');
+        this.order.eyePrescriptions.left = new EyePrescription(split[0], split[1], split[2], split[3]);
+        split = this.txtEyePrescriptions['right'].split(',');
+        this.order.eyePrescriptions.right = new EyePrescription(split[0], split[1], split[2], split[3]);
+        this.tmp = this.orderService.createOrder(this.order).subscribe(resp => {
             this.modalService.showModal.next(false);
             //toastr msg
             this.isLoading = false;
@@ -57,17 +80,56 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         });
     }
 
-    readCategories(){
-        this.isLoadingCats = true;
-        this.categoryService.MAP_List_Value_label(this.categoryService.readCats())
-        .subscribe(resp => { //console.log("read cats", resp);
-            if(typeof resp === "undefined"){
-                this.categories = [];
-            }else{
-                this.categories = resp; 
-            }     
-            this.isLoadingCats = false;
+    searchClients(event){ // by title for now
+        // console.log(event.target.value);
+        this.isLoadingClients = true;
+        this.clientService.searchClientByName(event.target.value).subscribe(resp => {
+            this.isLoadingClients = false;
+            this.searchClientsResult = resp; console.log("resp", resp);
         });
+    } 
+
+    onSelectedClient(option){ //console.log("selectedOption", option);
+        this.order.client = new Client(option.value, option.label);  //console.log("this.order.client ", this.order.client );
+    }
+
+    searchItems(event){ // by title for now
+        // console.log(event.target.value);
+        this.isLoadingItems = true;
+        this.itemService.searchItemsByTitle(event.target.value).subscribe(resp => {
+            this.isLoadingItems = false;
+            this.searchItemsResult = resp; console.log("resp", resp);
+        });
+    } 
+
+    onSelectedItem(option){ //console.log("selectedOption", option);
+        this.order.items.push(new Client(option.value, option.label));  //console.log("this.order.items ", this.order.items );
+    }
+
+    readBranches(){
+        this.isLoadingBranches = true;
+        this.tmp = this.branchService.MAP_List_Value_label(this.branchService.readBranches())
+            .subscribe(resp => { //console.log("read branches", resp);
+                if(typeof resp === "undefined"){
+                    this.branches = [];
+                }else{
+                    this.branches = resp; 
+                }     
+                this.isLoadingBranches = false;
+            });
+    }
+    
+    readInsurances(){
+        this.isLoadingInsurances = true;
+        this.tmp = this.insuranceService.MAP_List_Value_label(this.insuranceService.readInsurances())
+            .subscribe(resp => { //console.log("read clients", resp);
+                if(typeof resp === "undefined"){
+                    this.insurances = [];
+                }else{
+                    this.insurances = resp; 
+                }     
+                this.isLoadingInsurances = false;
+            });
     }
 
     ngOnDestroy(){

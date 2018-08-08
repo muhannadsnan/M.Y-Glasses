@@ -8,6 +8,7 @@ import { AdminIndexComponent } from "./components/admin/admin-index/admin-index.
 import { BranchesComponent } from "./components/Branches/branches.component";
 import { InsurancesComponent } from "./components/insurances/insurances.component";
 import { OrdersComponent } from "./components/orders/orders.component";
+import { ClientsComponent } from "./components/clients/clients.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -24,6 +25,7 @@ const routes = [
 			{path: 'items', component: ItemsComponent, data: {showAs: 'table'}},
 			{path: 'branches', component: BranchesComponent, data: {showAs: 'table'}},
 			{path: 'insurances', component: InsurancesComponent, data: {showAs: 'table'}},
+			{path: 'clients', component: ClientsComponent, data: {showAs: 'table'}},
 			{path: 'orders', component: OrdersComponent, data: {showAs: 'table'}},
 		]
 	},

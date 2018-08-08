@@ -1,0 +1,30 @@
+<div class="edit-client">
+    <label class="col-sm-12">
+        <div class="form-group">
+            Name:
+            <input type="text" class="form-control" [value]="client?.name" [(ngModel)]="client.name" [disabled]="isLoading" required>
+        </div>
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            Phone:
+            <input type="phone" class="form-control" [value]="client?.phone" [(ngModel)]="client.phone" [disabled]="isLoading" required>
+        </div>
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            Address:
+            <input type="text" class="form-control" [value]="client?.address" [(ngModel)]="client.address" [disabled]="isLoading" required>
+        </div>
+    </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            Email:
+            <input type="email" class="form-control" [value]="client?.email" [(ngModel)]="client.email" [disabled]="isLoading" required>
+        </div>
+    </label>
+    <br>
+</div>

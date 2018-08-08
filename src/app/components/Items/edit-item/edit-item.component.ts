@@ -60,14 +60,14 @@ export class EditItemComponent implements OnInit, OnDestroy {
     readCategories(){
         this.isLoadingCats = true;
         this.categoryService.MAP_List_Value_label(this.categoryService.readCats())
-        .subscribe(resp => { //console.log("read cats", resp);
-            if(typeof resp === "undefined"){
-                this.categories = [];
-            }else{
-                this.categories = resp; 
-            }     
-            this.isLoadingCats = false;
-        });
+            .subscribe(resp => { //console.log("read cats", resp);
+                if(typeof resp === "undefined"){
+                    this.categories = [];
+                }else{
+                    this.categories = resp; 
+                }     
+                this.isLoadingCats = false;
+            });
     }
 
     ngOnDestroy(){
