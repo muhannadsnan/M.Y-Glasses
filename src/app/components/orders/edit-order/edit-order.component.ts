@@ -11,6 +11,8 @@ import { BranchService } from '../../../services/branch.service';
 import { InsuranceService } from '../../../services/insurance.service';
 import { Client } from '../../../models/client';
 import { EyePrescription } from '../../../models/eyePrescription';
+import { Branch } from '../../../models/branch';
+import { Insurance } from '../../../models/insurance';
 
 @Component({
   selector: 'app-edit-order',
@@ -50,7 +52,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
     InitOrder(){
         if( ! this.order ){ //console.log("this.order has been initialized!");
-            this.order = new Order
+            this.order = new Order(); //console.log("INIT ORDER  ", this.order);
         }
     }
 
@@ -59,6 +61,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
             if(isCreated){
                 this.isLoading = true;
                 this.Listen_CreateOrder();
+                console.log("ORDER   ",this.order);
             }
         });
     }
@@ -85,12 +88,18 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         this.isLoadingClients = true;
         this.clientService.searchClientByName(event.target.value).subscribe(resp => {
             this.isLoadingClients = false;
-            this.searchClientsResult = resp; console.log("resp", resp);
+            this.searchClientsResult = resp; console.log("searchClients resp ", resp);
         });
     } 
 
     onSelectedClient(option){ //console.log("selectedOption", option);
         this.order.client = new Client(option.value, option.label);  //console.log("this.order.client ", this.order.client );
+    }
+    onSelectedBranch(option){ //console.log("selectedOption", option);
+        this.order.branch = new Branch(option.value, option.label);  //console.log("this.order.client ", this.order.client );
+    }
+    onSelectedInsurance(option){ //console.log("selectedOption", option);
+        this.order.insurance = new Insurance(option.value, option.label);  //console.log("this.order.client ", this.order.client );
     }
 
     searchItems(event){ // by title for now
@@ -98,7 +107,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         this.isLoadingItems = true;
         this.itemService.searchItemsByTitle(event.target.value).subscribe(resp => {
             this.isLoadingItems = false;
-            this.searchItemsResult = resp; console.log("resp", resp);
+            this.searchItemsResult = resp; console.log("searchItems resp ", resp);
         });
     } 
 

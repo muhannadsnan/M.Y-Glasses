@@ -31,7 +31,7 @@ export class OrderService {
     }
     
     updateOrder(newOrder: Order){
-        return this.http.put(`${this.dbUrl}/orders/${newOrder.id}`, new Order(null, newOrder.client, newOrder.branchId, newOrder.insuranceId, newOrder.items, newOrder.eyePrescriptions, newOrder.desc), { responseType: 'text' /*important to receive JSON*/});        
+        return this.http.put(`${this.dbUrl}/orders/${newOrder.id}`, new Order(null, newOrder.client, newOrder.branch, newOrder.insurance, newOrder.items, newOrder.eyePrescriptions, newOrder.desc), { responseType: 'text' /*important to receive JSON*/});        
 	}
 
 	destroyOrder(orderid){

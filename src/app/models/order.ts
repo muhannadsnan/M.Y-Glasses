@@ -1,14 +1,23 @@
 import { Item } from "./item";
 import { Eye } from "./eyePrescription";
 import { Client } from "./client";
+import { Branch } from "./branch";
+import { Insurance } from "./insurance";
 
 export class Order {
 	constructor(
-                public id?: string,
-                public client?: Client,
-                public branchId?: string,
-                public insuranceId?: string,
-                public items?: Item[],
-                public eyePrescriptions?: Eye,
-				public desc?: string){}
+                public id?,
+                public client?,
+                public branch?,
+                public insurance?,
+                public items?,
+                public eyePrescriptions?,
+				public desc?){
+        this.client = client || new Client()
+        this.branch = branch || new Branch()
+        this.insurance = insurance || new Insurance()
+        this.items = items || []
+        this.eyePrescriptions = eyePrescriptions || new Eye()
+    }
+    
 }
