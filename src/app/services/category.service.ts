@@ -38,6 +38,9 @@ export class CategoryService {
         return this.http.delete(`${this.dbUrl}/cats/${catid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
     //*************************************
+    getCategorybyId(id) {
+        return this.http.get(`${this.dbUrl}/cats/${id}`);
+	}
     	
 	MAP(observable){
 		return observable.pipe(

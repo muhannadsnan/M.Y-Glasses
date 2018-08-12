@@ -4,16 +4,18 @@
 </a>
 
 <!-- <pre>{{category | json}}</pre> -->
-
-<div class="category" *ngIf="showAs == 'details' ">
+<!-- showas: {{showAs}} -->
+<!-- adminMode: {{adminMode}} -->
+<div class="category mx-auto col-md-6X col-lg-4X">
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteCategory()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
-        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode'" (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
-        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/categories') " [disabled]="isLoading">Categories</button>
     </div>
-    <div class="category-details" *ngIf="adminMode == 'detail-mode' ">
-        <div class="row">
+    <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
+    <ng-template #noLoading>
+        <div class="category-details" *ngIf="adminMode == 'detail-mode' ">
+            <div class="row">
                 <div class="col-sm-3">
                     <label for="">ID:</label>
                 </div>
@@ -37,11 +39,12 @@
                     <span class="x">{{category?.desc}}</span>
                 </div>
             </div>
-    </div>
-   <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
+        </div>
+    </ng-template>
+    <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
         <app-edit-category [category]="category"></app-edit-category>
     </div>
     <div class="addMode" *ngIf="adminMode == 'add-mode' ">
         <app-edit-category></app-edit-category>
-    </div>
-</div> <!-- END: DETAILS VIEW -->
+    </div>    
+</div> <!-- END: SHOW AS DETAILS -->

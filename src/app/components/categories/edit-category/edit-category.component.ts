@@ -3,6 +3,7 @@ import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-edit-category',
@@ -11,38 +12,48 @@ import { ModalService } from '../../../services/modal.service';
 })
 export class EditCategoryComponent implements OnInit, OnDestroy {
     @Input() category: Category; 
-    tmp: Subscription;
+    adminMode;
     isLoading: boolean;
+    tmp: Subscription[] = [];
 
     constructor(private categoryService: CategoryService,
-                    private modalService: ModalService) { }
+                    private modalService: ModalService,
+                private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.isLoading = false;
+        this.LOADING(false);
+        this.LISTEN_AdminMode();
         this.InitCat();
-        this.Listen_OnClickCreateCat();
     }
 
     InitCat(){
         if( ! this.category ){ //console.log("this.category has been initialized!");
             this.category = new Category
-        }
+            this.adminMode = "add-mode"
+        }else this.adminMode = "edit-mode"
     }
 
-    Listen_OnClickCreateCat(){
-        this.tmp = this.categoryService.ClickedCategoryCreate.subscribe(isCreated => {
-            if(isCreated){
-                this.isLoading = true;
-                this.Listen_CreateCat();
-            }
+    INIT_Data(){
+        this.tmp[4] = this.route.data.subscribe(data => {
+            if(data.adminMode)
+                this.categoryService.adminMode.next(data.adminMode);
+        } ); 
+    }
+
+    LISTEN_AdminMode(){
+        this.tmp[0] = this.categoryService.adminMode.subscribe(mode => { console.log(mode);
+            this.adminMode = mode;
+            if(mode == 'add-mode') // to reset after edit-mode
+                this.category = new Category();
         });
     }
 
-    Listen_CreateCat(){
-        this.categoryService.createCat(this.category).subscribe(resp => {
+    onCreateCat(){
+        this.LOADING(true);
+        this.tmp[2] = this.categoryService.createCat(this.category).subscribe(resp => {
             this.modalService.showModal.next(false);
             //toastr msg
-            this.isLoading = false;
+            this.LOADING(false);
             this.categoryService.loadingCats.next(false);
             console.log("resp create cat", resp);
             this.category.id = resp;
@@ -51,8 +62,25 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         });
     }
 
+    switchAdminMode(mode){        
+        this.categoryService.adminMode.next(mode); console.log(this.adminMode);
+    }
+
+    saveChanges(){
+        this.LOADING(true);
+        this.tmp[2] = this.categoryService.updateCat(this.category).subscribe(resp => { console.log(resp);
+            this.LOADING(false);
+            this.categoryService.adminMode.next('detail-mode');
+        });
+    }
+
+    LOADING(value){
+        this.isLoading = value;
+        this.modalService.isLoading.next(value);
+    }
+
     ngOnDestroy(){
-        this.tmp.unsubscribe();
+        this.tmp.forEach( el => el.unsubscribe() );
     }
 
 }

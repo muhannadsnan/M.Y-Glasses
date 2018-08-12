@@ -15,7 +15,7 @@
             <router-outlet></router-outlet>
         </div><!-- END: col-lg-9 -->
     </div>    
-
+<!-- <h1>{{adminMode}}</h1> -->
     <div class="rowX" *ngSwitchCase="'table'">
         <div class="alert alert-warning text-center">
             <h5> <a routerLink="/admin">Control panel</a> > Categories Management
@@ -52,5 +52,4 @@
     <h4 class="text-secondary" *ngIf="adminMode == 'edit-mode' " title>Edit category</h4>
     <h4 class="text-success" *ngIf="adminMode == 'add-mode' " title>Add category</h4>
     <app-category [showAs]="'details'" body></app-category>
-    <button class="btn btn-primary" *ngIf="adminMode == 'add-mode' " (click)="onCreateCat()" [disabled]="loadingCats" footer>{{loadingCats ? 'Creating category...' : 'Create category' }}</button>
 </app-modal>

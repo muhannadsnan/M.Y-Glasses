@@ -13,6 +13,7 @@ import { Client } from '../../../models/client';
 import { EyePrescription } from '../../../models/eyePrescription';
 import { Branch } from '../../../models/branch';
 import { Insurance } from '../../../models/insurance';
+import { Item } from '../../../models/item';
 
 @Component({
   selector: 'app-edit-order',
@@ -102,6 +103,10 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         this.order.insurance = new Insurance(option.value, option.label);  //console.log("this.order.client ", this.order.client );
     }
 
+    onSelectedItem(option){ //console.log("selectedOption", option);
+        this.order.items.push(new Item(option.value, null, option.label));  //console.log("this.order.items ", this.order.items );
+    }
+    
     searchItems(event){ // by title for now
         // console.log(event.target.value);
         this.isLoadingItems = true;
@@ -110,10 +115,6 @@ export class EditOrderComponent implements OnInit, OnDestroy {
             this.searchItemsResult = resp; console.log("searchItems resp ", resp);
         });
     } 
-
-    onSelectedItem(option){ //console.log("selectedOption", option);
-        this.order.items.push(new Client(option.value, option.label));  //console.log("this.order.items ", this.order.items );
-    }
 
     readBranches(){
         this.isLoadingBranches = true;

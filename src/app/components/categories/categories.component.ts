@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../../services/modal.service';
+import { Subscription } from '../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -9,12 +10,13 @@ import { ModalService } from '../../services/modal.service';
   styleUrls: ['./categories.component.css']
 })
 
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
     categories;
     selectedId = 0;
     loadingCats;
     showAs;
     adminMode;
+    tmp: Subscription[] = [];
 
     constructor(private categoryService: CategoryService,
                 private modalService: ModalService,
@@ -28,17 +30,17 @@ export class CategoriesComponent implements OnInit {
         this.getCats();
         this.showAs = 'grid';
         this.LISTEN_Data();
-        this.LISTEN_AdminMode();
+        this.LISTEN_AdminMode_catService();
     }
 
-    catChanged(cat) {
+    catChanged(cat) { //console.log("cat clicked",cat);
         this.selectedId = cat.id;
         this.categoryService.selectedCategory.next(cat);
     }
 
     getCats(){
         this.categoryService.loadingCats.next(true);
-        this.categoryService.readCats().subscribe(resp => { //console.log("resp", resp);
+        this.tmp[0] = this.categoryService.readCats().subscribe(resp => { //console.log("resp", resp);
             if(typeof resp === "undefined"){
                 this.categories = [];
             }else{
@@ -49,31 +51,31 @@ export class CategoriesComponent implements OnInit {
     }
 
     LISTEN_LoadingCats(){
-        this.categoryService.loadingCats.subscribe(isLoading => this.loadingCats = isLoading);
+        this.tmp[1] = this.categoryService.loadingCats.subscribe(isLoading => this.loadingCats = isLoading);
     }
 
     LISTEN_CreateCategory(){
-        this.categoryService.categoryCreated.subscribe(createdCat => {
+        this.tmp[2] = this.categoryService.categoryCreated.subscribe(createdCat => {
             this.categories.unshift(createdCat);
         });
     }
     
     LISTEN_DeleteCategory(){
-        this.categoryService.categoryDeleted.subscribe(deletedCat => { 
+        this.tmp[3] = this.categoryService.categoryDeleted.subscribe(deletedCat => { 
             this.categories = this.categories.filter(cat => cat !== deletedCat);
         });
     }
 
     LISTEN_Data(){
-        this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
+        this.tmp[4] = this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
             if(data.showAs){
-            this.showAs = data.showAs; console.log("data ", data);
+                this.showAs = data.showAs; //console.log("data ", data);
             }
         });
     }
 
-    LISTEN_AdminMode(){
-        this.categoryService.adminMode.subscribe(mode => this.adminMode = mode);
+    LISTEN_AdminMode_catService(){
+        this.tmp[5] = this.categoryService.adminMode.subscribe(mode => this.adminMode = mode);
     }
 
     onClkCategory(category){
@@ -87,8 +89,7 @@ export class CategoriesComponent implements OnInit {
         this.categoryService.adminMode.next('add-mode');
     }
 
-    onCreateCat(){
-        this.categoryService.ClickedCategoryCreate.next(true);
-        this.categoryService.loadingCats.next(true);
+    ngOnDestroy(){
+        this.tmp.forEach( el => el.unsubscribe() );
     }
 }

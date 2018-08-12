@@ -7,19 +7,26 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  name = "";
+    name = "";
+    message = {type: "", text: ""};
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+    constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
+    ngOnInit() {
     this.name = this.route.snapshot.params['name'];
     //this.LINSTEN_Params();
     this.route.params.subscribe(params => this.name = params['name']);
-    //this.LINSTEN_Data(); // when data message, show toastr alert according to messageType
-  }
+    this.LINSTEN_Data(); // when data message, show toastr alert according to messageType
+    }
 
-  onNav(toName){
+    onNav(toName){
     this.router.navigate(['Home', toName]);
-  }
+    }
 
+    LINSTEN_Data(){
+        this.route.data.subscribe(data => { //console.log("data", data);
+            this.message.text = data.message;
+            this.message.type = data.messageType; //console.log("message", this.message);
+        });
+    }
 }

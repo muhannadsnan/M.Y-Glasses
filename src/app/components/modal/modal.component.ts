@@ -10,35 +10,36 @@ import { ItemService } from '../../services/item.service';
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  show: boolean = false;
-  adminMode;
-  @Input() btns: string;
-  tmp1: Subscription;
-  tmp2: Subscription;
-  tmp3: Subscription;
+    show: boolean = false;
+    adminMode;
+    @Input() btns: string;
+    isLoading = false;
+    tmp: Subscription[] = [];
 
-  constructor(private modalService: ModalService,
+    constructor(private modalService: ModalService,
                     private itemService: ItemService,
                     private categoryService: CategoryService) { }
 
-  ngOnInit() {
-      this.btns = "close-only"; // close-only(defalut), close-save, ok-only, ok-cancel, yes-no, delete-cancel
+    ngOnInit() {
+        this.btns = "no-btns"; // close-only(defalut), close-save, ok-only, ok-cancel, yes-no, delete-cancel
+        this.tmp[0] = this.modalService.showModal.subscribe(show => this.show = show);
+        this.tmp[1] = this.itemService.adminMode.subscribe(mode => this.adminMode = mode);
+        this.tmp[2] = this.categoryService.adminMode.subscribe(mode => this.adminMode = mode);
+        this.LISTEN_IsLoading();
+    }
 
-      this.tmp1 = this.modalService.showModal.subscribe(show => this.show = show);
-      this.tmp2 = this.itemService.adminMode.subscribe(mode => this.adminMode = mode);
-      this.tmp3 = this.categoryService.adminMode.subscribe(mode => this.adminMode = mode);
-  }
+    closeModal(){
+        this.modalService.showModal.next(false);
+        this.itemService.adminMode.next('');
+        this.categoryService.adminMode.next('');
+    }
 
-  closeModal(){
-    this.modalService.showModal.next(false);
-    this.itemService.adminMode.next('');
-    this.categoryService.adminMode.next('');
-  }
+    LISTEN_IsLoading(){
+        this.tmp[3] = this.modalService.isLoading.subscribe(value => this.isLoading = value);
+    }
 
-  ngOnDestroy(){
-    this.tmp1.unsubscribe();
-    this.tmp2.unsubscribe();
-    this.tmp3.unsubscribe();
-  }
+    ngOnDestroy(){
+        this.tmp.forEach( el => el.unsubscribe() );
+    }
 
 }
