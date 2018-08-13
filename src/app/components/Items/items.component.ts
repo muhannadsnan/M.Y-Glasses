@@ -1,86 +1,87 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ItemService } from '../../services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../../services/modal.service';
+import { Subscription } from '../../../../node_modules/rxjs';
 
 @Component({
-  selector: 'items',
+  selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css']
 })
 
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit, OnDestroy {
     items;
     selectedId = 0;
     loadingItems;
     showAs;
-    // showModal;
     adminMode;
+    tmp: Subscription[] = [];
 
     constructor(private itemService: ItemService,
                 private modalService: ModalService,
                 private route: ActivatedRoute,
                 private router: Router) { }
 
-    ngOnInit() { //console.log("itemsss");
+    ngOnInit() { //console.log("catsss");
         this.LISTEN_LoadingItems();
-        this.LISTEN_CreateItem();
-        this.LISTEN_DeleteItem();
+        this.LISTEN_CreateItems();
+        this.LISTEN_DeleteItems();
         this.getItems();
         this.showAs = 'grid';
         this.LISTEN_Data();
-        this.LISTEN_AdminMode();
+        this.LISTEN_AdminMode_catService();
     }
 
-    itemChanged(item) {
-        this.selectedId = item.id;
-        this.itemService.selectedItem.next(item);
+    catChanged(cat) { //console.log("cat clicked",cat);
+        this.selectedId = cat.id;
+        this.itemService.selectedItem.next(cat);
     }
 
     getItems(){
         this.itemService.loadingItems.next(true);
-        this.itemService.readItems().subscribe(resp => { //console.log("resp", resp);
+        this.tmp[0] = this.itemService.readItems().subscribe(resp => { //console.log("resp", resp);
             if(typeof resp === "undefined"){
                 this.items = [];
             }else{
                 this.items = resp;
-            }
+            }            
             this.itemService.loadingItems.next(false);
         });
     }
 
     LISTEN_LoadingItems(){
-        this.itemService.loadingItems.subscribe(isLoading => this.loadingItems = isLoading);
+        this.tmp[1] = this.itemService.loadingItems.subscribe(isLoading => this.loadingItems = isLoading);
     }
 
-    LISTEN_CreateItem(){
-        this.itemService.itemCreated.subscribe(createdItem => {
+    LISTEN_CreateItems(){
+        this.tmp[2] = this.itemService.itemCreated.subscribe(createdItem => {
             this.items.unshift(createdItem);
         });
     }
     
-    LISTEN_DeleteItem(){
-        this.itemService.itemDeleted.subscribe(deletedItem => { 
-            this.items = this.items.filter(item => item !== deletedItem);
+    LISTEN_DeleteItems(){
+        this.tmp[3] = this.itemService.itemDeleted.subscribe(deletedItem => { 
+            this.items = this.items.filter(cat => cat !== deletedItem);
         });
     }
 
     LISTEN_Data(){
-        this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
+        this.tmp[4] = this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
             if(data.showAs){
-            this.showAs = data.showAs; console.log("data ", data);
+                this.showAs = data.showAs; //console.log("data ", data);
             }
         });
     }
 
-    LISTEN_AdminMode(){
-        this.itemService.adminMode.subscribe(mode => this.adminMode = mode);
+    LISTEN_AdminMode_catService(){
+        this.tmp[5] = this.itemService.adminMode.subscribe(mode => this.adminMode = mode);
     }
 
     onClkItem(item){
         this.modalService.showModal.next(true);
         this.itemService.adminMode.next('detail-mode');
-        this.itemChanged(item);
+        this.catChanged(item);
     }
 
     onClkAddItem(){
@@ -88,8 +89,7 @@ export class ItemsComponent implements OnInit {
         this.itemService.adminMode.next('add-mode');
     }
 
-    onCreateItem(){
-        this.itemService.ClickedItemCreate.next(true);
-        this.itemService.loadingItems.next(true);
+    ngOnDestroy(){
+        this.tmp.forEach( el => el.unsubscribe() );
     }
 }

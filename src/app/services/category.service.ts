@@ -9,7 +9,6 @@ import { environment } from "../../environments/environment";
 
 export class CategoryService {
 	selectedCategory: Subject<any> = new Subject<any>(); 
-	ClickedCategoryCreate: Subject<any> = new Subject<any>(); 
 	categoryCreated: Subject<Category> = new Subject<Category>(); 
 	categoryDeleted: Subject<Category> = new Subject<Category>(); 
 	loadingCats: Subject<boolean> = new Subject<boolean>();
