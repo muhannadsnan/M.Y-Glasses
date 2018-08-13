@@ -4,6 +4,7 @@ import { ItemService } from '../../../services/item.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
 import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-edit-item',
@@ -12,18 +13,22 @@ import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 })
 export class EditItemComponent implements OnInit, OnDestroy {
     @Input() item: Item; 
+    categories;
     adminMode;
     isLoading: boolean;
+    isLoadingCats: boolean;
     tmp: Subscription[] = [];
 
     constructor(private itemService: ItemService,
+                    private categoryService: CategoryService,
                     private modalService: ModalService,
-                private route: ActivatedRoute) { }
+                    private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.LOADING(false);
         this.LISTEN_AdminMode();
         this.InitItem();
+        this.readCategories();
     }
 
     InitItem(){
@@ -64,6 +69,19 @@ export class EditItemComponent implements OnInit, OnDestroy {
 
     switchAdminMode(mode){        
         this.itemService.adminMode.next(mode); console.log(this.adminMode);
+    }
+
+    readCategories(){
+        this.isLoadingCats = true;
+        this.categoryService.MAP_List_Value_label(this.categoryService.readCats())
+            .subscribe(resp => { console.log("read cats", resp);
+                if(typeof resp === "undefined"){
+                    this.categories = [];
+                }else{
+                    this.categories = resp; 
+                }     
+                this.isLoadingCats = false;
+            });
     }
 
     saveChanges(){

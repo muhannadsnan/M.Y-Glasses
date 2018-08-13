@@ -7,6 +7,12 @@
 <!-- showas: {{showAs}} -->
 <!-- adminMode: {{adminMode}} -->
 <div class="item mx-auto col-md-6X col-lg-4X">
+    <div class="header" *ngIf="showAs != 'table' ">
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show item: {{item?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit item: {{item?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add item</h4>
+    </div>
+
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteItem()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>

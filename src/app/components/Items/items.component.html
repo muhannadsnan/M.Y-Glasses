@@ -48,8 +48,8 @@
 
 <!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
 <app-modal [btns]="close-only">
-    <h4 class="text-secondary" *ngIf="adminMode == 'detail-mode' " title>Show item</h4>
-    <h4 class="text-secondary" *ngIf="adminMode == 'edit-mode' " title>Edit item</h4>
-    <h4 class="text-success" *ngIf="adminMode == 'add-mode' " title>Add item</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show item: {{item?.title}}</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit item: {{item?.title}}</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add item</h4>
     <app-item [showAs]="'details'" body></app-item>
 </app-modal>

@@ -13,6 +13,14 @@
             <textarea type="text" class="form-control" [value]="item?.desc" [(ngModel)]="item.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
+    <br>
+    <label class="col-sm-12">
+        <div class="form-group">
+            <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoading ? 'Loading...' : 'Select Category...' " 
+                        [disabled]="isLoadingCats" [(ngModel)]="item.catid"></ng-select>
+        </div>
+        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    </label>
     
     <div class="btns text-right">
         <button class="btn btn-success" *ngIf="adminMode == 'edit-mode'" (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
@@ -20,4 +28,3 @@
         <button class="btn btn-success" *ngIf="adminMode == 'add-mode' " (click)="onCreateItem()" [disabled]="isLoading">{{isLoading ? 'Creating item...' : 'Create item' }}</button>
     </div>
 </div>
-

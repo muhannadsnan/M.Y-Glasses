@@ -11,6 +11,7 @@ import { OrdersComponent } from "./components/orders/orders.component";
 import { ClientsComponent } from "./components/clients/clients.component";
 import { CategoryComponent } from "./components/categories/category/category.component";
 import { EditCategoryComponent } from "./components/categories/edit-category/edit-category.component";
+import { ItemComponent } from "./components/Items/item/item.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -27,7 +28,10 @@ const routes = [
                 {path: '', component: CategoriesComponent, data: {showAs: 'table'}},
                 {path: ':id', component: CategoryComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
             ]},
-			{path: 'items', component: ItemsComponent, data: {showAs: 'table'}},
+			{path: 'items', children: [
+                {path: '', component: ItemsComponent, data: {showAs: 'table'}},
+                {path: ':id', component: ItemComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
+            ]},
 			{path: 'branches', component: BranchesComponent, data: {showAs: 'table'}},
 			{path: 'insurances', component: InsurancesComponent, data: {showAs: 'table'}},
 			{path: 'clients', component: ClientsComponent, data: {showAs: 'table'}},
