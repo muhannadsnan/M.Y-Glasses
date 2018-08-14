@@ -53,10 +53,14 @@ export class ItemComponent implements OnInit, OnDestroy {
     LISTEN_Params(){
         this.tmp[5] = this.route.params.subscribe(params => { //console.log("params", params);
             if(this.showAs == "details" && (this.adminMode == "edit-mode" || this.adminMode == "detail-mode")){ // so dont request in /admin/items when showAs table
-                this.tmp[6] = this.itemService.getItembyId(params.id).subscribe(item =>{ //console.log("item", item)
-                    this.item = item;
-                    this.item.id = params.id;
-                    this.LOADING(false);
+                this.tmp[6] = this.itemService.getItemById(params.id).subscribe(item =>{ //console.log("item", item)
+                    if(typeof item == "undefined" || item === null){
+                        alert("The object you are trying to reach is not available!");
+                    }else{
+                        this.item = item;
+                        this.item.id = params.id;
+                        this.LOADING(false);
+                    }
                 });
             }
         });

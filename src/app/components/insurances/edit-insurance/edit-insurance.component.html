@@ -1,4 +1,4 @@
-<div class="edit-insurance">
+<div class="form-insurance">
     <label class="col-sm-12">
         <div class="form-group">
             Title:
@@ -12,12 +12,10 @@
             <textarea type="text" class="form-control" [value]="insurance?.desc" [(ngModel)]="insurance.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
-    <br>
-    <label class="col-sm-12">
-        <div class="form-group">
-            <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
-                        [disabled]="isLoadingCats" [(ngModel)]="insurance.catid"></ng-select>
-        </div>
-        <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
-    </label>
+    
+    <div class="btns text-right">
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode'" (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Back to details</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'add-mode' " (click)="onCreateInsurance()" [disabled]="isLoading">{{isLoading ? 'Creating insurance...' : 'Create insurance' }}</button>
+    </div>
 </div>

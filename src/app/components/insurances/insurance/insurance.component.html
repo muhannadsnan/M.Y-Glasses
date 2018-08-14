@@ -1,19 +1,24 @@
 <a [routerLink]="'/insurances/'+insurance?.id" routerLinkActive="active" class="list-group-insurance d-flex" (click)="onClickInsurance()" *ngIf="showAs == 'list-group-insurance' ">
     <span>{{insurance?.title}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelInsurance(insurance?.id)" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelInsurance(insurance?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
 </a>
 
-<!-- <pre>{{insurance | json}}</pre> -->
+<div class="insurance mx-auto col-md-6X col-lg-4X">
+    <div class="header" *ngIf="showAs != 'table' ">
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show insurance: {{insurance?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit insurance: {{insurance?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add insurance</h4>
+    </div>
 
-<div class="insurance" *ngIf="showAs == 'details' ">
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteInsurance()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
-        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
-        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/insurances') " [disabled]="isLoading">Insurances</button>
     </div>
-    <div class="insurance-details" *ngIf="adminMode == 'detail-mode' ">
-        <div class="row">
+    <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
+    <ng-template #noLoading>
+        <div class="insurance-details" *ngIf="adminMode == 'detail-mode' ">
+            <div class="row">
                 <div class="col-sm-3">
                     <label for="">ID:</label>
                 </div>
@@ -37,11 +42,12 @@
                     <span class="x">{{insurance?.desc}}</span>
                 </div>
             </div>
-    </div>
-   <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
+        </div>
+    </ng-template>
+    <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
         <app-edit-insurance [insurance]="insurance"></app-edit-insurance>
     </div>
     <div class="addMode" *ngIf="adminMode == 'add-mode' ">
         <app-edit-insurance></app-edit-insurance>
-    </div>
-</div> <!-- END: DETAILS VIEW -->
+    </div>    
+</div> <!-- END: SHOW AS DETAILS -->

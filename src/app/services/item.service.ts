@@ -49,7 +49,7 @@ export class ItemService {
         return this.MAP_List_Value_label(this.http.get(`${this.dbUrl}/items/search/${keyword}`));
     }
     //--------------------------------------------------------------------
-    getItembyId(id) {
+    getItemById(id) {
         return this.http.get(`${this.dbUrl}/items/${id}`);
 	}    
     

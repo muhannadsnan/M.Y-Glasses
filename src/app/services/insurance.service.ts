@@ -9,7 +9,6 @@ import { environment } from "../../environments/environment";
 
 export class InsuranceService {
 	selectedInsurance: Subject<any> = new Subject<any>(); 
-	ClickedInsuranceCreate: Subject<any> = new Subject<any>(); 
 	insuranceCreated: Subject<Insurance> = new Subject<Insurance>(); 
 	insuranceDeleted: Subject<Insurance> = new Subject<Insurance>(); 
 	loadingInsurances: Subject<boolean> = new Subject<boolean>();
@@ -38,7 +37,10 @@ export class InsuranceService {
         return this.http.delete(`${this.dbUrl}/insurances/${insuranceid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
     //*************************************
-    	
+    getInsuranceById(id) {
+        return this.http.get(`${this.dbUrl}/insurances/${id}`);
+	}    
+    
 	MAP(observable){
 		return observable.pipe(
             map(actions => { //console.log("actions",actions);
