@@ -94,12 +94,9 @@ export class InsuranceComponent implements OnInit, OnDestroy {
                 this.insuranceService.loadingInsurances.next(false);
                 this.insuranceService.insuranceDeleted.next(this.insurance);           
                 this.insurance = new Insurance;
+                this.router.navigateByUrl("/admin/insurances");
             });
         }
-    }
-
-    navTo(url){
-        this.router.navigateByUrl(url);
     }
 
     LOADING(value){

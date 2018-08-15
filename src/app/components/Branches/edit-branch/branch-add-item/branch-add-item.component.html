@@ -24,4 +24,4 @@
 
 <h5 *ngFor="let q of qtities">Item: {{q.item.id}} - {{q.item.title}}, Qty: {{q.qty}}</h5>
 
-<button class="btn btn-primary btn-block" (click)="saveQuantities()" [disabled]="isLoading">Save items</button>
+<button class="btn btn-primary btn-block" (click)="saveQuantities()" [disabled]="isLoading || qtities.length == 0">Save items</button>

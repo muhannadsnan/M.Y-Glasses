@@ -1,4 +1,4 @@
-<a [routerLink]="'/insurances/'+branch?.id" routerLinkActive="active" class="list-group-branch d-flex" (click)="onClickBranch()" *ngIf="showAs == 'list-group-branch' ">
+<a [routerLink]="'/branches/'+branch?.id" routerLinkActive="active" class="list-group-branch d-flex" (click)="onClickBranch()" *ngIf="showAs == 'list-group-branch' ">
     <span>{{branch?.title}}</span>
     <button class="btn btn-outline-warning ml-auto" (click)="onDelBranch(branch?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
 </a>
@@ -11,9 +11,10 @@
     </div>
 
     <div class="admin-btns form-group text-right">
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('branch-add-item-mode')" [disabled]="isLoading">Add Items</button>
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteBranch()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
-        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/insurances') " [disabled]="isLoading">Branches</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/branches') " [disabled]="isLoading">Branches</button>
     </div>
     <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
     <ng-template #noLoading>
@@ -50,4 +51,7 @@
     <div class="addMode" *ngIf="adminMode == 'add-mode' ">
         <app-edit-branch></app-edit-branch>
     </div>    
+    <div class="addItemMode" *ngIf="adminMode == 'branch-add-item-mode' ">
+        <app-branch-add-item [branch]="branch"></app-branch-add-item>
+    </div>
 </div> <!-- END: SHOW AS DETAILS -->

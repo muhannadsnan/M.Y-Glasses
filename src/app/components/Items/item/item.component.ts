@@ -94,12 +94,9 @@ export class ItemComponent implements OnInit, OnDestroy {
                 this.itemService.loadingItems.next(false);
                 this.itemService.itemDeleted.next(this.item);           
                 this.item = new Item;
+                this.router.navigateByUrl("/admin/items");
             });
         }
-    }
-
-    navTo(url){
-        this.router.navigateByUrl(url);
     }
 
     LOADING(value){

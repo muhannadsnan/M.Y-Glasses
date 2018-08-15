@@ -94,12 +94,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.categoryService.loadingCats.next(false);
                 this.categoryService.categoryDeleted.next(this.category);           
                 this.category = new Category;
+                this.router.navigateByUrl("/admin/categories");
             });
         }
-    }
-
-    navTo(url){
-        this.router.navigateByUrl(url);
     }
 
     LOADING(value){

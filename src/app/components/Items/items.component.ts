@@ -23,19 +23,19 @@ export class ItemsComponent implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private router: Router) { }
 
-    ngOnInit() { //console.log("catsss");
+    ngOnInit() { //console.log("itemsss");
         this.LISTEN_LoadingItems();
         this.LISTEN_CreateItems();
         this.LISTEN_DeleteItems();
         this.getItems();
         this.showAs = 'grid';
         this.LISTEN_Data();
-        this.LISTEN_AdminMode_catService();
+        this.LISTEN_AdminMode_itemService();
     }
 
-    catChanged(cat) { //console.log("cat clicked",cat);
-        this.selectedId = cat.id;
-        this.itemService.selectedItem.next(cat);
+    itemChanged(item) { //console.log("item clicked",item);
+        this.selectedId = item.id;
+        this.itemService.selectedItem.next(item);
     }
 
     getItems(){
@@ -62,7 +62,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     
     LISTEN_DeleteItems(){
         this.tmp[3] = this.itemService.itemDeleted.subscribe(deletedItem => { 
-            this.items = this.items.filter(cat => cat !== deletedItem);
+            this.items = this.items.filter(item => item !== deletedItem);
         });
     }
 
@@ -74,14 +74,14 @@ export class ItemsComponent implements OnInit, OnDestroy {
         });
     }
 
-    LISTEN_AdminMode_catService(){
+    LISTEN_AdminMode_itemService(){
         this.tmp[5] = this.itemService.adminMode.subscribe(mode => this.adminMode = mode);
     }
 
     onClkItem(item){
         this.modalService.showModal.next(true);
         this.itemService.adminMode.next('detail-mode');
-        this.catChanged(item);
+        this.itemChanged(item);
     }
 
     onClkAddItem(){

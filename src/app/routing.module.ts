@@ -13,6 +13,7 @@ import { CategoryComponent } from "./components/categories/category/category.com
 import { EditCategoryComponent } from "./components/categories/edit-category/edit-category.component";
 import { ItemComponent } from "./components/Items/item/item.component";
 import { InsuranceComponent } from "./components/insurances/insurance/insurance.component";
+import { BranchComponent } from "./components/Branches/branch/branch.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -33,7 +34,10 @@ const routes = [
                 {path: '', component: ItemsComponent, data: {showAs: 'table'}},
                 {path: ':id', component: ItemComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
             ]},
-			{path: 'branches', component: BranchesComponent, data: {showAs: 'table'}},
+			{path: 'branches', children: [
+                {path: '', component: BranchesComponent, data: {showAs: 'table'}},
+                {path: ':id', component: BranchComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
+            ]},
 			{path: 'insurances', children: [
                 {path: '', component: InsurancesComponent, data: {showAs: 'table'}},
                 {path: ':id', component: InsuranceComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},

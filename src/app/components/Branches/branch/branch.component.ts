@@ -17,7 +17,7 @@ export class BranchComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     tmp: Subscription[] = [];
 
-    constructor(private insuranceService: BranchService,
+    constructor(private branchService: BranchService,
                     private modalService: ModalService,
                     private route: ActivatedRoute,
                     private router: Router) { }
@@ -26,7 +26,7 @@ export class BranchComponent implements OnInit, OnDestroy {
         this.LISTEN_AdminMode();
         this.INIT_Data();
         this.LISTEN_Params();
-        this.tmp[1] = this.insuranceService.selectedBranch.subscribe(branch => this.branch = branch);
+        this.tmp[1] = this.branchService.selectedBranch.subscribe(branch => this.branch = branch);
         if(typeof this.branch == 'undefined' && this.showAs != 'table') {// means we will request the branch
             this.LOADING(true);
         }
@@ -35,7 +35,7 @@ export class BranchComponent implements OnInit, OnDestroy {
     }
 
     LISTEN_AdminMode(){
-        this.tmp[0] = this.insuranceService.adminMode.subscribe(mode => {
+        this.tmp[0] = this.branchService.adminMode.subscribe(mode => {
             this.adminMode = mode;
             if(mode == 'add-mode')
                 this.branch = new Branch();
@@ -46,14 +46,14 @@ export class BranchComponent implements OnInit, OnDestroy {
         this.tmp[4] = this.route.data.subscribe(data => {
             this.showAs = data.showAs;
             if(data.adminMode)
-                this.insuranceService.adminMode.next(data.adminMode);
+                this.branchService.adminMode.next(data.adminMode);
         } ); 
     }
 
     LISTEN_Params(){
         this.tmp[5] = this.route.params.subscribe(params => { //console.log("params", params);
-            if(this.showAs == "details" && (this.adminMode == "edit-mode" || this.adminMode == "detail-mode")){ // so dont request in /admin/insurances when showAs table
-                this.tmp[6] = this.insuranceService.getBranchById(params.id).subscribe(branch =>{ console.log("branch", branch)
+            if(this.showAs == "details" && (this.adminMode == "edit-mode" || this.adminMode == "detail-mode")){ // so dont request in /admin/branchs when showAs table
+                this.tmp[6] = this.branchService.getBranchById(params.id).subscribe(branch =>{ console.log("branch", branch)
                     if(typeof branch == "undefined" || branch === null){
                         alert("The object you are trying to reach is not available!");
                     }else{
@@ -67,39 +67,36 @@ export class BranchComponent implements OnInit, OnDestroy {
     }
 
     onClickBranch(){
-        this.insuranceService.selectedBranch.next(this.branch);
+        this.branchService.selectedBranch.next(this.branch);
     }
 
     switchAdminMode(mode){        
-        this.insuranceService.adminMode.next(mode); console.log(this.adminMode);
+        this.branchService.adminMode.next(mode); console.log(this.adminMode);
     }
 
     navigateByAdminMode(mode){
         let navigateUrl = [];
         if(mode == "edit-mode")
-            navigateUrl = ['admin', 'insurances', this.branch.id, 'edit'];
+            navigateUrl = ['admin', 'branchs', this.branch.id, 'edit'];
         else if(mode == "detail-mode")
-            navigateUrl = ['admin', 'insurances', this.branch.id];
+            navigateUrl = ['admin', 'branchs', this.branch.id];
         this.router.navigate(navigateUrl);
     }
 
     deleteBranch(){
         if(confirm(`Delete branch "${this.branch.title}"?`)){
             this.LOADING(true);
-            this.insuranceService.loadingBranches.next(true);
-            this.tmp[3] = this.insuranceService.destroyBranch(this.branch.id).subscribe(resp => {
+            this.branchService.loadingBranches.next(true);
+            this.tmp[3] = this.branchService.destroyBranch(this.branch.id).subscribe(resp => {
                 console.log(resp);
                 this.LOADING(false);
                 this.modalService.showModal.next(false);
-                this.insuranceService.loadingBranches.next(false);
-                this.insuranceService.insuranceDeleted.next(this.branch);           
+                this.branchService.loadingBranches.next(false);
+                this.branchService.branchDeleted.next(this.branch);           
                 this.branch = new Branch;
+                this.router.navigateByUrl("/admin/branches");
             });
         }
-    }
-
-    navTo(url){
-        this.router.navigateByUrl(url);
     }
 
     LOADING(value){

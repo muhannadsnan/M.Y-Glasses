@@ -15,10 +15,9 @@ export class EditBranchComponent implements OnInit, OnDestroy {
     @Input() branch: Branch; 
     adminMode;
     isLoading: boolean;
-    isLoadingCats: boolean;
     tmp: Subscription[] = [];
 
-    constructor(private insuranceService: BranchService,
+    constructor(private branchService: BranchService,
                     private categoryService: CategoryService,
                     private modalService: ModalService,
                     private route: ActivatedRoute) { }
@@ -39,12 +38,12 @@ export class EditBranchComponent implements OnInit, OnDestroy {
     INIT_Data(){
         this.tmp[4] = this.route.data.subscribe(data => {
             if(data.adminMode)
-                this.insuranceService.adminMode.next(data.adminMode);
+                this.branchService.adminMode.next(data.adminMode);
         } ); 
     }
 
     LISTEN_AdminMode(){
-        this.tmp[0] = this.insuranceService.adminMode.subscribe(mode => { console.log(mode);
+        this.tmp[0] = this.branchService.adminMode.subscribe(mode => { console.log(mode);
             this.adminMode = mode;
             if(mode == 'add-mode') // to reset after edit-mode
                 this.branch = new Branch();
@@ -53,27 +52,27 @@ export class EditBranchComponent implements OnInit, OnDestroy {
 
     onCreateBranch(){
         this.LOADING(true);
-        this.tmp[2] = this.insuranceService.createBranch(this.branch).subscribe(resp => {
+        this.tmp[2] = this.branchService.createBranch(this.branch).subscribe(resp => {
             this.modalService.showModal.next(false);
             //toastr msg
             this.LOADING(false);
-            this.insuranceService.loadingBranches.next(false);
+            this.branchService.loadingBranches.next(false);
             console.log("resp create branch", resp);
             this.branch.id = resp;
-            this.insuranceService.insuranceCreated.next(this.branch);
+            this.branchService.branchCreated.next(this.branch);
             this.branch = new Branch;
         });
     }
 
     switchAdminMode(mode){        
-        this.insuranceService.adminMode.next(mode); console.log(this.adminMode);
+        this.branchService.adminMode.next(mode); console.log(this.adminMode);
     }
 
     saveChanges(){
         this.LOADING(true);
-        this.tmp[2] = this.insuranceService.updateBranch(this.branch).subscribe(resp => { console.log(resp);
+        this.tmp[2] = this.branchService.updateBranch(this.branch).subscribe(resp => { console.log(resp);
             this.LOADING(false);
-            this.insuranceService.adminMode.next('detail-mode');
+            this.branchService.adminMode.next('detail-mode');
         });
     }
 

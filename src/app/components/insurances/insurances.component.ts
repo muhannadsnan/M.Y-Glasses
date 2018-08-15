@@ -23,19 +23,19 @@ export class InsurancesComponent implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private router: Router) { }
 
-    ngOnInit() { //console.log("catsss");
+    ngOnInit() { //console.log("insurancesss");
         this.LISTEN_LoadingInsurances();
         this.LISTEN_CreateInsurances();
         this.LISTEN_DeleteInsurances();
         this.getInsurances();
         this.showAs = 'grid';
         this.LISTEN_Data();
-        this.LISTEN_AdminMode_catService();
+        this.LISTEN_AdminMode_insuranceService();
     }
 
-    catChanged(cat) { //console.log("cat clicked",cat);
-        this.selectedId = cat.id;
-        this.insuranceService.selectedInsurance.next(cat);
+    insuranceChanged(insurance) { //console.log("insurance clicked",insurance);
+        this.selectedId = insurance.id;
+        this.insuranceService.selectedInsurance.next(insurance);
     }
 
     getInsurances(){
@@ -62,7 +62,7 @@ export class InsurancesComponent implements OnInit, OnDestroy {
     
     LISTEN_DeleteInsurances(){
         this.tmp[3] = this.insuranceService.insuranceDeleted.subscribe(deletedInsurance => { 
-            this.insurances = this.insurances.filter(cat => cat !== deletedInsurance);
+            this.insurances = this.insurances.filter(insurance => insurance !== deletedInsurance);
         });
     }
 
@@ -74,14 +74,14 @@ export class InsurancesComponent implements OnInit, OnDestroy {
         });
     }
 
-    LISTEN_AdminMode_catService(){
+    LISTEN_AdminMode_insuranceService(){
         this.tmp[5] = this.insuranceService.adminMode.subscribe(mode => this.adminMode = mode);
     }
 
     onClkInsurance(insurance){
         this.modalService.showModal.next(true);
         this.insuranceService.adminMode.next('detail-mode');
-        this.catChanged(insurance);
+        this.insuranceChanged(insurance);
     }
 
     onClkAddInsurance(){

@@ -15,7 +15,6 @@ export class EditInsuranceComponent implements OnInit, OnDestroy {
     @Input() insurance: Insurance; 
     adminMode;
     isLoading: boolean;
-    isLoadingCats: boolean;
     tmp: Subscription[] = [];
 
     constructor(private insuranceService: InsuranceService,

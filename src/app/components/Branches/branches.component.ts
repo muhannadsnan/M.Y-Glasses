@@ -18,51 +18,51 @@ export class BranchesComponent implements OnInit, OnDestroy {
     adminMode;
     tmp: Subscription[] = [];
 
-    constructor(private insuranceService: BranchService,
+    constructor(private branchService: BranchService,
                 private modalService: ModalService,
                 private route: ActivatedRoute,
                 private router: Router) { }
 
-    ngOnInit() { //console.log("catsss");
+    ngOnInit() { //console.log("branchsss");
         this.LISTEN_LoadingBranches();
-        this.LISTEN_CreateBranches();
-        this.LISTEN_DeleteBranches();
+        this.LISTEN_CreateBranch();
+        this.LISTEN_DeleteBranch();
         this.getBranches();
         this.showAs = 'grid';
         this.LISTEN_Data();
-        this.LISTEN_AdminMode_catService();
+        this.LISTEN_AdminMode_branchService();
     }
 
-    catChanged(cat) { //console.log("cat clicked",cat);
-        this.selectedId = cat.id;
-        this.insuranceService.selectedBranch.next(cat);
+    branchChanged(branch) { //console.log("branch clicked",branch);
+        this.selectedId = branch.id;
+        this.branchService.selectedBranch.next(branch);
     }
 
     getBranches(){
-        this.insuranceService.loadingBranches.next(true);
-        this.tmp[0] = this.insuranceService.readBranches().subscribe(resp => { //console.log("resp", resp);
+        this.branchService.loadingBranches.next(true);
+        this.tmp[0] = this.branchService.readBranches().subscribe(resp => { //console.log("resp", resp);
             if(typeof resp === "undefined"){
                 this.branches = [];
             }else{
                 this.branches = resp;
             }            
-            this.insuranceService.loadingBranches.next(false);
+            this.branchService.loadingBranches.next(false);
         });
     }
 
     LISTEN_LoadingBranches(){
-        this.tmp[1] = this.insuranceService.loadingBranches.subscribe(isLoading => this.loadingBranches = isLoading);
+        this.tmp[1] = this.branchService.loadingBranches.subscribe(isLoading => this.loadingBranches = isLoading);
     }
 
-    LISTEN_CreateBranches(){
-        this.tmp[2] = this.insuranceService.insuranceCreated.subscribe(createdBranch => {
+    LISTEN_CreateBranch(){
+        this.tmp[2] = this.branchService.branchCreated.subscribe(createdBranch => {
             this.branches.unshift(createdBranch);
         });
     }
     
-    LISTEN_DeleteBranches(){
-        this.tmp[3] = this.insuranceService.insuranceDeleted.subscribe(deletedBranch => { 
-            this.branches = this.branches.filter(cat => cat !== deletedBranch);
+    LISTEN_DeleteBranch(){
+        this.tmp[3] = this.branchService.branchDeleted.subscribe(deletedBranch => { 
+            this.branches = this.branches.filter(branch => branch !== deletedBranch);
         });
     }
 
@@ -74,19 +74,19 @@ export class BranchesComponent implements OnInit, OnDestroy {
         });
     }
 
-    LISTEN_AdminMode_catService(){
-        this.tmp[5] = this.insuranceService.adminMode.subscribe(mode => this.adminMode = mode);
+    LISTEN_AdminMode_branchService(){
+        this.tmp[5] = this.branchService.adminMode.subscribe(mode => this.adminMode = mode);
     }
 
     onClkBranch(branch){
         this.modalService.showModal.next(true);
-        this.insuranceService.adminMode.next('detail-mode');
-        this.catChanged(branch);
+        this.branchService.adminMode.next('detail-mode');
+        this.branchChanged(branch);
     }
 
     onClkAddBranch(){
         this.modalService.showModal.next(true);
-        this.insuranceService.adminMode.next('add-mode');
+        this.branchService.adminMode.next('add-mode');
     }
 
     ngOnDestroy(){
