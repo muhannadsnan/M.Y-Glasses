@@ -49,7 +49,10 @@ export class BranchService {
         return this.http.post(`${this.dbUrl}/quantities`, qtities, { responseType: 'text' /*important to receive JSON*/});
     }
     //--------------------------------------------------------------------
-    	
+    getBranchById(id) {
+        return this.http.get(`${this.dbUrl}/branches/${id}`);
+	}    
+    
 	MAP(observable){
 		return observable.pipe(
             map(actions => { //console.log("actions",actions);

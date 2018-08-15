@@ -1,4 +1,4 @@
-<div class="edit-branch">
+<div class="form-branch">
     <label class="col-sm-12">
         <div class="form-group">
             Title:
@@ -12,7 +12,10 @@
             <textarea type="text" class="form-control" [value]="branch?.desc" [(ngModel)]="branch.desc" [disabled]="isLoading"></textarea>
         </div>
     </label>
-    <!-- <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoadingCats ? 'Loading...' : 'Select category...' " 
-                    [disabled]="isLoadingCats"></ng-select> -->
-    <!-- https://basvandenberg.github.io/ng-select/#/documentation -->
+    
+    <div class="btns text-right">
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode'" (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Back to details</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'add-mode' " (click)="onCreateBranch()" [disabled]="isLoading">{{isLoading ? 'Creating branch...' : 'Create branch' }}</button>
+    </div>
 </div>

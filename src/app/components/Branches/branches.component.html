@@ -1,21 +1,18 @@
 <div class="container main" [ngSwitch]="showAs"> <!-- ngSwitch works only with divs, not ng-templates -->
- 
     <div class="row" *ngSwitchCase="'grid'">        
         <div class="col-lg-3">
-            <h5 class="text-center my-3">Branches</h5>
+            <h5 class="text-center my-3">Categories</h5>
             <div class="list-group">
-                <app-branch *ngFor="let branch of branches" [branch]="branch" (click)="branchChanged(branch)"></app-branch>
+                <app-branch *ngFor="let branch of branches" [branch]="branch" (click)="insuranceChanged(branch)"></app-branch>
                 <h3 *ngIf="loadingBranches">LOADING..</h3>
             </div>
             <!-- <pre>{{branches | async | json}}</pre> -->
         </div><!-- END: col-lg-3 -->
 
         <div class="col-lg-9">
-            <!-- <h3 *ngIf="selectedId == 0" class="alert alert-primary">Please select a branch!</h3>         -->
             <router-outlet></router-outlet>
         </div><!-- END: col-lg-9 -->
     </div>    
-
     <div class="rowX" *ngSwitchCase="'table'">
         <div class="alert alert-primary text-center">
             <h5> <a routerLink="/admin">Control panel</a> > Branches Management
@@ -25,34 +22,30 @@
         <table class="table table-striped table-hover table-primary table-responsiveX table-sm table-darkX table-borderedX col-sm-12 mx-auto">
             <thead class="thead-dark">
                 <tr class="">
-                    <th scope="col"># : id</th>
+                    <th scope="col"># - id</th>
                     <th scope="col">Title</th>
                     <th scope="col">Desc</th>
                 </tr>
             </thead>
             <tbody>
                     <h3 *ngIf="loadingBranches">LOADING..</h3>
-                <tr *ngIf="branches?.length == 0; else branchesExist"><td colspan="3" class="text-center">No branches.</td></tr>
-                <ng-template #branchesExist>
+                    <tr *ngIf="branches?.length == 0; else manyRows"><td colspan="3" class="text-center">No branches.</td></tr>
+                <ng-template #manyRows>
                     <tr *ngFor="let branch of branches; let i = index" (click)="onClkBranch(branch)">                    
-                        <th scope="row">{{i+1}} : {{branch.id}}</th>
+                        <th scope="row">{{i+1}} - {{branch.id}}</th>
                         <td>{{branch.title}}</td>
                         <td>{{branch.desc}}</td>
                     </tr>
                 </ng-template>
-                
             </tbody>
         </table>
     </div>
 </div>
-<!-- <h4>adminMode: {{adminMode}}</h4> -->
 
 <!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
 <app-modal [btns]="close-only">
-    <h4 class="text-secondary" *ngIf="adminMode == 'detail-mode' " title>Show branch</h4>
-    <h4 class="text-secondary" *ngIf="adminMode == 'edit-mode' " title>Edit branch</h4>
-    <h4 class="text-primary" *ngIf="adminMode == 'add-mode' " title>Add branch</h4>
-    <h4 class="text-primary" *ngIf="adminMode == 'branch-add-item-mode' " title>Add items to branch</h4>
-    <app-branch [showAs]=" 'details' " body></app-branch>
-    <button class="btn btn-primary" *ngIf="adminMode == 'add-mode' " (click)="onCreateBranch()" [disabled]="loadingBranches" footer>{{loadingBranches ? 'Creating branch...' : 'Create branch' }}</button>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show branch: {{branch?.title}}</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit branch: {{branch?.title}}</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add branch</h4>
+    <app-branch [showAs]="'details'" body></app-branch>
 </app-modal>

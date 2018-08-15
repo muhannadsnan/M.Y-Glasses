@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Branch } from '../../../models/branch';
 import { BranchService } from '../../../services/branch.service';
-import { CategoryService } from '../../../services/category.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
-import { map } from "rxjs/operators";
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-edit-branch',
@@ -13,55 +13,77 @@ import { map } from "rxjs/operators";
 })
 export class EditBranchComponent implements OnInit, OnDestroy {
     @Input() branch: Branch; 
-    tmp: Subscription;
+    adminMode;
     isLoading: boolean;
     isLoadingCats: boolean;
-    categories;
+    tmp: Subscription[] = [];
 
-    constructor(private branchService: BranchService, 
+    constructor(private insuranceService: BranchService,
                     private categoryService: CategoryService,
-                    private modalService: ModalService) { }
+                    private modalService: ModalService,
+                    private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.isLoading = false;
+        this.LOADING(false);
+        this.LISTEN_AdminMode();
         this.InitBranch();
-        this.Listen_OnClickCreateBranch();
     }
 
     InitBranch(){
         if( ! this.branch ){ //console.log("this.branch has been initialized!");
             this.branch = new Branch
-        }
+            this.adminMode = "add-mode"
+        }else this.adminMode = "edit-mode"
     }
 
-    Listen_OnClickCreateBranch(){
-        this.tmp = this.branchService.ClickedBranchCreate.subscribe(isCreated => {
-            if(isCreated){
-                this.isLoading = true;
-                this.Listen_CreateBranch();
-            }
+    INIT_Data(){
+        this.tmp[4] = this.route.data.subscribe(data => {
+            if(data.adminMode)
+                this.insuranceService.adminMode.next(data.adminMode);
+        } ); 
+    }
+
+    LISTEN_AdminMode(){
+        this.tmp[0] = this.insuranceService.adminMode.subscribe(mode => { console.log(mode);
+            this.adminMode = mode;
+            if(mode == 'add-mode') // to reset after edit-mode
+                this.branch = new Branch();
         });
     }
 
-    Listen_CreateBranch(){
-        this.branchService.createBranch(this.branch).subscribe(resp => {
+    onCreateBranch(){
+        this.LOADING(true);
+        this.tmp[2] = this.insuranceService.createBranch(this.branch).subscribe(resp => {
             this.modalService.showModal.next(false);
             //toastr msg
-            this.isLoading = false;
-            this.branchService.loadingBranches.next(false);
+            this.LOADING(false);
+            this.insuranceService.loadingBranches.next(false);
             console.log("resp create branch", resp);
             this.branch.id = resp;
-            this.branchService.branchCreated.next(this.branch);
+            this.insuranceService.insuranceCreated.next(this.branch);
             this.branch = new Branch;
         });
     }
 
-    catSelected(cat){
-        console.log(cat);
+    switchAdminMode(mode){        
+        this.insuranceService.adminMode.next(mode); console.log(this.adminMode);
+    }
+
+    saveChanges(){
+        this.LOADING(true);
+        this.tmp[2] = this.insuranceService.updateBranch(this.branch).subscribe(resp => { console.log(resp);
+            this.LOADING(false);
+            this.insuranceService.adminMode.next('detail-mode');
+        });
+    }
+
+    LOADING(value){
+        this.isLoading = value;
+        this.modalService.isLoading.next(value);
     }
 
     ngOnDestroy(){
-        this.tmp.unsubscribe();
+        this.tmp.forEach( el => el.unsubscribe() );
     }
 
 }

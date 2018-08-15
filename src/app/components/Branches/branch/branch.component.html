@@ -1,20 +1,24 @@
-<a [routerLink]="'/branches/'+branch?.id" routerLinkActive="active" class="list-group-branch d-flex" (click)="onClickBranch()" *ngIf="showAs == 'list-group-branch' ">
+<a [routerLink]="'/insurances/'+branch?.id" routerLinkActive="active" class="list-group-branch d-flex" (click)="onClickBranch()" *ngIf="showAs == 'list-group-branch' ">
     <span>{{branch?.title}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelBranch(branch?.id)" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelBranch(branch?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
 </a>
 
-<!-- <pre>{{branch | json}}</pre> -->
+<div class="branch mx-auto col-md-6X col-lg-4X">
+    <div class="header" *ngIf="showAs != 'table' ">
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show branch: {{branch?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit branch: {{branch?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add branch</h4>
+    </div>
 
-<div class="branch" *ngIf="showAs == 'details' ">
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
         <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteBranch()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
-        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
-        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Cancel</button>
-        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('branch-add-item-mode')" [disabled]="isLoading">Add Items</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/insurances') " [disabled]="isLoading">Branches</button>
     </div>
-    <div class="branch-details" *ngIf="adminMode == 'detail-mode' ">
-        <div class="row">
+    <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
+    <ng-template #noLoading>
+        <div class="branch-details" *ngIf="adminMode == 'detail-mode' ">
+            <div class="row">
                 <div class="col-sm-3">
                     <label for="">ID:</label>
                 </div>
@@ -38,14 +42,12 @@
                     <span class="x">{{branch?.desc}}</span>
                 </div>
             </div>
-    </div>
-   <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
+        </div>
+    </ng-template>
+    <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
         <app-edit-branch [branch]="branch"></app-edit-branch>
     </div>
     <div class="addMode" *ngIf="adminMode == 'add-mode' ">
         <app-edit-branch></app-edit-branch>
-    </div>
-    <div class="addItemMode" *ngIf="adminMode == 'branch-add-item-mode' ">
-        <app-branch-add-item [branch]="branch"></app-branch-add-item>
-    </div>
-</div> <!-- END: DETAILS VIEW -->
+    </div>    
+</div> <!-- END: SHOW AS DETAILS -->
