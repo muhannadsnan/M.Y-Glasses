@@ -1,0 +1,53 @@
+<a [routerLink]="'/clients/'+client?.id" routerLinkActive="active" class="list-group-client d-flex" (click)="onClickClient()" *ngIf="showAs == 'list-group-client' ">
+    <span>{{client?.title}}</span>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelClient(client?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+</a>
+
+<div class="client mx-auto col-md-6X col-lg-4X">
+    <div class="header" *ngIf="showAs != 'table' ">
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show client: {{client?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit client: {{client?.title}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add client</h4>
+    </div>
+
+    <div class="admin-btns form-group text-right">
+        <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteClient()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/clients') " [disabled]="isLoading">Clients</button>
+    </div>
+    <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
+    <ng-template #noLoading>
+        <div class="client-details" *ngIf="adminMode == 'detail-mode' ">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">ID:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{client?.id}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">Title:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{client?.title}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">Desc:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{client?.desc}}</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="editMode" *ngIf="adminMode == 'edit-mode' ">
+        <app-edit-client [client]="client"></app-edit-client>
+    </div>
+    <div class="addMode" *ngIf="adminMode == 'add-mode' ">
+        <app-edit-client></app-edit-client>
+    </div>    
+</div> <!-- END: SHOW AS DETAILS -->

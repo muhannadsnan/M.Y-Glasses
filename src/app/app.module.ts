@@ -12,8 +12,8 @@ import { NavComponent } from './components/nav/nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { CategoryComponent } from './components/categories/category/category.component';
-import { ItemsComponent } from './components/Items/items.component';
-import { ItemComponent } from './components/Items/item/item.component';
+import { ItemsComponent } from './components/items/items.component';
+import { ItemComponent } from './components/items/item/item.component';
 
 import { CategoryService } from './services/category.service';
 import { ItemService } from './services/item.service';
@@ -24,11 +24,11 @@ import { EditCategoryComponent } from './components/categories/edit-category/edi
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from './services/modal.service';
-import { BranchesComponent } from './components/Branches/branches.component';
+import { BranchesComponent } from './components/branches/branches.component';
 import { BranchService } from './services/branch.service';
-import { BranchComponent } from './components/Branches/branch/branch.component';
-import { EditBranchComponent } from './components/Branches/edit-branch/edit-branch.component';
-import { BranchAddItemComponent } from './components/Branches/edit-branch/branch-add-item/branch-add-item.component';
+import { BranchComponent } from './components/branches/branch/branch.component';
+import { EditBranchComponent } from './components/branches/edit-branch/edit-branch.component';
+import { BranchAddItemComponent } from './components/branches/edit-branch/branch-add-item/branch-add-item.component';
 import { InsuranceService } from './services/insurance.service';
 import { InsuranceComponent } from './components/insurances/insurance/insurance.component';
 import { InsurancesComponent } from './components/insurances/insurances.component';

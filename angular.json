@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "my-angular": {
+    "M.Y-Glasses": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/my-angular",
+            "outputPath": "dist/M.Y-Glasses",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "my-angular:build"
+            "browserTarget": "M.Y-Glasses:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "my-angular:build:production"
+              "browserTarget": "M.Y-Glasses:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "my-angular:build"
+            "browserTarget": "M.Y-Glasses:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "my-angular-e2e": {
+    "M.Y-Glasses-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,7 +103,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "my-angular:serve"
+            "devServerTarget": "M.Y-Glasses:serve"
           }
         },
         "lint": {
@@ -118,5 +118,5 @@
       }
     }
   },
-  "defaultProject": "my-angular"
+  "defaultProject": "M.Y-Glasses"
 }

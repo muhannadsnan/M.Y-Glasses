@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Client } from '../../../models/client';
 import { ClientService } from '../../../services/client.service';
-import { CategoryService } from '../../../services/category.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
-import { map } from "rxjs/operators";
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-edit-client',
@@ -13,42 +13,49 @@ import { map } from "rxjs/operators";
 })
 export class EditClientComponent implements OnInit, OnDestroy {
     @Input() client: Client; 
-    tmp: Subscription;
+    adminMode;
     isLoading: boolean;
-    isLoadingCats: boolean;
-    categories;
+    tmp: Subscription[] = [];
 
-    constructor(private clientService: ClientService, 
+    constructor(private clientService: ClientService,
                     private categoryService: CategoryService,
-                    private modalService: ModalService) { }
+                    private modalService: ModalService,
+                    private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.isLoading = false;
+        this.LOADING(false);
+        this.LISTEN_AdminMode();
         this.InitClient();
-        this.Listen_OnClickCreateClient();
-        this.readCategories();
     }
 
     InitClient(){
         if( ! this.client ){ //console.log("this.client has been initialized!");
             this.client = new Client
-        }
+            this.adminMode = "add-mode"
+        }else this.adminMode = "edit-mode"
     }
 
-    Listen_OnClickCreateClient(){
-        this.tmp = this.clientService.ClickedClientCreate.subscribe(isCreated => {
-            if(isCreated){
-                this.isLoading = true;
-                this.Listen_CreateClient();
-            }
+    INIT_Data(){
+        this.tmp[4] = this.route.data.subscribe(data => {
+            if(data.adminMode)
+                this.clientService.adminMode.next(data.adminMode);
+        } ); 
+    }
+
+    LISTEN_AdminMode(){
+        this.tmp[0] = this.clientService.adminMode.subscribe(mode => { console.log(mode);
+            this.adminMode = mode;
+            if(mode == 'add-mode') // to reset after edit-mode
+                this.client = new Client();
         });
     }
 
-    Listen_CreateClient(){
-        this.clientService.createClient(this.client).subscribe(resp => {
+    onCreateClient(){
+        this.LOADING(true);
+        this.tmp[2] = this.clientService.createClient(this.client).subscribe(resp => {
             this.modalService.showModal.next(false);
             //toastr msg
-            this.isLoading = false;
+            this.LOADING(false);
             this.clientService.loadingClients.next(false);
             console.log("resp create client", resp);
             this.client.id = resp;
@@ -57,21 +64,25 @@ export class EditClientComponent implements OnInit, OnDestroy {
         });
     }
 
-    readCategories(){
-        this.isLoadingCats = true;
-        this.categoryService.MAP_List_Value_label(this.categoryService.readCats())
-        .subscribe(resp => { //console.log("read cats", resp);
-            if(typeof resp === "undefined"){
-                this.categories = [];
-            }else{
-                this.categories = resp; 
-            }     
-            this.isLoadingCats = false;
+    switchAdminMode(mode){        
+        this.clientService.adminMode.next(mode); console.log(this.adminMode);
+    }
+
+    saveChanges(){
+        this.LOADING(true);
+        this.tmp[2] = this.clientService.updateClient(this.client).subscribe(resp => { console.log(resp);
+            this.LOADING(false);
+            this.clientService.adminMode.next('detail-mode');
         });
     }
 
+    LOADING(value){
+        this.isLoading = value;
+        this.modalService.isLoading.next(value);
+    }
+
     ngOnDestroy(){
-        this.tmp.unsubscribe();
+        this.tmp.forEach( el => el.unsubscribe() );
     }
 
 }
