@@ -1,19 +1,19 @@
 <a [routerLink]="'/clients/'+client?.id" routerLinkActive="active" class="list-group-client d-flex" (click)="onClickClient()" *ngIf="showAs == 'list-group-client' ">
-    <span>{{client?.title}}</span>
+    <span>{{client?.name}}</span>
     <button class="btn btn-outline-warning ml-auto" (click)="onDelClient(client?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
 </a>
 
 <div class="client mx-auto col-md-6X col-lg-4X">
     <div class="header" *ngIf="showAs != 'table' ">
-        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show client: {{client?.title}}</h4>
-        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit client: {{client?.title}}</h4>
-        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add client</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " name>Show client: {{client?.name}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " name>Edit client: {{client?.name}}</h4>
+        <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'add-mode' " name>Add client</h4>
     </div>
 
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
-        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteClient()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
-        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/clients') " [disabled]="isLoading">Clients</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteClient()" [disabled]="isLoading">{{isLoading ? 'Loading..' : 'Delete'}}</button>
+        <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/clients')" [disabled]="isLoading">Clients</button>
     </div>
     <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
     <ng-template #noLoading>
@@ -27,19 +27,31 @@
                 </div>
             </div>
             <div class="row">
+                <label for="" class="col-sm-3">Name:</label>
+                <span class="x" class="col-sm-9">{{client?.name}}</span>
+            </div>
+            <div class="row">
                 <div class="col-sm-3">
-                    <label for="">Title:</label>
+                    <label for="">Phone:</label>
                 </div>
                 <div class="col-sm-9">
-                    <span class="x">{{client?.title}}</span>
+                    <span class="x">{{client?.phone}}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
-                    <label for="">Desc:</label>
+                    <label for="">Address:</label>
                 </div>
                 <div class="col-sm-9">
-                    <span class="x">{{client?.desc}}</span>
+                    <span class="x">{{client?.address}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">Email:</label>
+                </div>
+                <div class="col-sm-9">
+                    <span class="x">{{client?.email}}</span>
                 </div>
             </div>
         </div>

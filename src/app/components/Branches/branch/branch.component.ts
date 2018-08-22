@@ -83,6 +83,10 @@ export class BranchComponent implements OnInit, OnDestroy {
         this.router.navigate(navigateUrl);
     }
 
+    navTo(url){
+        this.router.navigateByUrl(url);
+    }
+    
     deleteBranch(){
         if(confirm(`Delete branch "${this.branch.title}"?`)){
             this.LOADING(true);

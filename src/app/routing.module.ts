@@ -2,18 +2,18 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { HomeComponent } from "./components/home/home.component";
 import { CategoriesComponent } from "./components/categories/categories.component";
-import { ItemsComponent } from "./components/Items/items.component";
+import { ItemsComponent } from "./components/items/items.component";
+import { ItemComponent } from "./components/items/item/item.component";
 import { AdminComponent } from "./components/admin/admin.component";
 import { AdminIndexComponent } from "./components/admin/admin-index/admin-index.component";
-import { BranchesComponent } from "./components/Branches/branches.component";
+import { BranchesComponent } from "./components/branches/branches.component";
+import { BranchComponent } from "./components/branches/branch/branch.component";
 import { InsurancesComponent } from "./components/insurances/insurances.component";
 import { OrdersComponent } from "./components/orders/orders.component";
 import { ClientsComponent } from "./components/clients/clients.component";
 import { CategoryComponent } from "./components/categories/category/category.component";
-import { EditCategoryComponent } from "./components/categories/edit-category/edit-category.component";
-import { ItemComponent } from "./components/Items/item/item.component";
 import { InsuranceComponent } from "./components/insurances/insurance/insurance.component";
-import { BranchComponent } from "./components/Branches/branch/branch.component";
+import { ClientComponent } from "./components/clients/client/client.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -42,7 +42,10 @@ const routes = [
                 {path: '', component: InsurancesComponent, data: {showAs: 'table'}},
                 {path: ':id', component: InsuranceComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
             ]},
-			{path: 'clients', component: ClientsComponent, data: {showAs: 'table'}},
+			{path: 'clients', children: [
+                {path: '', component: ClientsComponent, data: {showAs: 'table'}},
+                {path: ':id', component: ClientComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
+            ]},
 			{path: 'orders', component: OrdersComponent, data: {showAs: 'table'}},
 		]
 	},

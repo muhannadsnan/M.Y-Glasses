@@ -24,8 +24,8 @@ import { EditCategoryComponent } from './components/categories/edit-category/edi
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from './services/modal.service';
-import { BranchesComponent } from './components/branches/branches.component';
 import { BranchService } from './services/branch.service';
+import { BranchesComponent } from './components/branches/branches.component';
 import { BranchComponent } from './components/branches/branch/branch.component';
 import { EditBranchComponent } from './components/branches/edit-branch/edit-branch.component';
 import { BranchAddItemComponent } from './components/branches/edit-branch/branch-add-item/branch-add-item.component';

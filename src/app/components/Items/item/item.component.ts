@@ -83,6 +83,10 @@ export class ItemComponent implements OnInit, OnDestroy {
         this.router.navigate(navigateUrl);
     }
 
+    navTo(url){
+        this.router.navigateByUrl(url);
+    }
+    
     deleteItem(){
         if(confirm(`Delete item "${this.item.title}"?`)){
             this.LOADING(true);

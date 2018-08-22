@@ -33,8 +33,8 @@
                 <ng-template #manyRows>
                     <tr *ngFor="let client of clients; let i = index" (click)="onClkClient(client)">                    
                         <th scope="row">{{i+1}} - {{client.id}}</th>
-                        <td>{{client.title}}</td>
-                        <td>{{client.desc}}</td>
+                        <td>{{client.name}}</td>
+                        <td>{{client.address}}</td>
                     </tr>
                 </ng-template>
             </tbody>
@@ -44,8 +44,8 @@
 
 <!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
 <app-modal [btns]="close-only">
-    <h4 class="text-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show client: {{client?.title}}</h4>
-    <h4 class="text-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit client: {{client?.title}}</h4>
-    <h4 class="text-primary text-center" *ngIf="adminMode == 'add-mode' " title>Add client</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'detail-mode' " name>Show client: {{client?.name}}</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'edit-mode' " name>Edit client: {{client?.name}}</h4>
+    <h4 class="text-primary text-center" *ngIf="adminMode == 'add-mode' " name>Add client</h4>
     <app-client [showAs]="'details'" body></app-client>
 </app-modal>

@@ -32,8 +32,8 @@ export const environment = {
     "hideMethod": "fadeOut"
   },
   db: {
-    // url: "http://localhost:99",
-    url: "https://ctenoid-chairs.000webhostapp.com/"
+    url: "http://localhost:99",
+    // url: "https://ctenoid-chairs.000webhostapp.com/"
   }
 };
 

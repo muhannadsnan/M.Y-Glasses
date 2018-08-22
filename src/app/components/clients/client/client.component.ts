@@ -83,8 +83,12 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.router.navigate(navigateUrl);
     }
 
+    navTo(url){
+        this.router.navigateByUrl(url);
+    }
+    
     deleteClient(){
-        if(confirm(`Delete client "${this.client.title}"?`)){
+        if(confirm(`Delete client "${this.client.name}"?`)){
             this.LOADING(true);
             this.clientService.loadingClients.next(true);
             this.tmp[3] = this.clientService.destroyClient(this.client.id).subscribe(resp => {

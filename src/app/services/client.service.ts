@@ -38,7 +38,10 @@ export class ClientService {
         return this.http.delete(`${this.dbUrl}/clients/${clientid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
     //*************************************
-        
+    getClientById(id) {
+        return this.http.get(`${this.dbUrl}/clients/${id}`);
+    }
+    
     searchClientByName(keyword){
         this.loadingClients.next(true);
         return this.MAP_List_Value_label(this.http.get(`${this.dbUrl}/clients/search/${keyword}`));

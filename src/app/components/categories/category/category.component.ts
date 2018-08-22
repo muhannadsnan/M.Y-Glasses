@@ -53,7 +53,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     LISTEN_Params(){
         this.tmp[5] = this.route.params.subscribe(params => { //console.log("params", params);
             if(this.showAs == "details" && (this.adminMode == "edit-mode" || this.adminMode == "detail-mode")){ // so dont request in /admin/categories when showAs table
-                this.tmp[6] = this.categoryService.getCategorybyId(params.id).subscribe(category =>{ //console.log("category", category)
+                this.tmp[6] = this.categoryService.getCategoryById(params.id).subscribe(category =>{ //console.log("category", category)
                     if(typeof category == "undefined" || category === null){
                         alert("The object you are trying to reach is not available!");
                     }else{
@@ -83,6 +83,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.router.navigate(navigateUrl);
     }
 
+    navTo(url){
+        this.router.navigateByUrl(url);
+    }
+    
     deleteCategory(){
         if(confirm(`Delete category "${this.category.title}"?`)){
             this.LOADING(true);

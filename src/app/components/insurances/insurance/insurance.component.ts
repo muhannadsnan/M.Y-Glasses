@@ -83,6 +83,10 @@ export class InsuranceComponent implements OnInit, OnDestroy {
         this.router.navigate(navigateUrl);
     }
 
+    navTo(url){
+        this.router.navigateByUrl(url);
+    }
+
     deleteInsurance(){
         if(confirm(`Delete insurance "${this.insurance.title}"?`)){
             this.LOADING(true);
