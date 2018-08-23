@@ -1,6 +1,6 @@
 <a [routerLink]="'/items/'+item?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickItem()" *ngIf="showAs == 'list-group-item' ">
     <span>{{item?.title}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelItem(item?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelItem(item?.id)" [disabled]="isLoading">{{isLoading ? 'Please wait..' : 'Delete'}}</button>
 </a>
 
 <div class="item mx-auto col-md-6X col-lg-4X">
@@ -12,7 +12,7 @@
 
     <div class="admin-btns form-group text-right">
         <button class="btn btn-warning" *ngIf="adminMode == 'detail-mode' " (click)="switchAdminMode('edit-mode')" [disabled]="isLoading">Edit</button>
-        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteItem()" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+        <button class="btn btn-danger" *ngIf="adminMode == 'detail-mode' " (click)="deleteItem()" [disabled]="isLoading">{{isLoading ? 'Please wait..' : 'Delete'}}</button>
         <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/items') " [disabled]="isLoading">Items</button>
     </div>
     <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>

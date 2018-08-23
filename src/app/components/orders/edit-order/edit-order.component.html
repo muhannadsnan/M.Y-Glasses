@@ -1,4 +1,4 @@
-<div class="edit-order">
+<div class="form-order">
     <label class="col-md-12">
         <div class="form-group">
             {{isLoadingClients ? 'Searching clients ...' : 'Search clients:'}}
@@ -50,4 +50,9 @@
         </div>
     </label>
     <br>
+    <div class="btns text-right">
+        <button class="btn btn-success" *ngIf="adminMode == 'edit-mode' " (click)="saveChanges()" [disabled]="isLoading">{{isLoading ? 'Saving..' : 'Save'}}</button>
+        <button class="btn btn-secondary" *ngIf="adminMode == 'edit-mode' " (click)="switchAdminMode('detail-mode')" [disabled]="isLoading">Back to details</button>
+        <button class="btn btn-success" *ngIf="adminMode == 'add-mode' " (click)="onCreateOrder()" [disabled]="isLoading">{{isLoading ? 'Creating order...' : 'Create order' }}</button>
+    </div>
 </div>

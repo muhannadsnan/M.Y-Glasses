@@ -38,7 +38,10 @@ export class OrderService {
         return this.http.delete(`${this.dbUrl}/orders/${orderid}`, { responseType: 'text' /*important to receive JSON*/});
 	}
     //*************************************
-    	
+    getOrderById(id) {
+        return this.http.get(`${this.dbUrl}/orders/${id}`);
+    }    
+    
 	MAP(observable){
 		return observable.pipe(
             map(actions => { //console.log("actions",actions);

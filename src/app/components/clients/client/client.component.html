@@ -1,6 +1,6 @@
 <a [routerLink]="'/clients/'+client?.id" routerLinkActive="active" class="list-group-client d-flex" (click)="onClickClient()" *ngIf="showAs == 'list-group-client' ">
     <span>{{client?.name}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelClient(client?.id)" [disabled]="isLoading">{{isLoading ? 'Deleting..' : 'Delete'}}</button>
+    <button class="btn btn-outline-warning ml-auto" (click)="onDelClient(client?.id)" [disabled]="isLoading">{{isLoading ? 'Please wait..' : 'Delete'}}</button>
 </a>
 
 <div class="client mx-auto col-md-6X col-lg-4X">

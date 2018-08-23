@@ -14,6 +14,7 @@ import { ClientsComponent } from "./components/clients/clients.component";
 import { CategoryComponent } from "./components/categories/category/category.component";
 import { InsuranceComponent } from "./components/insurances/insurance/insurance.component";
 import { ClientComponent } from "./components/clients/client/client.component";
+import { OrderComponent } from "./components/orders/order/order.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -46,7 +47,10 @@ const routes = [
                 {path: '', component: ClientsComponent, data: {showAs: 'table'}},
                 {path: ':id', component: ClientComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
             ]},
-			{path: 'orders', component: OrdersComponent, data: {showAs: 'table'}},
+			{path: 'orders', children: [
+                {path: '', component: OrdersComponent, data: {showAs: 'table'}},
+                {path: ':id', component: OrderComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
+            ]},
 		]
 	},
 	{path: '**', component: HomeComponent, data: {message: 'Page not found', messageType: 'error'}}

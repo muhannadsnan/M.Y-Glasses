@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../../services/modal.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'orders',
@@ -9,13 +10,13 @@ import { ModalService } from '../../services/modal.service';
   styleUrls: ['./orders.component.css']
 })
 
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
     orders;
     selectedId = 0;
     loadingOrders;
     showAs;
-    // showModal;
     adminMode;
+    tmp: Subscription[] = [];
 
     constructor(private orderService: OrderService,
                 private modalService: ModalService,
@@ -29,7 +30,7 @@ export class OrdersComponent implements OnInit {
         this.getOrders();
         this.showAs = 'grid';
         this.LISTEN_Data();
-        this.LISTEN_AdminMode();
+        this.LISTEN_AdminMode_orderService();
     }
 
     orderChanged(order) {
@@ -50,17 +51,17 @@ export class OrdersComponent implements OnInit {
     }
 
     LISTEN_LoadingOrders(){
-        this.orderService.loadingOrders.subscribe(isLoading => this.loadingOrders = isLoading);
+        this.tmp[1] = this.orderService.loadingOrders.subscribe(isLoading => this.loadingOrders = isLoading);
     }
 
     LISTEN_CreateOrder(){
-        this.orderService.orderCreated.subscribe(createdOrder => {
+        this.tmp[2] = this.orderService.orderCreated.subscribe(createdOrder => {
             this.orders.unshift(createdOrder);
         });
     }
     
     LISTEN_DeleteOrder(){
-        this.orderService.orderDeleted.subscribe(deletedOrder => { 
+        this.tmp[3] = this.orderService.orderDeleted.subscribe(deletedOrder => { 
             this.orders = this.orders.filter(order => order !== deletedOrder);
         });
     }
@@ -68,13 +69,13 @@ export class OrdersComponent implements OnInit {
     LISTEN_Data(){
         this.route.data.subscribe(data => { //console.log("showAs", this.showAs);
             if(data.showAs){
-            this.showAs = data.showAs; console.log("data ", data);
+                this.showAs = data.showAs; //console.log("data ", data);
             }
         });
     }
 
-    LISTEN_AdminMode(){
-        this.orderService.adminMode.subscribe(mode => this.adminMode = mode);
+    LISTEN_AdminMode_orderService(){
+        this.tmp[5] = this.orderService.adminMode.subscribe(mode => this.adminMode = mode);
     }
 
     onClkOrder(order){
@@ -88,8 +89,7 @@ export class OrdersComponent implements OnInit {
         this.orderService.adminMode.next('add-mode');
     }
 
-    onCreateOrder(){
-        this.orderService.ClickedOrderCreate.next(true);
-        this.orderService.loadingOrders.next(true);
+    ngOnDestroy(){
+        this.tmp.forEach( el => el.unsubscribe() );
     }
 }

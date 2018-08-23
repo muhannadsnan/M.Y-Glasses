@@ -26,7 +26,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.LOADING(false);
-        this.LISTEN_AdminMode();
+        this.LISTEN_AdminMode_itemService();
         this.InitItem();
         this.readCategories();
     }
@@ -45,7 +45,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
         } ); 
     }
 
-    LISTEN_AdminMode(){
+    LISTEN_AdminMode_itemService(){
         this.tmp[0] = this.itemService.adminMode.subscribe(mode => { console.log(mode);
             this.adminMode = mode;
             if(mode == 'add-mode') // to reset after edit-mode

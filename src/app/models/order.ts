@@ -1,5 +1,4 @@
-import { Item } from "./item";
-import { Eye } from "./eyePrescription";
+import { Eyes } from "./eyePrescription";
 import { Client } from "./client";
 import { Branch } from "./branch";
 import { Insurance } from "./insurance";
@@ -17,7 +16,7 @@ export class Order {
         this.branch = branch || new Branch()
         this.insurance = insurance || new Insurance()
         this.items = items || []
-        this.eyePrescriptions = eyePrescriptions || new Eye()
+        this.eyePrescriptions = eyePrescriptions || new Eyes()
     }
     
 }

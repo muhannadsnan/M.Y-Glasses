@@ -1,4 +1,4 @@
-export class Eye {
+export class Eyes {
 	constructor( 
                 public left?: EyePrescription,
                 public right?: EyePrescription )
@@ -10,14 +10,14 @@ export class Eye {
 
 export class EyePrescription {
 	constructor( 
-                public sphere?: string,
-				public cylinder?: string,
-				public axis?: string,
-				public addition?: string )
+                public sphere?: number,
+				public cylinder?: number,
+				public axis?: number,
+				public addition?: number )
     {
-        this.sphere = sphere || ""
-        this.cylinder = cylinder || ""
-        this.axis = axis || ""
-        this.addition = addition || ""
+        this.sphere = sphere || 0
+        this.cylinder = cylinder || 0
+        this.axis = axis || 0
+        this.addition = addition || 0
     }
 }
