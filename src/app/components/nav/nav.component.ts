@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,20 +10,22 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   loggedin = false;
 
-  constructor(private categoryservice: CategoryService, private router: Router) { }
+  constructor(private authService: AuthService,
+                    private router: Router,
+                    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.loggedin = this.categoryservice.isLoggedin;
+    this.loggedin = this.authService.isLoggedIn;
   }
   
   onLogin(){
-    this.categoryservice.isLoggedin = true;
+    this.authService.authenticate();
     this.loggedin = true;
-    this.router.navigate(['categories']);
+    this.route.queryParams.subscribe(params => this.router.navigate([params.returnTo]));
   }
   
   onLogout(){
-    this.categoryservice.isLoggedin = false;
+    this.authService.logout();
     this.loggedin = false;
     this.router.navigate(['home']);
   }

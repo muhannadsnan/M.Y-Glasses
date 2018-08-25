@@ -41,6 +41,7 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { ClientComponent } from './components/clients/client/client.component';
 import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
 import { ClientService } from './services/client.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
     declarations: [
@@ -79,7 +80,16 @@ import { ClientService } from './services/client.service';
         NgbModule.forRoot(), // bootstrap 4
         SelectModule
     ],
-    providers: [ModalService, CategoryService, ItemService, BranchService, InsuranceService, ClientService, OrderService],
+    providers: [
+        AuthService,
+        ModalService, 
+        CategoryService, 
+        ItemService, 
+        BranchService, 
+        InsuranceService, 
+        ClientService, 
+        OrderService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

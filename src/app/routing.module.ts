@@ -15,17 +15,18 @@ import { CategoryComponent } from "./components/categories/category/category.com
 import { InsuranceComponent } from "./components/insurances/insurance/insurance.component";
 import { ClientComponent } from "./components/clients/client/client.component";
 import { OrderComponent } from "./components/orders/order/order.component";
+import { AuthGuard } from "./services/auth.guard";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent },	
 	{path: 'home/:name', component: HomeComponent },	
-	{path: 'categories', component: CategoriesComponent, /*canActivate: [AuthGuard],*/ children: [
+	{path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard], children: [
 			{path: ':catid', component: ItemsComponent}
 		]
 	},
 	{path: 'items', component: ItemsComponent, data: {itemsInRow: 3}},
-	{path: 'admin', component: AdminComponent, children: [
+	{path: 'admin', canActivate: [AuthGuard], children: [
 			{path: '', component: AdminIndexComponent},
 			{path: 'categories', children: [
                 {path: '', component: CategoriesComponent, data: {showAs: 'table'}},
