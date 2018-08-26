@@ -42,6 +42,7 @@ import { ClientComponent } from './components/clients/client/client.component';
 import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
 import { ClientService } from './services/client.service';
 import { AuthService } from './services/auth.service';
+import { LoginComponent } from './components/auth/login/login.component';
 
 @NgModule({
     declarations: [
@@ -69,7 +70,8 @@ import { AuthService } from './services/auth.service';
         EditClientComponent,
         OrdersComponent,
         OrderComponent,
-        EditOrderComponent
+        EditOrderComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,

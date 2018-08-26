@@ -16,6 +16,7 @@ import { InsuranceComponent } from "./components/insurances/insurance/insurance.
 import { ClientComponent } from "./components/clients/client/client.component";
 import { OrderComponent } from "./components/orders/order/order.component";
 import { AuthGuard } from "./services/auth.guard";
+import { LoginComponent } from "./components/auth/login/login.component";
 
 const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -53,7 +54,8 @@ const routes = [
                 {path: ':id', component: OrderComponent, data: {showAs: 'details', adminMode: 'detail-mode'}},
             ]},
 		]
-	},
+    },
+    {path: 'login', component: LoginComponent},
 	{path: '**', component: HomeComponent, data: {message: 'Page not found', messageType: 'error'}}
 ];
 

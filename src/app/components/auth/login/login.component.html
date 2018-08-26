@@ -1,0 +1,19 @@
+<div class="login">
+    <label class="col-md-6">
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="user.name" [disabled]="isLoading" placeholder="User name.." required>
+        </div>
+    </label>
+    <br>
+    <label class="col-md-6">
+        <div class="form-group">
+            <input type="password" class="form-control" [(ngModel)]="user.password" [disabled]="isLoading" placeholder="Password.." required>
+        </div>
+    </label>
+    <br>
+    <label class="col-md-6">
+        <div class="form-group">
+            <button class="btn btn-primary" (click)="onLogin()" [disabled]="isLoading">Login</button>
+        </div>
+    </label>
+</div>

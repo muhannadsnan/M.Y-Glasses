@@ -24,9 +24,9 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/about">About</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" style="color: greenyellow; cursor: pointer;" (click)="onLogin()" *ngIf="!loggedin">Login</a>
-          <a class="nav-link" style="color: red; cursor: pointer;" (click)="onLogout()" *ngIf="loggedin">Logout</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link login" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+          <a class="nav-link logout"  (click)="onLogout()" *ngIf="isLoggedIn">Logout</a> 
         </li>
       </ul>
     </div>
