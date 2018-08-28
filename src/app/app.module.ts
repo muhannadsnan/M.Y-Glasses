@@ -43,11 +43,14 @@ import { EditClientComponent } from './components/clients/edit-client/edit-clien
 import { ClientService } from './services/client.service';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/auth/login/login.component';
+import { AlertService } from './services/alert.service';
+import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavComponent,
+        AlertComponent,
         ModalComponent,
         HomeComponent,
         CategoriesComponent,
@@ -83,6 +86,7 @@ import { LoginComponent } from './components/auth/login/login.component';
         SelectModule
     ],
     providers: [
+        AlertService,
         AuthService,
         ModalService, 
         CategoryService, 

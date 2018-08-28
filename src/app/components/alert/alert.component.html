@@ -1,0 +1,8 @@
+<h3 class="alert" [ngClass]="{
+                                'alert-success': message.type == 'success', 
+                                'alert-danger': message.type == 'error',
+                                'alert-warning': message.type == 'warning',
+                                'alert-info': message.type == 'info',
+                                'hide' : message?.hide
+                            }" 
+    *ngIf="message">{{message.text}}</h3>

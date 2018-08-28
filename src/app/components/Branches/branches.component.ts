@@ -90,6 +90,7 @@ export class BranchesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(){
-        this.tmp.forEach( el => el.unsubscribe() );
+        
+        
     }
 }

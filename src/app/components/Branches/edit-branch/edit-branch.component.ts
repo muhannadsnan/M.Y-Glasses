@@ -82,7 +82,7 @@ export class EditBranchComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(){
-        this.tmp.forEach( el => el.unsubscribe() );
+        this.tmp.forEach( subs => subs.unsubscribe() );
     }
 
 }

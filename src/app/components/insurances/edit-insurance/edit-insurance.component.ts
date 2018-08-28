@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal.service';
 import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 import { CategoryService } from '../../../services/category.service';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-edit-insurance',
@@ -18,9 +19,9 @@ export class EditInsuranceComponent implements OnInit, OnDestroy {
     tmp: Subscription[] = [];
 
     constructor(private insuranceService: InsuranceService,
-                    private categoryService: CategoryService,
                     private modalService: ModalService,
-                    private route: ActivatedRoute) { }
+                    private route: ActivatedRoute,
+                    private alertService: AlertService) { }
 
     ngOnInit() {
         this.LOADING(false);
@@ -55,6 +56,7 @@ export class EditInsuranceComponent implements OnInit, OnDestroy {
         this.tmp[2] = this.insuranceService.createInsurance(this.insurance).subscribe(resp => {
             this.modalService.showModal.next(false);
             //toastr msg
+            this.alertService.success(`Insurance '${this.insurance.title}' was created!`);
             this.LOADING(false);
             this.insuranceService.loadingInsurances.next(false);
             console.log("resp create insurance", resp);
@@ -82,7 +84,7 @@ export class EditInsuranceComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(){
-        this.tmp.forEach( el => el.unsubscribe() );
+        this.tmp.forEach( subs => subs.unsubscribe() );
     }
 
 }
