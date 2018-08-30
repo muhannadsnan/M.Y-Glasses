@@ -1,5 +1,5 @@
 <div class="container main" [ngSwitch]="showAs"> <!-- ngSwitch works only with divs, not ng-templates -->
-    <pre>{{items | json}}</pre>
+    <!-- <pre>{{items | json}}</pre> -->
     <div class="row" *ngSwitchCase="'grid'">        
         <div class="col-md-6X">
             <h5 class="text-center my-3">Items {{selectedCat ? " in "+selectedCat.title : ""}}</h5>

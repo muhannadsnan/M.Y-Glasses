@@ -22,11 +22,14 @@ const routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent },	
 	{path: 'home/:name', component: HomeComponent },	
-	{path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard], children: [
+	{path: 'categories', component: CategoriesComponent, canActivate: [/* AuthGuard */], children: [
 			{path: ':catid', component: ItemsComponent}
 		]
-	},
-	{path: 'items', component: ItemsComponent, data: {itemsInRow: 3}},
+    },
+    {path: 'items', data: {itemsInRow: 3}, children: [
+        {path: '', component: ItemsComponent},
+        {path: ':id', component: ItemComponent, data: {}},
+    ]},
 	{path: 'admin', canActivate: [AuthGuard], children: [
 			{path: '', component: AdminIndexComponent},
 			{path: 'categories', children: [
@@ -56,7 +59,7 @@ const routes = [
 		]
     },
     {path: 'login', component: LoginComponent},
-	{path: '**', component: HomeComponent, data: {message: 'Page not found', messageType: 'error'}}
+	{path: '**', redirectTo: "/home?err=Page not found!"}
 ];
 
 
