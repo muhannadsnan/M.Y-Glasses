@@ -22,7 +22,7 @@ import { AdminIndexComponent } from './components/admin/admin-index/admin-index.
 import { ModalComponent } from './components/modal/modal.component';
 import { EditCategoryComponent } from './components/categories/edit-category/edit-category.component';
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalService } from './services/modal.service';
 import { BranchService } from './services/branch.service';
 import { BranchesComponent } from './components/branches/branches.component';
@@ -79,6 +79,7 @@ import { AlertComponent } from './components/alert/alert.component';
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         RoutingModule,
         HttpClientModule,
         HttpModule,

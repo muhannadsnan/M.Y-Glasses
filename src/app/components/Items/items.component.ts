@@ -3,6 +3,7 @@ import { ItemService } from '../../services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../../services/modal.service';
 import { Subscription } from '../../../../node_modules/rxjs';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-items',
@@ -13,24 +14,34 @@ import { Subscription } from '../../../../node_modules/rxjs';
 export class ItemsComponent implements OnInit, OnDestroy {
     items;
     selectedId = 0;
-    loadingItems;
+    selectedCat = 0;
+    loadingItems = false;
     showAs;
     adminMode;
     tmp: Subscription[] = [];
 
     constructor(private itemService: ItemService,
+                private categoryService: CategoryService,
                 private modalService: ModalService,
                 private route: ActivatedRoute,
                 private router: Router) { }
 
     ngOnInit() { //console.log("itemsss");
-        this.LISTEN_LoadingItems();
+        this.LISTEN_SelectedCat_GetItems();
         this.LISTEN_CreateItems();
         this.LISTEN_DeleteItems();
-        this.getItems();
+        this.getItems(); // with respect for params
         this.showAs = 'grid';
         this.LISTEN_Data();
+        this.LISTEN_Params();
         this.LISTEN_AdminMode_itemService();
+    }
+    
+    LISTEN_SelectedCat_GetItems(){
+        this.tmp[6] = this.categoryService.selectedCategory.subscribe(cat => {
+            this.selectedCat = cat;
+            this.readItemsByCat(cat.id);
+        });
     }
 
     itemChanged(item) { //console.log("item clicked",item);
@@ -38,21 +49,14 @@ export class ItemsComponent implements OnInit, OnDestroy {
         this.itemService.selectedItem.next(item);
     }
 
-    getItems(){
-        this.itemService.loadingItems.next(true);
-        this.tmp[0] = this.itemService.readItems().subscribe(resp => { //console.log("resp", resp);
-            if(typeof resp === "undefined"){
-                this.items = [];
-            }else{
-                this.items = resp;
-            }            
-            this.itemService.loadingItems.next(false);
-        });
-    }
-
-    LISTEN_LoadingItems(){
-        this.tmp[1] = this.itemService.loadingItems.subscribe(isLoading => this.loadingItems = isLoading);
-    }
+    getItems(catid = 0){
+        this.loadingItems = true;
+        if(this.route.snapshot.params.catid){
+            this.readItemsByCat(this.route.snapshot.params.catid);
+        }else{ // read all
+            this.readAllItems();
+        }
+    } 
 
     LISTEN_CreateItems(){
         this.tmp[2] = this.itemService.itemCreated.subscribe(createdItem => {
@@ -72,6 +76,34 @@ export class ItemsComponent implements OnInit, OnDestroy {
                 this.showAs = data.showAs; //console.log("data ", data);
             }
         });
+    }
+
+    LISTEN_Params(){
+        this.tmp[8] = this.route.params.subscribe(params => { console.log(params);
+            if(params.catid){
+                this.readItemsByCat(params.catid);
+            }
+        });
+    }
+
+    readItemsByCat(catid){
+        this.loadingItems = true;
+        this.tmp.push(this.itemService.readItemsByCatId(catid).subscribe(items => {
+            this.items = items;
+            this.loadingItems = false;
+        }));
+    }
+    readAllItems(){
+        this.tmp.push(        
+            this.tmp[0] = this.itemService.readItems().subscribe(resp => { //console.log("resp", resp);
+                if(typeof resp === "undefined"){
+                    this.items = [];
+                }else{
+                    this.items = resp;
+                }            
+                this.loadingItems = false;
+            }
+        ));
     }
 
     LISTEN_AdminMode_itemService(){

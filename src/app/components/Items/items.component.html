@@ -1,18 +1,16 @@
 <div class="container main" [ngSwitch]="showAs"> <!-- ngSwitch works only with divs, not ng-templates -->
+    <pre>{{items | json}}</pre>
     <div class="row" *ngSwitchCase="'grid'">        
-        <div class="col-lg-3">
-            <h5 class="text-center my-3">Categories</h5>
-            <div class="list-group">
+        <div class="col-md-6X">
+            <h5 class="text-center my-3">Items {{selectedCat ? " in "+selectedCat.title : ""}}</h5>
+            <div class="list-group" *ngIf="!loadingItems">
                 <app-item *ngFor="let item of items" [item]="item" (click)="itemChanged(item)"></app-item>
-                <h3 *ngIf="loadingItems">LOADING..</h3>
             </div>
-            <!-- <pre>{{items | async | json}}</pre> -->
-        </div><!-- END: col-lg-3 -->
-
-        <div class="col-lg-9">
+            <h3 *ngIf="loadingItems">LOADING..</h3>
             <router-outlet></router-outlet>
         </div><!-- END: col-lg-9 -->
     </div>    
+
     <div class="rowX" *ngSwitchCase="'table'">
         <div class="alert alert-primary text-center">
             <h5> <a routerLink="/admin">Control panel</a> > Items Management

@@ -8,7 +8,7 @@ import { environment } from "../../environments/environment";
 @Injectable()
 
 export class CategoryService {
-	selectedCategory: Subject<any> = new Subject<any>(); 
+	selectedCategory: Subject<any> = new Subject<any>();
 	categoryCreated: Subject<Category> = new Subject<Category>(); 
 	categoryDeleted: Subject<Category> = new Subject<Category>(); 
 	loadingCats: Subject<boolean> = new Subject<boolean>();

@@ -15,7 +15,7 @@
             <router-outlet></router-outlet>
         </div><!-- END: col-lg-9 -->
     </div>    
-<!-- <h1>{{adminMode}}</h1> -->
+    <!-- <h1>{{adminMode}}</h1> -->
     <div class="rowX" *ngSwitchCase="'table'">
         <div class="alert alert-warning text-center">
             <h5> <a routerLink="/admin">Control panel</a> > Categories Management
@@ -44,7 +44,6 @@
         </table>
     </div>
 </div>
-<!-- <h4>adminMode: {{adminMode}}</h4> -->
 
 <!-- BOOTSTRAP 4 MODALs, SHOWS ON CATEGORY CLICK, CONTAINS FORM CONTROLS WITH CAT FIELDS -->
 <app-modal [btns]="close-only">

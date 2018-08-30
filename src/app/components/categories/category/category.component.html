@@ -1,7 +1,8 @@
-<a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickCat()" *ngIf="showAs == 'list-group-item' ">
-    <span>{{category?.title}}</span>
-    <button class="btn btn-outline-warning ml-auto" (click)="onDelCat(category?.id)" [disabled]="isLoading">{{isLoading ? 'Please wait..' : 'Delete'}}</button>
-</a>
+<div class="category list-group list-group-flush">
+    <a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" (click)="onClickCat()" *ngIf="showAs == 'list-group-item' "class="list-group-item list-group-item-action">
+        {{category?.title}}
+    </a>
+</div>
 
 <!-- <pre>{{category | json}}</pre> -->
 <!-- showas: {{showAs}} -->

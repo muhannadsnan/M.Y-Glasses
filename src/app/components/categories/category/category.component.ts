@@ -26,12 +26,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.LISTEN_AdminMode();
         this.INIT_Data();
         this.LISTEN_Params();
-        this.tmp[1] = this.categoryService.selectedCategory.subscribe(category => this.category = category);
         if(typeof this.category == 'undefined' && this.showAs != 'table') {// means we will request the category
             this.LOADING(true);
         }
         if( !this.showAs)
             this.showAs = 'list-group-item';
+        if(this.showAs == 'table'){
+            this.tmp[1] = this.categoryService.selectedCategory.subscribe(category => this.category = category);
+        }
     }
 
     LISTEN_AdminMode(){
@@ -67,7 +69,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     onClickCat(){
-        this.categoryService.selectedCategory.next(this.category);
+        // this.categoryService.selectedCategory.next(this.category);
+        // this.category = cat;
     }
 
     switchAdminMode(mode){        

@@ -16,6 +16,7 @@
     <br>
     <label class="col-sm-12">
         <div class="form-group">
+            Category: {{item.catid}}
             <ng-select [options]="categories" [allowClear]="true" [placeholder]="isLoading ? 'Loading...' : 'Select Category...' " 
                         [disabled]="isLoadingCats" [(ngModel)]="item.catid"></ng-select>
         </div>

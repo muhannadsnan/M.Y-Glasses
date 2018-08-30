@@ -1,6 +1,6 @@
 .alert{margin-top: 20px;  z-index: 9999;  width: 40%;  float: right;  opacity: .9; position: absolute; right: 10px; border-width: 2px;
-    -webkit-transition: opacity 2s ease-out;
-    -moz-transition: opacity 2s ease-out;
-    -ms-transition: opacity 2s ease-out;
-    -o-transition: opacity 2s ease-out;}
+    -webkit-transition: opacity 1s ease-out;
+    -moz-transition: opacity 1s ease-out;
+    -ms-transition: opacity 1s ease-out;
+    -o-transition: opacity 1s ease-out;}
 .hide{opacity: 0;}

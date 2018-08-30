@@ -13,7 +13,7 @@ import { Subscription } from '../../../../node_modules/rxjs';
 export class CategoriesComponent implements OnInit, OnDestroy {
     categories;
     selectedId = 0;
-    loadingCats;
+    loadingCats = false;
     showAs;
     adminMode;
     tmp: Subscription[] = [];
@@ -24,7 +24,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
                 private router: Router) { }
 
     ngOnInit() { //console.log("catsss");
-        this.LISTEN_LoadingCats();
+        // this.LISTEN_LoadingCats();
         this.LISTEN_CreateCategory();
         this.LISTEN_DeleteCategory();
         this.getCats();
@@ -34,25 +34,27 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     }
 
     catChanged(cat) { //console.log("cat clicked",cat);
-        this.selectedId = cat.id;
+        // this.selectedId = cat.id;
         this.categoryService.selectedCategory.next(cat);
     }
 
     getCats(){
-        this.categoryService.loadingCats.next(true);
+        // this.categoryService.loadingCats.next(true);
+        this.loadingCats = true;
         this.tmp[0] = this.categoryService.readCats().subscribe(resp => { //console.log("resp", resp);
             if(typeof resp === "undefined"){
                 this.categories = [];
             }else{
                 this.categories = resp;
             }            
-            this.categoryService.loadingCats.next(false);
+            // this.categoryService.loadingCats.next(false);
+            this.loadingCats = false;
         });
     }
 
-    LISTEN_LoadingCats(){
-        this.tmp[1] = this.categoryService.loadingCats.subscribe(isLoading => this.loadingCats = isLoading);
-    }
+    // LISTEN_LoadingCats(){
+    //     this.tmp[1] = this.categoryService.loadingCats.subscribe(isLoading => this.loadingCats = isLoading);
+    // }
 
     LISTEN_CreateCategory(){
         this.tmp[2] = this.categoryService.categoryCreated.subscribe(createdCat => {
