@@ -30,7 +30,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
             this.LOADING(true);
         }
         if( !this.showAs)
-            this.showAs = 'list-group-item';
+            this.showAs = 'listGroup';
         if(this.showAs == 'table'){
             this.tmp[1] = this.categoryService.selectedCategory.subscribe(category => this.category = category);
         }

@@ -5,4 +5,4 @@
                                 'alert-info': message.type == 'info',
                                 'hide' : message?.hide
                             }" 
-    *ngIf="message">{{message.text}}</h3>
+    *ngIf="message && message.text != '' ">{{message.text}}</h3>

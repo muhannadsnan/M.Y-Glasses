@@ -1,5 +1,5 @@
 <div class="category list-group list-group-flush">
-    <a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" (click)="onClickCat()" *ngIf="showAs == 'list-group-item' "class="list-group-item list-group-item-action">
+    <a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" (click)="onClickCat()" *ngIf="showAs == 'listGroup' "class="list-group-item list-group-item-action">
         {{category?.title}}
     </a>
 </div>

@@ -5,7 +5,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  encapsulation: ViewEncapsulation.Emulated 
+  encapsulation: ViewEncapsulation.None 
 })
 
 export class AppComponent {

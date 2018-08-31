@@ -45,6 +45,7 @@ import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/auth/login/login.component';
 import { AlertService } from './services/alert.service';
 import { AlertComponent } from './components/alert/alert.component';
+import { PreviousRouteService } from './services/prevRoute.service';
 
 @NgModule({
     declarations: [
@@ -95,7 +96,8 @@ import { AlertComponent } from './components/alert/alert.component';
         BranchService, 
         InsuranceService, 
         ClientService, 
-        OrderService
+        OrderService,
+        PreviousRouteService
     ],
     bootstrap: [AppComponent]
 })

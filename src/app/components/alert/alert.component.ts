@@ -16,10 +16,14 @@ export class AlertComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.tmp = this.alertService.getMessage().subscribe(message => { 
             this.message = message; 
-            setInterval(() =>{
+            setTimeout(() =>{
                 if(this.message)
-                    this.message.hide = true;                    
-            }, 4000)
+                    this.message.hide = true;
+                setTimeout(() =>{
+                    if(this.message)
+                        this.message.text = ''; 
+                }, 6000)                    
+            }, 4000);            
         });
     }
 

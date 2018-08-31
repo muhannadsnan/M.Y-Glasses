@@ -28,7 +28,7 @@ const routes = [
     },
     {path: 'items', data: {itemsInRow: 3}, children: [
         {path: '', component: ItemsComponent},
-        {path: ':id', component: ItemComponent, data: {}},
+        {path: ':id', component: ItemComponent, data: {showAs: "card"}},
     ]},
 	{path: 'admin', canActivate: [AuthGuard], children: [
 			{path: '', component: AdminIndexComponent},

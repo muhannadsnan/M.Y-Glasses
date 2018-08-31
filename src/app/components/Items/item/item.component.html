@@ -1,8 +1,17 @@
-<a [routerLink]="'/items/'+item?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickItem()" *ngIf="showAs == 'list-group-item' ">
+<a [routerLink]="'/items/'+item?.id" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickItem()" *ngIf="showAs == 'listGroup' ">
     <span>{{item?.title}}</span>
 </a>
 
-<div class="item mx-auto col-md-6X col-lg-4X">
+<div class="item-card" *ngIf="showAs == 'card' ">
+    <h4 class="alert alert-primary" *ngIf="showBackToItemsLink; else noError"><a (click)="navTo('/items')">Back to all items</a></h4>
+    <ng-template #noError>
+        <h4 class="alert alert-primary">
+            <a (click)="navTo(prevRoute)">Back </a> - {{ isLoading ? 'Loading...' : item?.title}}</h4>
+    </ng-template>
+    <pre>{{item | json}}</pre>
+</div>
+
+<div class="item mx-auto col-md-6X col-lg-4X" *ngIf="['table', 'details'].indexOf(showAs) > -1">
     <div class="header" *ngIf="showAs != 'table' ">
         <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'detail-mode' " title>Show item: {{item?.title}}</h4>
         <h4 class="alert alert-primary text-center" *ngIf="adminMode == 'edit-mode' " title>Edit item: {{item?.title}}</h4>
@@ -15,7 +24,7 @@
         <button class="btn btn-primary" *ngIf="adminMode == 'detail-mode' && showAs == 'details' " (click)="navTo('/admin/items') " [disabled]="isLoading">Items</button>
     </div>
     <h3 class="text-center text-secondary" *ngIf="isLoading; else noLoading">Loading...</h3>
-    <ng-template #noLoading>
+    <ng-template #noLoading> <!-- ITEM DETAILS -->
         <div class="item-details" *ngIf="adminMode == 'detail-mode' ">
             <div class="row">
                 <div class="col-sm-3">

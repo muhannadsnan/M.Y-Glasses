@@ -4,6 +4,8 @@ import { ItemService } from '../../../services/item.service';
 import { ModalService } from '../../../services/modal.service';
 import { Subscription } from '../../../../../node_modules/rxjs';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { AlertService } from '../../../services/alert.service';
+import { PreviousRouteService } from '../../../services/prevRoute.service';
 
 @Component({
   selector: 'app-item',
@@ -12,17 +14,22 @@ import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/rou
 })
 export class ItemComponent implements OnInit, OnDestroy {
     @Input() item: Item;
-    @Input() showAs: string;
+    @Input() showAs: string; // table, details, card, grid, listGroup
     adminMode: string; // add, edit in modal
     isLoading: boolean = false;
     tmp: Subscription[] = [];
+    prevRoute;
+    showBackToItemsLink = false;
 
     constructor(private itemService: ItemService,
                     private modalService: ModalService,
                     private route: ActivatedRoute,
-                    private router: Router) { }
+                    private router: Router,
+                    private alertService: AlertService,
+                    private previousRouteService: PreviousRouteService) { }
 
-    ngOnInit() { // order is important here        
+    ngOnInit() { // order is important here    
+        this.prevRoute = this.previousRouteService.getPreviousUrl()    
         this.LISTEN_AdminMode();
         this.INIT_Data();
         this.LISTEN_Params();
@@ -31,7 +38,7 @@ export class ItemComponent implements OnInit, OnDestroy {
             this.LOADING(true);
         }
         if( !this.showAs)
-            this.showAs = 'list-group-item';
+            this.showAs = 'listGroup';
     }
 
     LISTEN_AdminMode(){
@@ -50,18 +57,34 @@ export class ItemComponent implements OnInit, OnDestroy {
         } ); 
     }
 
-    LISTEN_Params(){
+    LISTEN_Params(){ // this has to be reflected to all components
         this.tmp[5] = this.route.params.subscribe(params => { //console.log("params", params);
             if(this.showAs == "details" && (this.adminMode == "edit-mode" || this.adminMode == "detail-mode")){ // so dont request in /admin/items when showAs table
+                this.LOADING(true);
                 this.tmp[6] = this.itemService.getItemById(params.id).subscribe(item =>{ //console.log("item", item)
                     if(typeof item == "undefined" || item === null){
-                        alert("The object you are trying to reach is not available!");
+                        this.alertService.error("The object you are trying to reach is not available!");
                     }else{
                         this.item = item;
                         this.item.id = params.id;
-                        this.LOADING(false);
                     }
+                    this.LOADING(false);
                 });
+            }
+            else if (this.showAs == "card"){
+                this.LOADING(true);
+                this.tmp.push(
+                    this.itemService.getItemById(params.id).subscribe(item =>{ //console.log("item", item)
+                        if(typeof item == "undefined" || item === null){
+                            this.alertService.error("The object you are trying to reach is not available!");
+                            this.showBackToItemsLink = true;
+                        }else{
+                            this.item = item;
+                            this.item.id = params.id;
+                        }
+                        this.LOADING(false);
+                    })
+                );
             }
         });
     }
@@ -83,8 +106,11 @@ export class ItemComponent implements OnInit, OnDestroy {
         this.router.navigate(navigateUrl);
     }
 
-    navTo(url){
-        this.router.navigateByUrl(url);
+    navTo(url){ //console.log("url", url); console.log("this.router.url", this.router.url);
+        if(url == this.router.url)
+            this.router.navigateByUrl("/items");
+        else
+            this.router.navigateByUrl(url);
     }
     
     deleteItem(){
